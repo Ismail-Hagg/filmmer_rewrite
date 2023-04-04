@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>285343917002-ge8aknma5879va75gbq6ioqa0ilojgc6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.285343917002-ge8aknma5879va75gbq6ioqa0ilojgc6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>285343917002-1ugmuuqkelo736fg4pein0ci6r2et65r.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC8QcbFGM-tUE-dhyjj8UbyURs4fAtUhqQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>285343917002</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.filmmerRewrite</string>
+	<key>PROJECT_ID</key>
+	<string>filmmer</string>
+	<key>STORAGE_BUCKET</key>
+	<string>filmmer.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:285343917002:ios:a8e2080ff86792d1cb6533</string>
+</dict>
+</plist>

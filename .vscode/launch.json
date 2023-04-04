@@ -1,0 +1,43 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "filmmer_rewrite",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "filmmer_rewrite (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "filmmer_rewrite (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Android",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
+    {
+      "name": "Ios",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "2908043D-3642-4784-AFB4-95E965CC9B90"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Compound",
+      "configurations": ["Android", "Ios"]
+    }
+  ]
+}

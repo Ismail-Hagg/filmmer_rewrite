@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "285343917002",
+    "project_id": "filmmer",
+    "storage_bucket": "filmmer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285343917002:android:a88d88044ba87f67cb6533",
+        "android_client_info": {
+          "package_name": "com.example.filmmer_rewrite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285343917002-q07s6bhds86776eadireaj1a11evqqeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO4h1kyCt777CQcycsnszc5MFL4xaodQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285343917002-mne6k9or9h8u6rcc5tej3k3k9fe4iu3k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "285343917002-a97mof7cp3tvfeu2rn7f7e8vptbvjegc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.filmpro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285343917002:android:cadbfeb1f033d8a2cb6533",
+        "android_client_info": {
+          "package_name": "com.example.filmpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285343917002-q07s6bhds86776eadireaj1a11evqqeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO4h1kyCt777CQcycsnszc5MFL4xaodQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285343917002-mne6k9or9h8u6rcc5tej3k3k9fe4iu3k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "285343917002-a97mof7cp3tvfeu2rn7f7e8vptbvjegc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.filmpro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
