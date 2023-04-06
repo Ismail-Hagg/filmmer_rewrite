@@ -113,7 +113,9 @@ class Translation extends Translations {
           'ended': 'Ended',
           'return': 'Returning Series',
           'message': ' new message from ',
-          'commentmessage': ' replied on your comment '
+          'commentmessage': ' replied on your comment ',
+          'ok': 'OK',
+          'complete': 'Complete Your Info'
         },
         'ar_SA': {
           'Year': 'السنه',
@@ -224,7 +226,9 @@ class Translation extends Translations {
           'ended': 'منتهي',
           'return': 'مستمر',
           'message': 'رساله جديده من ',
-          'commentmessage': ' قام بالرد على تعليقك '
+          'commentmessage': ' قام بالرد على تعليقك ',
+          'ok': 'حسنا',
+          'complete': 'اكمل بياناتك'
         }
 
         // add translation fot other english speaking countries

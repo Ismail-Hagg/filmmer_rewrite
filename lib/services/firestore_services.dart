@@ -36,4 +36,13 @@ class FirestoreService {
       {required String userId, required Map<String, dynamic> map}) async {
     _ref.doc(userId).update(map);
   }
+
+  // stream updated chat or episode keeping
+  Stream<QuerySnapshot> isUpdates(String userId, String collection) {
+    return _ref
+        .doc(userId)
+        .collection(collection)
+        .where('isUpdated', isEqualTo: true)
+        .snapshots();
+  }
 }

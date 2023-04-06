@@ -1,3 +1,4 @@
+import 'package:filmmer_rewrite/pages/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,8 +58,10 @@ class LoginPage extends StatelessWidget {
                             isIos: isIos,
                             width: width * 0.8,
                             radius: 6,
-                            press: () =>
-                                controller.googleSignIn(context: context),
+                            press: () => controller.loginSignin(
+                                isIos: isIos,
+                                context: context,
+                                method: 'google'),
                             text: 'google'.tr,
                             textColor: orangeColor,
                             titleSize: width * 0.03,
@@ -102,7 +105,7 @@ class LoginPage extends StatelessWidget {
                                   color: mainColor,
                                   textColor: orangeColor,
                                   leading: const Icon(
-                                    Icons.email,
+                                    Icons.lock,
                                     color: orangeColor,
                                   ),
                                   hint: 'pass'.tr,
@@ -115,19 +118,21 @@ class LoginPage extends StatelessWidget {
                                   width: width * 0.9,
                                   titleSize: width * 0.05,
                                   text: 'login'.tr,
-                                  press: () {}),
+                                  press: () => controller.loginSignin(
+                                      method: 'email-log',
+                                      context: context,
+                                      isIos: isIos)),
                             ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: UnderParat(
+                            isIos: isIos,
                             titleSize: width * 0.04,
                             titele: 'account'.tr,
                             navigatorText: 'make'.tr,
-                            tap: () {
-                              //Get.to(() =>  SignUpPage());
-                            },
+                            tap: () => controller.moving(method: 'forward'),
                           ),
                         ),
                       ],

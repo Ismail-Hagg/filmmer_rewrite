@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 void snack(String message, String otherMessage) {
   Get.snackbar(message, otherMessage,
       margin: const EdgeInsets.all(0),
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       backgroundColor: Colors.black38,
       borderRadius: 0,
       snackPosition: SnackPosition.BOTTOM,

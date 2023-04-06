@@ -29,7 +29,7 @@ class UserModel {
       this.errorMessage});
 
   toMap() {
-    return {
+    return <String, dynamic>{
       'userName': userName,
       'email': email,
       'onlinePicPath': onlinePicPath,

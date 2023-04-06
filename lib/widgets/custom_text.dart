@@ -31,19 +31,17 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isGradiant == true
-        ? FittedBox(
-            child: GradientText(
-              textAlign: align,
-              maxLines: maxline,
-              gradientDirection: direction,
-              text ?? '',
-              style: TextStyle(
-                fontWeight: weight,
-                fontSize: size,
-                overflow: flow,
-              ),
-              colors: colors ?? [],
+        ? GradientText(
+            textAlign: align,
+            maxLines: maxline,
+            gradientDirection: direction,
+            text ?? '',
+            style: TextStyle(
+              fontWeight: weight,
+              fontSize: size,
+              overflow: flow,
             ),
+            colors: colors ?? [],
           )
         : FittedBox(
             child: Text(text ?? '',

@@ -1,3 +1,5 @@
+import 'package:filmmer_rewrite/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../helper/constants.dart';
@@ -7,12 +9,14 @@ class UnderParat extends StatelessWidget {
   final String navigatorText;
   final double titleSize;
   final Function()? tap;
+  final bool isIos;
   const UnderParat(
       {Key? key,
       required this.titele,
       required this.navigatorText,
       this.tap,
-      required this.titleSize})
+      required this.titleSize,
+      required this.isIos})
       : super(key: key);
 
   @override
@@ -20,24 +24,36 @@ class UnderParat extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          titele,
-          style: TextStyle(
-              color: mainColor,
-              fontFamily: 'OpenSans',
-              fontSize: titleSize,
-              fontWeight: FontWeight.w600),
+        CustomText(
+          text: titele,
+          color: mainColor,
+          size: titleSize,
+          weight: FontWeight.w600,
+          flow: TextOverflow.ellipsis,
         ),
         const SizedBox(width: 10),
-        GestureDetector(
-          onTap: tap,
-          child: Text(navigatorText,
-              style: TextStyle(
+        isIos
+            ? CupertinoButton(
+                onPressed: tap,
+                child: CustomText(
+                  text: navigatorText,
                   color: orangeColor,
-                  fontFamily: 'OpenSans',
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.w600)),
-        )
+                  size: titleSize,
+                  weight: FontWeight.w600,
+                  flow: TextOverflow.ellipsis,
+                ),
+              )
+            : TextButton(
+                style: TextButton.styleFrom(foregroundColor: orangeColor),
+                onPressed: tap,
+                child: CustomText(
+                  text: navigatorText,
+                  color: orangeColor,
+                  size: titleSize,
+                  weight: FontWeight.w600,
+                  flow: TextOverflow.ellipsis,
+                ),
+              )
       ],
     );
   }

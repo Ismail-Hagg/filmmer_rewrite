@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/auth_controller.dart';
-import 'home_page.dart';
+import 'home_page/home_page.dart';
 import 'login_page.dart';
 
 // decide if user is logged in or not
