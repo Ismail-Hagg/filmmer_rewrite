@@ -57,11 +57,11 @@ class AuthController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void dispose() {
     _emailController.dispose();
     _userController.dispose();
     _passController.dispose();
-    super.onClose();
+    super.dispose();
   }
 
   // login or sign in begins here

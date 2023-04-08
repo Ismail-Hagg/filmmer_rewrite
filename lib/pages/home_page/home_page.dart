@@ -1,11 +1,8 @@
-import 'package:filmmer_rewrite/helper/constants.dart';
 import 'package:filmmer_rewrite/pages/home_page/home_page_android.dart';
 import 'package:filmmer_rewrite/pages/home_page/home_page_ios.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/auth_controller.dart';
 import '../../controllers/home_controller.dart';
 
 class HomePage extends StatelessWidget {

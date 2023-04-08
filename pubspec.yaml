@@ -49,6 +49,9 @@ dependencies:
   file_picker: ^5.2.6
   shimmer: ^2.0.0
   cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.1
+  shape_of_view_null_safe: ^2.0.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

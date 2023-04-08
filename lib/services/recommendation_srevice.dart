@@ -1,13 +1,12 @@
 import 'dart:convert';
+import 'package:filmmer_rewrite/models/homepage_model.dart';
 import 'package:http/http.dart' as http;
-import '../models/homepage_model.dart';
 
-class HomePageService {
-  Future<HomePageModel> getHomeInfo(
-      {required String link, required String language}) async {
+class RecommendationService {
+  Future<HomePageModel> getHomeInfo({required String link}) async {
     HomePageModel model = HomePageModel();
     dynamic result = '';
-    var url = Uri.parse(link + language.replaceAll('_', '-'));
+    var url = Uri.parse(link);
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {

@@ -5,7 +5,7 @@ class FirebaseStorageService {
   UploadTask? uploadTask;
 
   // uploading image to firebase storage
-  Future<String> uploade(String id, File file) async {
+  Future<String> uploade({required String id, required File file}) async {
     final String path = '$id/images/profile';
     final ref = FirebaseStorage.instance.ref().child(path);
     uploadTask = ref.putFile(file);

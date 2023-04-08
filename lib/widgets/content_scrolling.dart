@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/home_controller.dart';
 import '../helper/constants.dart';
 import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
@@ -59,6 +61,7 @@ class ContentScrolling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.find<HomeController>();
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -76,8 +79,10 @@ class ContentScrolling extends StatelessWidget {
               ? IconButton(
                   splashRadius: 15,
                   onPressed: () {
-                    // Get.find<HomeController>()
-                    //     .goToSearch(false, link.toString(), title.toString());
+                    controller.goToSearch(
+                        isSearch: false,
+                        link: link.toString(),
+                        title: title.toString());
                   },
                   icon: Icon(Icons.arrow_forward,
                       color: textColor, size: pageWidth * 0.065))
@@ -115,26 +120,33 @@ class ContentScrolling extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: paddingY),
                     child: GestureDetector(
                         onTap: () {
-                          //isFirstPage
-                          // ? Get.find<HomeController>()
-                          //     .navToDetale(model!.results![index])
-                          // : isMovie
-                          //     ? Get.find<HomeController>().navToDetale(
-                          //         detales!.recomendation!.results![index])
-                          //     : loading==0?
-                          //     Get.find<HomeController>().navToCast(
-                          //       detales!.cast!.cast![index].name.toString(),
-                          //         imagebase +
-                          //             detales!
-                          //                 .cast!.cast![index].profilePath
-                          //                 .toString(),
-                          //         detales!.cast!.cast![index].id.toString(),
-                          //         Get.find<HomeController>()
-                          //             .userModel
-                          //             .language
+                          if (isFirstPage) {
+                            //print(model!.results![index].title);
+                            controller.navToDetale(res: model!.results![index]);
+                          }
+                          // isFirstPage
+                          //     ? Get.find<HomeController>()
+                          //         .navToDetale(model!.results![index])
+                          //     : isMovie
+                          //         ? Get.find<HomeController>().navToDetale(
+                          //             detales!.recomendation!.results![index])
+                          //         : loading == 0
+                          //             ?
+                          // Get.find<HomeController>().navToCast(
+                          //   detales!.cast!.cast![index].name.toString(),
+                          //     imagebase +
+                          //         detales!
+                          //             .cast!.cast![index].profilePath
                           //             .toString(),
-                          //         false,
-                          //         ):{};
+                          //     detales!.cast!.cast![index].id.toString(),
+                          //     Get.find<HomeController>()
+                          //         .userModel
+                          //         .language
+                          //         .toString(),
+                          //     false,
+                          //     )
+                          // {}
+                          // : {};
                         },
                         child: isWaiting == null
                             ? ImageNetwork(

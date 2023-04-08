@@ -2,17 +2,23 @@ import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:filmmer_rewrite/controllers/auth_controller.dart';
+import 'package:filmmer_rewrite/models/search_move_model.dart';
 import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
 import '../local_storage/local_data_pref.dart';
+import '../models/cast_model.dart';
 import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
+import '../models/results_model.dart';
+import '../pages/movie_detale_page/mocvie_detale_page.dart';
+import '../pages/search_more_page/sewarch_more_page.dart';
 import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
 import '../services/home_page_service.dart';
+import 'movie_detale_controller.dart';
 
 class HomeController extends GetxController {
   final BuildContext context;
@@ -33,19 +39,40 @@ class HomeController extends GetxController {
       HomePageModel(results: [], isError: false);
   final HomePageModel _topMovies = HomePageModel(results: [], isError: false);
   final HomePageModel _topShows = HomePageModel(results: [], isError: false);
-  MovieDetaleModel _movieDetales = MovieDetaleModel();
+  //MovieDetaleModel _movieDetales = MovieDetaleModel();
 
   HomePageModel get upcomingMovies => _upcomingMovies;
   HomePageModel get popularMovies => _popularMovies;
   HomePageModel get popularShows => _popularShows;
   HomePageModel get topMovies => _topMovies;
   HomePageModel get topShows => _topShows;
-  MovieDetaleModel get movieDetales => _movieDetales;
+  //MovieDetaleModel get movieDetales => _movieDetales;
+
+  final List<String> _urls = [upcoming, pop, popularTv, top, topTv];
+  List<String> get urls => _urls;
+  List<HomePageModel> _lists = [];
+  List<HomePageModel> get lists => _lists;
+
+  final List<String> _translation = [
+    'upcoming'.tr,
+    'popularMovies'.tr,
+    'popularShows'.tr,
+    'topMovies'.tr,
+    'topShowa'.tr,
+  ];
+  List<String> get translation => _translation;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    _lists = [
+      _upcomingMovies,
+      _popularMovies,
+      _popularShows,
+      _topMovies,
+      _topShows
+    ];
     loadUser();
     notify();
   }
@@ -68,18 +95,12 @@ class HomeController extends GetxController {
   void apiCall({required String language}) async {
     _count = 1;
     update();
-    List<String> urls = [upcoming, pop, popularTv, top, topTv];
-    List<HomePageModel> lists = [
-      _upcomingMovies,
-      _popularMovies,
-      _popularShows,
-      _topMovies,
-      _topShows
-    ];
 
-    for (var i = 0; i < urls.length; i++) {
-      await HomePageService().getHomeInfo(urls[i], language).then((value) {
-        lists[i] = value;
+    for (var i = 0; i < _urls.length; i++) {
+      await HomePageService()
+          .getHomeInfo(link: _urls[i], language: language)
+          .then((value) {
+        _lists[i].results = value.results;
       });
     }
     _count = 0;
@@ -90,8 +111,9 @@ class HomeController extends GetxController {
   void uploadImage() async {
     if (_userModel.isPicLocal == true && _userModel.onlinePicPath == '') {
       await FirebaseStorageService()
-          .uploade(_userModel.userId.toString(),
-              File(_userModel.localPicPath.toString()))
+          .uploade(
+              id: _userModel.userId.toString(),
+              file: File(_userModel.localPicPath.toString()))
           .then((value) async {
         _userModel.onlinePicPath = value;
         await UserDataPref().setUser(_userModel);
@@ -134,6 +156,13 @@ class HomeController extends GetxController {
     });
   }
 
+  // navigate to search or more page
+  void goToSearch(
+      {required bool isSearch, required String link, required String title}) {
+    Move moving = Move(isSearch: isSearch, link: link, title: title);
+    Get.to(() => SearchMorePage(), arguments: moving);
+  }
+
   // when notificatio is clicked
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
@@ -164,5 +193,73 @@ class HomeController extends GetxController {
     //     break;
     //   default:
     // }
+  }
+
+  // navigate to the detale page
+  void navToDetale({required Results res}) {
+    if (res.mediaType == 'person') {
+      // navigate to cast member pagex
+      // navToCast(res.title.toString(), imagebase + res.posterPath.toString(),
+      //     res.id.toString(), _model.language.toString(), false);
+    } else {
+      MovieDetaleModel movieDetales = MovieDetaleModel(
+          recomendation: HomePageModel(isError: false, results: [
+            Results(
+                voteAverage: 0.0, id: 0, posterPath: 'assets/images/oscar.jpg'),
+            Results(
+                voteAverage: 0.0, id: 0, posterPath: 'assets/images/oscar.jpg'),
+            Results(
+                voteAverage: 0.0, id: 0, posterPath: 'assets/images/oscar.jpg'),
+            Results(
+                voteAverage: 0.0, id: 0, posterPath: 'assets/images/oscar.jpg')
+          ]),
+          cast: CastModel(isError: false, cast: [
+            Cast(
+              profilePath: 'assets/images/oscar.jpg',
+              name: 'Actor',
+              character: 'character',
+              id: 0,
+              creditId: '',
+            ),
+            Cast(
+              profilePath: 'assets/images/oscar.jpg',
+              name: 'Actor',
+              character: 'character',
+              id: 0,
+              creditId: '',
+            ),
+            Cast(
+              profilePath: 'assets/images/oscar.jpg',
+              name: 'Actor',
+              character: 'character',
+              id: 0,
+              creditId: '',
+            ),
+            Cast(
+              profilePath: 'assets/images/oscar.jpg',
+              name: 'Actor',
+              character: 'character',
+              id: 0,
+              creditId: '',
+            )
+          ]),
+          id: res.id,
+          posterPath: res.posterPath,
+          overview: res.overview,
+          voteAverage: double.parse(res.voteAverage.toString()),
+          title: res.title,
+          isShow: res.isShow,
+          runtime: 0,
+          genres: null,
+          releaseDate: res.releaseDate,
+          originCountry: '');
+
+      if (Get.isRegistered<MovieDetaleController>() == true) {
+        Get.find<MovieDetaleController>().myFocusNode.unfocus();
+      }
+      Get.create(() => (MovieDetaleController()), permanent: true);
+      Get.to(() => const MovieDetalePage(),
+          preventDuplicates: false, arguments: movieDetales);
+    }
   }
 }

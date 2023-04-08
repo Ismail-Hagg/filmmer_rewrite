@@ -43,16 +43,14 @@ class CustomText extends StatelessWidget {
             ),
             colors: colors ?? [],
           )
-        : FittedBox(
-            child: Text(text ?? '',
-                maxLines: maxline,
-                textAlign: align,
-                style: TextStyle(
-                    color: color,
-                    fontSize: size,
-                    fontWeight: weight,
-                    overflow: flow,
-                    letterSpacing: spacing)),
-          );
+        : Text(text ?? '',
+            maxLines: maxline,
+            textAlign: align,
+            style: TextStyle(
+                color: color,
+                fontSize: size,
+                fontWeight: weight,
+                overflow: flow,
+                letterSpacing: spacing));
   }
 }

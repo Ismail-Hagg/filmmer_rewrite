@@ -15,6 +15,7 @@ class HomePageAndroid extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeController controller = Get.find<HomeController>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: mainColor,
       drawer: const Draw(),
       appBar: AppBar(
@@ -35,7 +36,8 @@ class HomePageAndroid extends StatelessWidget {
             icon: const Icon(Icons.search),
             splashRadius: 15,
             onPressed: () {
-              // Get.find<HomeController>().goToSearch(true, '', '');
+              Get.find<HomeController>()
+                  .goToSearch(isSearch: true, title: '', link: '');
             },
           ),
         ],
@@ -48,37 +50,36 @@ class HomePageAndroid extends StatelessWidget {
                 ? SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Column(
-                      children: [
-                        SizedBox(
-                          height: constraints.maxWidth * 0.016,
-                        ),
-                        ContentScrolling(
-                            color: orangeColor,
-                            borderColor: orangeColor,
-                            inHeight: constraints.maxHeight * 0.3,
-                            inWidth: constraints.maxWidth * 0.37,
-                            paddingY: 4,
-                            pageWidth: constraints.maxWidth,
-                            borderWidth: 2,
-                            isError: controller.upcomingMovies.isError as bool,
-                            isArrow: true,
-                            isTitle: true,
-                            isMovie: true,
-                            isShadow: false,
-                            title: 'upcoming'.tr,
-                            fit: BoxFit.cover,
-                            reload: () => Get.find<HomeController>().apiCall(
-                                language: Get.find<HomeController>()
-                                    .userModel
-                                    .language
-                                    .toString()),
-                            textColor: whiteColor,
-                            isFirstPage: true,
-                            height: constraints.maxHeight * 0.31,
-                            model: controller.upcomingMovies,
-                            link: upcoming,
-                            loading: controller.count),
-                      ],
+                      children: controller.lists
+                          .map((e) => ContentScrolling(
+                              color: orangeColor,
+                              borderColor: orangeColor,
+                              inHeight: constraints.maxHeight * 0.3,
+                              inWidth: constraints.maxWidth * 0.37,
+                              paddingY: 4,
+                              pageWidth: constraints.maxWidth,
+                              borderWidth: 2,
+                              isError: e.isError as bool,
+                              isArrow: true,
+                              isTitle: true,
+                              isMovie: true,
+                              isShadow: false,
+                              title: controller
+                                  .translation[controller.lists.indexOf(e)],
+                              fit: BoxFit.cover,
+                              reload: () => Get.find<HomeController>().apiCall(
+                                  language: Get.find<HomeController>()
+                                      .userModel
+                                      .language
+                                      .toString()),
+                              textColor: whiteColor,
+                              isFirstPage: true,
+                              height: constraints.maxHeight * 0.31,
+                              model: e,
+                              link:
+                                  controller.urls[controller.lists.indexOf(e)],
+                              loading: controller.count))
+                          .toList(),
                     ))
                 : const Center(
                     child: CircularProgressIndicator(

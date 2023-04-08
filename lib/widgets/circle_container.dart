@@ -93,24 +93,28 @@ class CircleContainer extends StatelessWidget {
                 name != null
                     ? name == ''
                         ? Container()
-                        : CustomText(
-                            align: TextAlign.center,
-                            text: name,
-                            size: nameSize,
-                            color: nameColor,
-                            flow: flow,
-                            maxline: nameMax,
-                            weight: weight,
+                        : FittedBox(
+                            child: CustomText(
+                              align: TextAlign.center,
+                              text: name,
+                              size: nameSize,
+                              color: nameColor,
+                              flow: flow,
+                              maxline: nameMax,
+                              weight: weight,
+                            ),
                           )
                     : Container(),
                 char != null
-                    ? CustomText(
-                        align: TextAlign.center,
-                        text: char,
-                        size: charSize,
-                        color: charColor,
-                        flow: flow,
-                        maxline: charMax,
+                    ? FittedBox(
+                        child: CustomText(
+                          align: TextAlign.center,
+                          text: char,
+                          size: charSize,
+                          color: charColor,
+                          flow: flow,
+                          maxline: charMax,
+                        ),
                       )
                     : Container()
               ],
@@ -151,25 +155,29 @@ class CircleContainer extends StatelessWidget {
                   height: topSpacing ?? 0.0,
                 ),
                 name != null
-                    ? CustomText(
-                        align: TextAlign.center,
-                        text: name,
-                        size: nameSize,
-                        color: nameColor,
-                        flow: flow,
-                        maxline: nameMax,
-                        weight: weight,
+                    ? FittedBox(
+                        child: CustomText(
+                          align: TextAlign.center,
+                          text: name,
+                          size: nameSize,
+                          color: nameColor,
+                          flow: flow,
+                          maxline: nameMax,
+                          weight: weight,
+                        ),
                       )
                     : Container(),
                 char != null
-                    ? CustomText(
-                        align: TextAlign.center,
-                        text: char,
-                        size: charSize,
-                        color: charColor,
-                        flow: flow,
-                        maxline: charMax,
-                        weight: weight,
+                    ? FittedBox(
+                        child: CustomText(
+                          align: TextAlign.center,
+                          text: char,
+                          size: charSize,
+                          color: charColor,
+                          flow: flow,
+                          maxline: charMax,
+                          weight: weight,
+                        ),
                       )
                     : Container()
               ],

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
-import '../local_storage/local_data_pref.dart';
 import '../models/user_model.dart';
 import 'circle_container.dart';
 import 'drawer_item_widget.dart';
@@ -65,30 +64,55 @@ Widget header(double height, double width) {
                           .image),
                 ),
               )
-            : FittedBox(
-                child: Padding(
-                  padding: EdgeInsets.all(height * 0.01),
-                  child: CircleContainer(
-                    flow: TextOverflow.ellipsis,
-                    color: secondaryColor,
-                    height: height * 0.15,
-                    isPicOk: false,
-                    shadow: false,
-                    width: height * 0.15,
-                    icon: Icons.person,
-                    iconColor: orangeColor,
-                    borderWidth: 2,
-                    borderColor: orangeColor,
-                    char: model.email,
-                    charColor: orangeColor,
-                    charSize: width * 0.05,
-                    name: model.userName,
-                    nameColor: milkyColor,
-                    nameSize: width * 0.07,
-                    topSpacing: height * 0.017,
-                  ),
-                ),
-              )),
+            : model.onlinePicPath == ''
+                ? FittedBox(
+                    child: Padding(
+                      padding: EdgeInsets.all(height * 0.01),
+                      child: CircleContainer(
+                        flow: TextOverflow.ellipsis,
+                        color: secondaryColor,
+                        height: height * 0.15,
+                        isPicOk: false,
+                        shadow: false,
+                        width: height * 0.15,
+                        icon: Icons.person,
+                        iconColor: orangeColor,
+                        borderWidth: 2,
+                        borderColor: orangeColor,
+                        char: model.email,
+                        charColor: orangeColor,
+                        charSize: width * 0.05,
+                        name: model.userName,
+                        nameColor: milkyColor,
+                        nameSize: width * 0.07,
+                        topSpacing: height * 0.017,
+                      ),
+                    ),
+                  )
+                : FittedBox(
+                    child: Padding(
+                      padding: EdgeInsets.all(height * 0.01),
+                      child: CircleContainer(
+                          flow: TextOverflow.ellipsis,
+                          topSpacing: height * 0.017,
+                          fit: BoxFit.cover,
+                          borderWidth: 2,
+                          borderColor: orangeColor,
+                          char: model.email,
+                          charColor: orangeColor,
+                          charSize: width * 0.05,
+                          name: model.userName,
+                          nameColor: milkyColor,
+                          nameSize: width * 0.07,
+                          color: secondaryColor,
+                          height: height * 0.15,
+                          isPicOk: true,
+                          shadow: false,
+                          width: height * 0.15,
+                          image: Image.network(model.onlinePicPath.toString())
+                              .image),
+                    ),
+                  )),
   ));
 }
 

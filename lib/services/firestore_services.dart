@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/comment_model.dart';
 import '../models/user_model.dart';
 
 class FirestoreService {
@@ -44,5 +45,38 @@ class FirestoreService {
         .collection(collection)
         .where('isUpdated', isEqualTo: true)
         .snapshots();
+  }
+
+  // add comment data to firebase
+  Future<String> addComment(
+      {required CommentModel model,
+      required String movieId,
+      required String userId}) async {
+    var ref = _comRef.doc(movieId).collection('Comments').doc();
+    await ref.set(model.toMap());
+    return ref.id;
+  }
+
+  // stream to get comments
+  Stream<QuerySnapshot> commentStream(
+      {required String movieId, required String collection}) {
+    return _comRef
+        .doc(movieId)
+        .collection(collection)
+        .orderBy('timeStamp', descending: true)
+        .snapshots();
+  }
+
+  // update comment data fields in firebase
+  Future<void> updateCommentData(
+      {required String movieId,
+      required String postId,
+      required String key,
+      required dynamic value}) async {
+    await _comRef
+        .doc(movieId)
+        .collection('Comments')
+        .doc(postId)
+        .update({key: value});
   }
 }
