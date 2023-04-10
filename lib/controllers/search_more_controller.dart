@@ -98,7 +98,15 @@ class SearchMoreController extends GetxController {
             link:
                 '${_argumentData.link}${_userModel.language.toString().replaceAll('_', '-')}$query&page=',
             language: '$page')
-        .then((value) => {_model = value, _indicator = 0, update()});
+        .then((value) {
+      print(
+          '${_argumentData.link}${_userModel.language.toString().replaceAll('_', '-')}$query&page=');
+      _model = value;
+      print(_model.isError);
+      print(_model.errorMessage);
+      _indicator = 0;
+      update();
+    });
   }
 
   // load the next result page from api

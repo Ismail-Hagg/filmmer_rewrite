@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
+import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
 import 'package:filmmer_rewrite/models/movie_detale_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import '../helper/constants.dart';
 import '../local_storage/local_data_pref.dart';
 import '../local_storage/local_database.dart';
 import '../models/comment_model.dart';
+import '../models/fire_upload.dart';
 import '../models/image_model.dart';
 import '../models/trailer_model.dart';
 import '../models/user_model.dart';
@@ -20,6 +23,7 @@ import '../services/movie_detale_service.dart';
 import '../services/recommendation_srevice.dart';
 import '../services/trailer_service.dart';
 import '../widgets/image_network.dart';
+import 'favourites_controller.dart';
 
 class MovieDetaleController extends GetxController {
   final UserModel _userModel = Get.find<HomeController>().userModel;
@@ -43,6 +47,9 @@ class MovieDetaleController extends GetxController {
   int get commentLoader => _commentLoader;
   TrailerModel get trailer => _trailer;
 
+  ImagesModel _imageModel = ImagesModel();
+  ImagesModel get imageModel => _imageModel;
+
   int _loader = 0;
   int get loader => _loader;
 
@@ -51,7 +58,7 @@ class MovieDetaleController extends GetxController {
   int _heart = 0;
   int get heart => _heart;
 
-  List<String> slashes = ['', 'credits', 'recommendations', 'videos'];
+  List<String> slashes = ['', '/credits', '/recommendations', '/videos'];
 
   int get imagesCounter => _imagesCounter;
 
@@ -68,48 +75,56 @@ class MovieDetaleController extends GetxController {
   }
 
   // call api to get images
-  void getImages(double height, double width, bool isActor, String id) async {
+  void getImages({
+    required double height,
+    required double width,
+    required bool isActor,
+    required String id,
+  }) async {
     if (_loader == 0) {
-      ImagesModel model = ImagesModel();
+      _imageModel = ImagesModel();
       _imagesCounter = 1;
       update();
       Get.dialog(
-        Center(
-          child: _imagesCounter == 1
-              ? const CircularProgressIndicator(
-                  color: orangeColor,
-                )
-              : model.isError == false
-                  ? CarouselSlider.builder(
-                      options: CarouselOptions(
-                          height: height * 0.6, enlargeCenterPage: true),
-                      itemCount: model.links!.length,
-                      itemBuilder: (context, index, realIndex) {
-                        return ImageNetwork(
-                          link: imagebase + model.links![index],
-                          height: height * 0.95,
-                          width: width * 0.8,
-                          color: orangeColor,
-                          fit: BoxFit.contain,
-                          isMovie: true,
-                          isShadow: false,
-                        );
-                      },
-                    )
-                  : AlertDialog(
-                      title: Text('noimage'.tr),
-                      actions: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: orangeColor,
+        GetBuilder<MovieDetaleController>(
+          init: Get.find<MovieDetaleController>(),
+          builder: (build) => Center(
+            child: _imagesCounter == 1
+                ? const CircularProgressIndicator(
+                    color: orangeColor,
+                  )
+                : _imageModel.isError == false
+                    ? CarouselSlider.builder(
+                        options: CarouselOptions(
+                            height: height * 0.6, enlargeCenterPage: true),
+                        itemCount: _imageModel.links!.length,
+                        itemBuilder: (context, index, realIndex) {
+                          return ImageNetwork(
+                            link: imagebase + _imageModel.links![index],
+                            height: height * 0.95,
+                            width: width * 0.8,
+                            color: orangeColor,
+                            fit: BoxFit.contain,
+                            isMovie: true,
+                            isShadow: false,
+                          );
+                        },
+                      )
+                    : AlertDialog(
+                        title: Text('noimage'.tr),
+                        actions: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: orangeColor,
+                            ),
+                            child: Text("answer".tr),
+                            onPressed: () async => {
+                              Get.back(),
+                            },
                           ),
-                          child: Text("answer".tr),
-                          onPressed: () async => {
-                            Get.back(),
-                          },
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+          ),
         ),
       );
       ImagesService()
@@ -124,8 +139,9 @@ class MovieDetaleController extends GetxController {
                   .toString()
                   .substring(0, _userModel.language.toString().indexOf('_')))
           .then((val) {
-        model = val;
+        _imageModel = val;
         _imagesCounter = 0;
+        update();
       });
     }
   }
@@ -161,9 +177,11 @@ class MovieDetaleController extends GetxController {
         case 0:
           await MovieDetaleService()
               .getHomeInfo(link: '$base${slashes[i]}$end')
-              .then((value) => {
-                    if (value.isError == false) {_detales = value}
-                  });
+              .then((value) {
+            if (value.isError == false) {
+              _detales = value;
+            }
+          });
           break;
         case 1:
           await CastService()
@@ -173,7 +191,9 @@ class MovieDetaleController extends GetxController {
         case 2:
           await RecommendationService()
               .getHomeInfo(link: '$base/${slashes[i]}$end')
-              .then((value) => {_detales.recomendation = value});
+              .then((value) => {
+                    _detales.recomendation = value,
+                  });
           break;
         case 3:
           await TrailerService()
@@ -431,5 +451,117 @@ class MovieDetaleController extends GetxController {
               key: otherKey,
               value: otherVal)
         });
+  }
+
+  // adding to and removing from local database and firestore
+  void favouriteUpload({
+    required BuildContext context,
+  }) async {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    if (_loader == 0 && _detales.isError == false) {
+      List<String> lst = [];
+
+      for (var i = 0; i < _detales.genres!.length; i++) {
+        lst.add(_detales.genres![i]);
+      }
+
+      FirebaseSend fire = FirebaseSend(
+          posterPath: _detales.posterPath.toString(),
+          overView: _detales.overview.toString(),
+          voteAverage: _detales.voteAverage as double,
+          name: _detales.title.toString(),
+          isShow: _detales.isShow as bool,
+          releaseDate: _detales.releaseDate.toString(),
+          id: _detales.id.toString(),
+          time: DateTime.now(),
+          genres: lst);
+
+      if (_heart == 0) {
+        // adding to favourites locally and in firestore
+        _heart = 1;
+        // checking if we're coming from the favorites page
+        if (Get.isRegistered<FavouritesController>() == true) {
+          Get.find<FavouritesController>()
+              .fromDetale(send: fire, addOrDelete: true);
+        }
+        await dbHelper
+            .insert(fire.toMapLocal(), DatabaseHelper.table)
+            .then((value) async {
+          Get.find<AuthController>().platformAlert(
+              isIos: isIos, context: context, title: 'favadd'.tr, body: '');
+          update();
+          await FirestoreService().upload(
+              userId: _userModel.userId.toString(), fire: fire, count: 0);
+        });
+      } else {
+        _heart = 0;
+        if (Get.isRegistered<FavouritesController>() == true) {
+          Get.find<FavouritesController>()
+              .fromDetale(send: fire, addOrDelete: false);
+        }
+        await dbHelper
+            .delete(DatabaseHelper.table, fire.id)
+            .then((value) async {
+          Get.find<AuthController>().platformAlert(
+              isIos: isIos, context: context, title: 'favalready'.tr, body: '');
+          update();
+          await FirestoreService().upload(
+              userId: _userModel.userId.toString(), fire: fire, count: 1);
+        });
+      }
+    }
+  }
+
+  //add movie or show to watchlist
+  void watch({required BuildContext context}) async {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    if (_loader == 0 && _detales.isError == false) {
+      String table = _detales.isShow != true
+          ? DatabaseHelper.movieTable
+          : DatabaseHelper.showTable;
+      await dbHelper
+          .querySelect(table, _detales.id.toString())
+          .then((value) async {
+        if (value.isEmpty) {
+          List<String> lst = [];
+          String show = '';
+          for (var i = 0; i < _detales.genres!.length; i++) {
+            lst.add(_detales.genres![i]);
+          }
+          FirebaseSend fire = FirebaseSend(
+              posterPath: _detales.posterPath.toString(),
+              overView: _detales.overview.toString(),
+              voteAverage: _detales.voteAverage as double,
+              name: _detales.title.toString(),
+              isShow: _detales.isShow as bool,
+              releaseDate: _detales.releaseDate.toString(),
+              id: _detales.id.toString(),
+              time: DateTime.now(),
+              genres: lst);
+          fire.isShow == true ? show = 'show' : show = 'movie';
+
+          await dbHelper.insert(fire.toMapLocal(), table).then((value) async {
+            if (Get.isRegistered<WatchlistController>() == true) {
+              Get.find<WatchlistController>()
+                  .fromDetale(send: fire, isShow: fire.isShow);
+            }
+            Get.find<AuthController>().platformAlert(
+                isIos: isIos, context: context, title: 'watchadd'.tr, body: '');
+
+            await FirestoreService().watchList(
+                userId: _userModel.userId.toString(),
+                fire: fire,
+                isShow: show,
+                count: 0);
+          });
+        } else {
+          Get.find<AuthController>().platformAlert(
+              isIos: isIos,
+              context: context,
+              title: 'watchalready'.tr,
+              body: '');
+        }
+      });
+    }
   }
 }

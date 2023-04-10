@@ -4,20 +4,24 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/models/search_move_model.dart';
 import 'package:filmmer_rewrite/models/user_model.dart';
+import 'package:filmmer_rewrite/pages/movie_detale_page/movie_detale_page_amdroid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
 import '../local_storage/local_data_pref.dart';
+import '../models/actor_model.dart';
 import '../models/cast_model.dart';
 import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
 import '../models/results_model.dart';
+import '../pages/actorPage/actor_page.dart';
 import '../pages/movie_detale_page/mocvie_detale_page.dart';
 import '../pages/search_more_page/sewarch_more_page.dart';
 import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
 import '../services/home_page_service.dart';
+import 'actor_controller.dart';
 import 'movie_detale_controller.dart';
 
 class HomeController extends GetxController {
@@ -199,8 +203,12 @@ class HomeController extends GetxController {
   void navToDetale({required Results res}) {
     if (res.mediaType == 'person') {
       // navigate to cast member pagex
-      // navToCast(res.title.toString(), imagebase + res.posterPath.toString(),
-      //     res.id.toString(), _model.language.toString(), false);
+      navToCast(
+          name: res.title.toString(),
+          link: imagebase + res.posterPath.toString(),
+          id: res.id.toString(),
+          language: Get.find<HomeController>().userModel.language.toString(),
+          isShow: false);
     } else {
       MovieDetaleModel movieDetales = MovieDetaleModel(
           recomendation: HomePageModel(isError: false, results: [
@@ -257,9 +265,34 @@ class HomeController extends GetxController {
       if (Get.isRegistered<MovieDetaleController>() == true) {
         Get.find<MovieDetaleController>().myFocusNode.unfocus();
       }
-      Get.create(() => (MovieDetaleController()), permanent: true);
-      Get.to(() => const MovieDetalePage(),
-          preventDuplicates: false, arguments: movieDetales);
+      Get.create(() => (MovieDetaleController()), permanent: false);
+      Get.to(
+        () => const MovieDetalePage(),
+        preventDuplicates: false,
+        arguments: movieDetales,
+      );
     }
+  }
+
+  // navigate to cast member page
+  void navToCast(
+      {required String name,
+      required String link,
+      required String id,
+      required String language,
+      required bool isShow}) {
+    ActorModel actorModel = ActorModel(
+        actorName: name,
+        posterPath: link,
+        language: language,
+        id: id,
+        isShow: isShow,
+        bio: '',
+        tvResults: [],
+        movieResults: [],
+        age: 0);
+    Get.create(() => (ActorController()), permanent: false);
+    Get.to(() => const ActorPage(),
+        preventDuplicates: false, arguments: actorModel);
   }
 }

@@ -120,33 +120,46 @@ class ContentScrolling extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: paddingY),
                     child: GestureDetector(
                         onTap: () {
-                          if (isFirstPage) {
-                            //print(model!.results![index].title);
-                            controller.navToDetale(res: model!.results![index]);
-                          }
-                          // isFirstPage
-                          //     ? Get.find<HomeController>()
-                          //         .navToDetale(model!.results![index])
-                          //     : isMovie
-                          //         ? Get.find<HomeController>().navToDetale(
-                          //             detales!.recomendation!.results![index])
-                          //         : loading == 0
-                          //             ?
-                          // Get.find<HomeController>().navToCast(
-                          //   detales!.cast!.cast![index].name.toString(),
-                          //     imagebase +
-                          //         detales!
-                          //             .cast!.cast![index].profilePath
-                          //             .toString(),
-                          //     detales!.cast!.cast![index].id.toString(),
-                          //     Get.find<HomeController>()
-                          //         .userModel
-                          //         .language
-                          //         .toString(),
-                          //     false,
-                          //     )
-                          // {}
-                          // : {};
+                          //controller.navToDetale(res: model!.results![index]);
+                          // if (isFirstPage) {
+                          //   //print(model!.results![index].title);
+                          //   controller.navToDetale(res: model!.results![index]);
+                          // }
+                          isFirstPage
+                              ? Get.find<HomeController>()
+                                  .navToDetale(res: model!.results![index])
+                              : isMovie
+                                  ? Get.find<HomeController>().navToDetale(
+                                      res: detales!
+                                          .recomendation!.results![index])
+                                  : loading == 0
+                                      ? Get.find<HomeController>().navToCast(
+                                          name: detales!.cast!.cast![index].name
+                                              .toString(),
+                                          link: imagebase +
+                                              detales!.cast!.cast![index]
+                                                  .profilePath
+                                                  .toString(),
+                                          id: detales!.cast!.cast![index].id
+                                              .toString(),
+                                          language: Get.find<HomeController>()
+                                              .userModel
+                                              .language
+                                              .toString(),
+                                          isShow: false
+                                          // detales!.cast!.cast![index].name.toString(),
+                                          //   imagebase +
+                                          //       detales!
+                                          //           .cast!.cast![index].profilePath
+                                          //           .toString(),
+                                          //   detales!.cast!.cast![index].id.toString(),
+                                          //   Get.find<HomeController>()
+                                          //       .userModel
+                                          //       .language
+                                          //       .toString(),
+                                          //   false,
+                                          )
+                                      : {};
                         },
                         child: isWaiting == null
                             ? ImageNetwork(
@@ -167,7 +180,7 @@ class ContentScrolling extends StatelessWidget {
                                 charSize: pageWidth * 0.026,
                                 nameMax: 1,
                                 charMax: 1,
-                                flow: TextOverflow.clip,
+                                flow: TextOverflow.ellipsis,
                                 align: TextAlign.center,
                                 borderWidth: borderWidth ?? 0,
                                 borderColor: borderColor ?? Colors.transparent,

@@ -1,3 +1,4 @@
+import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class SearchMoreAndroid extends StatelessWidget {
   Widget build(BuildContext context) {
     SearchMoreController controller = Get.find<SearchMoreController>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: mainColor,
       appBar: controller.argumentData.isSearch == true
           ? AppBar(
@@ -145,7 +147,11 @@ class SearchMoreAndroid extends StatelessWidget {
                                             builder.model.results!.length,
                                             (index) {
                                           return GestureDetector(
-                                            //onTap: () =>builder.navToDetale(builder.model.results![index]),
+                                            onTap: () =>
+                                                Get.find<HomeController>()
+                                                    .navToDetale(
+                                                        res: builder.model
+                                                            .results![index]),
                                             child: ImageNetwork(
                                               borderWidth: 2,
                                               borderColor: orangeColor,

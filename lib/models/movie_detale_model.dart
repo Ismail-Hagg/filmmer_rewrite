@@ -43,6 +43,9 @@ class MovieDetaleModel {
     double voteAve = json['vote_average'] ?? 0.0;
     String relDate =
         json['release_date'] ?? json['first_air_date'] ?? 'unknown';
+    // int seasonNumbrt = json['seasons'][0]['season_number'];
+    // List<dynamic> seasons = json['seasons'];
+    int run = json['runtime'] ?? json['seasons'][0]['season_number'];
 
     if (json['genres'] != null) {
       genres = <String>[];
@@ -59,15 +62,18 @@ class MovieDetaleModel {
         ? relDate.substring(0, 4)
         : relDate;
     status = json['status'];
-    runtime = json['runtime'] ?? json['seasons'][0]['season_number'] == 0
-        ? json['seasons'].length - 1
-        : json['seasons'].length;
+    runtime = json['first_air_date'] == null
+        ? run
+        : run == 0
+            ? json['seasons'].length - 1
+            : json['seasons'].length;
 
     title = json['title'] ?? json['name'];
     voteAverage = double.parse(voteAve.toStringAsFixed(1));
     isShow = json['first_air_date'] == null ? false : true;
-    originCountry = countries[json['origin_country'][0]] ??
-        json['production_countries'][0]['name'];
+    originCountry = json['origin_country'] == null
+        ? json['production_countries'][0]['name']
+        : countries[json['origin_country'][0]];
     isError = false;
     errorMessage = '';
   }

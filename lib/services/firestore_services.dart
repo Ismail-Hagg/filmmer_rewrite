@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/comment_model.dart';
+import '../models/fire_upload.dart';
 import '../models/user_model.dart';
 
 class FirestoreService {
@@ -78,5 +79,42 @@ class FirestoreService {
         .collection('Comments')
         .doc(postId)
         .update({key: value});
+  }
+
+  // upload favorites to firestore
+  Future<void> upload(
+      {required String userId,
+      required FirebaseSend fire,
+      required int count}) async {
+    if (count == 1) {
+      await _ref.doc(userId).collection('Favourites').doc(fire.id).delete();
+    } else if (count == 0) {
+      await _ref
+          .doc(userId)
+          .collection('Favourites')
+          .doc(fire.id)
+          .set(fire.toMap());
+    }
+  }
+
+  // upload watchList to firestore
+  Future<void> watchList(
+      {required String userId,
+      required FirebaseSend fire,
+      required String isShow,
+      required int count}) async {
+    if (count == 1) {
+      await _ref
+          .doc(userId)
+          .collection('${isShow}WatchList')
+          .doc(fire.id)
+          .delete();
+    } else if (count == 0) {
+      await _ref
+          .doc(userId)
+          .collection('${isShow}WatchList')
+          .doc(fire.id)
+          .set(fire.toMap());
+    }
   }
 }

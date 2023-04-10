@@ -9,7 +9,7 @@ class HomePageIos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Get.find<HomeController>();
+    //HomeController controller = Get.find<HomeController>();
     return const CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: mainColor,

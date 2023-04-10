@@ -21,7 +21,9 @@ class Results {
       this.isShow});
 
   Results.fromMap(Map<String, dynamic> json) {
-    double voteAve = json['vote_average'].toDouble() ?? 0.0;
+    double voteAve = json['vote_average'] != null
+        ? double.parse(json['vote_average'].toString()).toDouble()
+        : 0.0;
     String relDate =
         json['release_date'] ?? json['first_air_date'] ?? 'unknown';
     backdropPath = json['backdrop_path'];
