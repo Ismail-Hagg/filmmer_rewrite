@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,8 +88,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         elevation: 12,
                         onPressed: () {
-                          // controll.goToTrailer();
-                          print(controll.detales.id);
+                          controll.goToTrailer(context: context);
                         },
                         shape: const CircleBorder(),
                         fillColor: whiteColor,
@@ -147,7 +145,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                         if (value == 0) {
                                           controll.watch(context: context);
                                         } else if (value == 1) {
-                                          // controll.addKeeping();
+                                          controll.addKeeping(context: context);
                                         }
                                       })
                                   : IconButton(
@@ -504,30 +502,22 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                                 snapshot.data!.docs[index].id,
                                                 controll.commentsList[index]
                                                     .likeCount),
-                                            delete: () => {},
-                                            // controll.deleteComment(
-                                            //     controll.detales.id
-                                            //         .toString(),
-                                            //     snapshot
-                                            //         .data!.docs[index].id),
-                                            nav: () => {},
-                                            // controll.navToSubComment(
-                                            //     controll,
-                                            //     controll.detales.id
-                                            //         .toString(),
-                                            //     controll.commentsList[index]
-                                            //         .postId,
-                                            //     snapshot.data!.docs[index].id,
-                                            //     controll.commentsList[index]
-                                            //         .token),
-                                            disLike: () => controll.likeSystem(
-                                                false,
-                                                controll
+                                            delete: () => controll.deleteComment(
+                                                context: context,
+                                                movieId: controll.detales.id
+                                                    .toString(),
+                                                postId: snapshot
+                                                    .data!.docs[index].id),
+                                            nav: () => controll.navToSubComment(
+                                                controller: controll,
+                                                movieId: controll.detales.id
+                                                    .toString(),
+                                                postId: controll
                                                     .commentsList[index].postId,
-                                                controll.detales.id.toString(),
-                                                snapshot.data!.docs[index].id,
-                                                controll.commentsList[index]
-                                                    .dislikeCount))));
+                                                firePostId: snapshot
+                                                    .data!.docs[index].id,
+                                                token: controll.commentsList[index].token),
+                                            disLike: () => controll.likeSystem(false, controll.commentsList[index].postId, controll.detales.id.toString(), snapshot.data!.docs[index].id, controll.commentsList[index].dislikeCount))));
                               }),
                         ],
                       )

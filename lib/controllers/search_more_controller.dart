@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
+import '../helper/utils.dart';
 import '../models/homepage_model.dart';
 import '../services/home_page_service.dart';
 import 'home_controller.dart';
@@ -112,7 +113,7 @@ class SearchMoreController extends GetxController {
   // load the next result page from api
   void pageUp() async {
     if (_page == _model.totalPages) {
-      Get.find<AuthController>().platformAlert(
+      platformAlert(
           isIos: isIos,
           title: 'error'.tr,
           body: 'moreres'.tr,
@@ -128,7 +129,7 @@ class SearchMoreController extends GetxController {
               language: '$page')
           .then((value) {
         if (value.isError == true) {
-          Get.find<AuthController>().platformAlert(
+          platformAlert(
               isIos: isIos,
               title: 'error'.tr,
               body: 'wrong'.tr,

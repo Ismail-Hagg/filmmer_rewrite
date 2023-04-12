@@ -11,6 +11,7 @@ class AwardsService {
       var response = await http.get(url);
       if (response.statusCode == 200) {
         result = jsonDecode(response.body);
+        print(link);
         model = AwardModel.fromJson(result);
       } else {
         model = AwardModel(

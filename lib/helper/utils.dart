@@ -1,3 +1,6 @@
+import 'package:filmmer_rewrite/helper/constants.dart';
+import 'package:filmmer_rewrite/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -90,4 +93,79 @@ String getTimeString(int value) {
   final int hour = value ~/ 60;
   final int minutes = value % 60;
   return '${hour.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}';
+}
+
+// platform alert
+void platformAlert(
+    {required bool isIos,
+    required String title,
+    required String body,
+    required BuildContext context}) {
+  if (isIos) {
+    showCupertinoDialog(
+        context: context,
+        builder: (_) => CupertinoAlertDialog(
+              title: Text(
+                title,
+              ),
+              content: Text(
+                body,
+              ),
+              actions: [
+                CupertinoDialogAction(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'ok'.tr,
+                    ))
+              ],
+            ));
+  } else {
+    snack(title, body);
+  }
+}
+
+void platforMulti(
+    {required bool isIos,
+    required String title,
+    required List<String> buttonTitle,
+    required String body,
+    required List<Function()> func,
+    required BuildContext context}) {
+  if (isIos) {
+    showCupertinoDialog(
+        context: context,
+        builder: (_) => CupertinoAlertDialog(
+            title: Text(
+              title,
+            ),
+            content: Text(
+              body,
+            ),
+            actions: buttonTitle
+                .map((e) => CupertinoDialogAction(
+                      onPressed: func[buttonTitle.indexOf(e)],
+                      child: Text(e),
+                    ))
+                .toList()));
+  } else {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+            title: Text(title),
+            content: Text(body),
+            actions: buttonTitle
+                .map((e) => TextButton(
+                      onPressed: func[buttonTitle.indexOf(e)],
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all(
+                              orangeColor.withOpacity(0.2))),
+                      child: CustomText(
+                        text: e,
+                        color: orangeColor,
+                      ),
+                    ))
+                .toList()));
+  }
 }

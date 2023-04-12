@@ -168,27 +168,31 @@ class ActorPageAndroid extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return SizedBox(
                                 width: width * 0.3,
-                                child: Column(children: [
-                                  CustomText(
-                                      align: TextAlign.center,
-                                      text: controller.awardMap[index]['count']
-                                          .toString(),
-                                      size: width * 0.04,
-                                      color: Colors.white),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  CustomText(
-                                    maxline: 2,
-                                    text: controller.awardMap[index]
-                                            ['awardName']
-                                        .toString(),
-                                    size: width * 0.033,
-                                    color: orangeColor,
-                                    flow: TextOverflow.ellipsis,
-                                    align: TextAlign.center,
-                                  )
-                                ]),
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                          align: TextAlign.center,
+                                          text: controller.awardMap[index]
+                                                  ['count']
+                                              .toString(),
+                                          size: width * 0.04,
+                                          color: Colors.white),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      CustomText(
+                                        maxline: 2,
+                                        text: controller.awardMap[index]
+                                                ['awardName']
+                                            .toString(),
+                                        size: width * 0.033,
+                                        color: orangeColor,
+                                        flow: TextOverflow.ellipsis,
+                                        align: TextAlign.center,
+                                      )
+                                    ]),
                               );
                             },
                             separatorBuilder: (context, index) {

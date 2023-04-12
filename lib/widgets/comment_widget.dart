@@ -5,6 +5,7 @@ import '../controllers/movie_detale_controller.dart';
 import '../helper/constants.dart';
 import '../helper/utils.dart';
 import '../models/comment_model.dart';
+import '../models/profile_model.dart';
 import 'circle_container.dart';
 import 'custom_text.dart';
 import 'image_network.dart';
@@ -55,14 +56,14 @@ class Comments extends StatelessWidget {
               SizedBox(
                 width: (width - 16) * 0.2,
                 child: GestureDetector(
-                  // onTap: () => Get.find<MovieDetaleController>().goToProfile(
-                  //     ProfileModel(
-                  //         usreId: comment.userId,
-                  //         usreName: comment.userName,
-                  //         pic: comment.pic,
-                  //         favList: [],
-                  //         watchList: [],
-                  //         nowList: [])),
+                  onTap: () => Get.find<MovieDetaleController>().goToProfile(
+                      profile: ProfileModel(
+                          usreId: comment.userId,
+                          usreName: comment.userName,
+                          pic: comment.pic,
+                          favList: [],
+                          watchList: [],
+                          nowList: [])),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: comment.isPicOnline == true
@@ -104,14 +105,15 @@ class Comments extends StatelessWidget {
                           SizedBox(
                             width: ((width - 16) * 0.8) * 0.5,
                             child: GestureDetector(
-                              // onTap: () => Get.find<MovieDetaleController>()
-                              //     .goToProfile(ProfileModel(
-                              //         usreId: comment.userId,
-                              //         usreName: comment.userName,
-                              //         pic: comment.pic,
-                              //         favList: [],
-                              //         watchList: [],
-                              //         nowList: [])),
+                              onTap: () => Get.find<MovieDetaleController>()
+                                  .goToProfile(
+                                      profile: ProfileModel(
+                                          usreId: comment.userId,
+                                          usreName: comment.userName,
+                                          pic: comment.pic,
+                                          favList: [],
+                                          watchList: [],
+                                          nowList: [])),
                               child: CustomText(
                                   text: comment.userName,
                                   color: orangeColor,

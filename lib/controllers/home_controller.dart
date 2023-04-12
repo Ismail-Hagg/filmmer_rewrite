@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
+import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
 import '../models/actor_model.dart';
 import '../models/cast_model.dart';
@@ -125,7 +126,7 @@ class HomeController extends GetxController {
             userId: _userModel.userId.toString(),
             map: {'onlinePicPath': value});
       }).catchError((e) {
-        Get.find<AuthController>().platformAlert(
+        platformAlert(
             isIos: isIos,
             title: 'error'.tr,
             body: e.toString(),

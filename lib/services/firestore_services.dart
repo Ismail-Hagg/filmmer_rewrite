@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/comment_model.dart';
+import '../models/episode_keeping_model.dart';
 import '../models/fire_upload.dart';
 import '../models/user_model.dart';
 
@@ -116,5 +117,55 @@ class FirestoreService {
           .doc(fire.id)
           .set(fire.toMap());
     }
+  }
+
+  // delete a comment
+  Future<void> deleteComment(
+      {required String movieId, required String postId}) async {
+    return await _comRef
+        .doc(movieId)
+        .collection('Comments')
+        .doc(postId)
+        .delete();
+  }
+
+  // add to episode keeping
+  Future<void> addEpisode(
+      {required String uid, required EpisodeModeL model}) async {
+    await _ref
+        .doc(uid)
+        .collection('episodeKeeping')
+        .doc(model.id.toString())
+        .set(model.toMap())
+        .then((value) {
+      _watchRef.doc(model.id.toString()).get().then((value) {
+        DocumentReference myRef =
+            _ref.doc(uid).collection('episodeKeeping').doc(model.id.toString());
+        if (value.exists) {
+          List<dynamic> lst = value.get('refList');
+          if (lst.contains(myRef) == false) {
+            lst.add(myRef);
+            _watchRef.doc(model.id.toString()).update({'refList': lst});
+          }
+        } else {
+          model.refList = [myRef];
+          _watchRef.doc(model.id.toString()).set(model.toMap());
+        }
+      });
+    });
+  }
+
+  // delete from watchlist or favorites
+  Future<void> delete(
+      {required String uid,
+      required String id,
+      required String collection}) async {
+    return _ref.doc(uid).collection(collection).doc(id).delete();
+  }
+
+  // get favorites or watchlist or watching now
+  Future<QuerySnapshot> getThingz(
+      {required String uid, required String collection}) async {
+    return _ref.doc(uid).collection(collection).get();
   }
 }

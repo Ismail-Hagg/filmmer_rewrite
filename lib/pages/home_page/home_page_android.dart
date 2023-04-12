@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,15 +23,35 @@ class HomePageAndroid extends StatelessWidget {
         backgroundColor: mainColor,
         centerTitle: true,
         elevation: 0,
-        title: Shimmer.fromColors(
-            period: const Duration(seconds: 3),
-            baseColor: orangeColor,
-            highlightColor: Colors.yellow,
-            child: const CustomText(
-              text: 'Filmmer',
-              size: 26,
-              color: orangeColor,
-            )),
+        title: GestureDetector(
+          onTap: () async {
+            try {
+              HttpsCallable callable =
+                  FirebaseFunctions.instance.httpsCallable('sendNotifications');
+              final resp = await callable.call(<String, dynamic>{
+                'title': 'jazzzzz',
+                'body': 'blues music',
+                'token': controller.userModel.messagingToken.toString(),
+                'payload': '${{
+                  'action': 'chat',
+                  'userNsme': '_model.userName',
+                  'userId': ' _model.userId',
+                }}'
+              });
+            } catch (e) {
+              print('========  $e');
+            }
+          },
+          child: Shimmer.fromColors(
+              period: const Duration(seconds: 3),
+              baseColor: orangeColor,
+              highlightColor: Colors.yellow,
+              child: const CustomText(
+                text: 'Filmmer',
+                size: 26,
+                color: orangeColor,
+              )),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

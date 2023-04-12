@@ -473,36 +473,14 @@ class AuthController extends GetxController {
   }
 
   // platform alert
-  void platformAlert(
+  void platformAlerting(
       {required bool isIos,
       required String title,
       required String body,
       required BuildContext context}) {
     _count = 0;
     update();
-    if (isIos) {
-      showCupertinoDialog(
-          context: context,
-          builder: (_) => CupertinoAlertDialog(
-                title: Text(
-                  title,
-                ),
-                content: Text(
-                  body,
-                ),
-                actions: [
-                  CupertinoDialogAction(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Text(
-                        'ok'.tr,
-                      ))
-                ],
-              ));
-    } else {
-      snack(title, body);
-    }
+    platformAlert(isIos: isIos, title: title, body: body, context: context);
   }
 
   // move between login and signup

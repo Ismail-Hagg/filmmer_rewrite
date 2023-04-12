@@ -4,19 +4,26 @@ import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
 import 'package:filmmer_rewrite/models/movie_detale_model.dart';
+import 'package:filmmer_rewrite/pages/trailer_page/trailer_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 import '../helper/constants.dart';
+import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
 import '../local_storage/local_database.dart';
 import '../models/comment_model.dart';
 import '../models/fire_upload.dart';
 import '../models/image_model.dart';
+import '../models/profile_model.dart';
 import '../models/trailer_model.dart';
 import '../models/user_model.dart';
+import '../pages/profile_page/profile_page.dart';
+import '../pages/sub_comment/sub_comment_page.dart';
 import '../services/cast_service.dart';
+import '../services/episode_keeping_service.dart';
 import '../services/firestore_services.dart';
 import '../services/image_service.dart';
 import '../services/movie_detale_service.dart';
@@ -487,7 +494,7 @@ class MovieDetaleController extends GetxController {
         await dbHelper
             .insert(fire.toMapLocal(), DatabaseHelper.table)
             .then((value) async {
-          Get.find<AuthController>().platformAlert(
+          platformAlert(
               isIos: isIos, context: context, title: 'favadd'.tr, body: '');
           update();
           await FirestoreService().upload(
@@ -502,7 +509,7 @@ class MovieDetaleController extends GetxController {
         await dbHelper
             .delete(DatabaseHelper.table, fire.id)
             .then((value) async {
-          Get.find<AuthController>().platformAlert(
+          platformAlert(
               isIos: isIos, context: context, title: 'favalready'.tr, body: '');
           update();
           await FirestoreService().upload(
@@ -545,7 +552,7 @@ class MovieDetaleController extends GetxController {
               Get.find<WatchlistController>()
                   .fromDetale(send: fire, isShow: fire.isShow);
             }
-            Get.find<AuthController>().platformAlert(
+            platformAlert(
                 isIos: isIos, context: context, title: 'watchadd'.tr, body: '');
 
             await FirestoreService().watchList(
@@ -555,7 +562,7 @@ class MovieDetaleController extends GetxController {
                 count: 0);
           });
         } else {
-          Get.find<AuthController>().platformAlert(
+          platformAlert(
               isIos: isIos,
               context: context,
               title: 'watchalready'.tr,
@@ -563,5 +570,129 @@ class MovieDetaleController extends GetxController {
         }
       });
     }
+  }
+
+  // add to episode keeping
+  void addKeeping({required BuildContext context}) async {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    FirestoreService()
+        .ref
+        .doc(_userModel.userId)
+        .collection('episodeKeeping')
+        .doc(_detales.id.toString())
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        platformAlert(
+            isIos: isIos, title: 'readykeep'.tr, body: '', context: context);
+      } else {
+        await EpisodeKeepingService()
+            .getData(
+                link:
+                    'https://api.themoviedb.org/3/tv/${_detales.id}?api_key=$apiKey&language=',
+                lan: _userModel.language.toString(),
+                isFire: false)
+            .then((value) async {
+          if (value.isError == false) {
+            value.token = _userModel.messagingToken;
+            await FirestoreService()
+                .addEpisode(uid: _userModel.userId.toString(), model: value)
+                .then((thing) {
+              platformAlert(
+                  isIos: isIos,
+                  title: 'keepadd'.tr,
+                  body: '',
+                  context: context);
+              // remove from firebase watchinglist and from local storage
+
+              FirestoreService()
+                  .ref
+                  .doc(_userModel.userId)
+                  .collection('showWatchList')
+                  .doc(value.id.toString())
+                  .get()
+                  .then((value) async {
+                if (value.exists) {
+                  await FirestoreService()
+                      .delete(
+                          uid: _userModel.userId.toString(),
+                          id: value.id,
+                          collection: 'showWatchList')
+                      .then((nothing) async {
+                    await dbHelper.delete('showTable', value.id);
+                  });
+                }
+              });
+            });
+          } else {
+            platformAlert(
+                isIos: isIos,
+                title: 'error'.tr,
+                body: value.errorMessage.toString(),
+                context: context);
+          }
+        });
+      }
+    });
+  }
+
+  //navigate to trailer page
+  goToTrailer({required BuildContext context}) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    if (_loader == 0) {
+      if (_trailer.results!.isEmpty) {
+        platformAlert(
+            isIos: isIos, title: 'trailer'.tr, body: '', context: context);
+      } else {
+        Get.to(() => const TrailerPage(), arguments: _trailer);
+      }
+    }
+  }
+
+  // go to profile page
+  void goToProfile({required ProfileModel profile}) {
+    Get.to(() => const ProfilePage(), arguments: profile);
+  }
+
+  // navigate to subcomment page
+  void navToSubComment(
+      {required MovieDetaleController controller,
+      required String movieId,
+      required String postId,
+      required String firePostId,
+      required String token}) {
+    Get.to(() => SubCommentPage(
+        movieId: movieId,
+        mainPostId: postId,
+        firePostId: firePostId,
+        pastController: controller,
+        token: token));
+  }
+
+  // delete comments from
+  void deleteComment(
+      {required String movieId,
+      required String postId,
+      required BuildContext context}) async {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    platforMulti(
+        buttonTitle: [
+          'cancel'.tr,
+          'answer'.tr,
+        ],
+        func: [
+          () {
+            Get.back();
+          },
+          () async {
+            Get.back();
+            await FirestoreService()
+                .deleteComment(movieId: movieId, postId: postId);
+          }
+        ],
+        isIos: isIos,
+        title: 'deletecomment'.tr,
+        body: 'deletecommentsure'.tr,
+        context: context);
   }
 }
