@@ -1,15 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
 import 'package:filmmer_rewrite/models/movie_detale_model.dart';
 import 'package:filmmer_rewrite/pages/trailer_page/trailer_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-
 import '../helper/constants.dart';
 import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
@@ -30,13 +27,15 @@ import '../services/movie_detale_service.dart';
 import '../services/recommendation_srevice.dart';
 import '../services/trailer_service.dart';
 import '../widgets/image_network.dart';
-import 'favourites_controller.dart';
+import 'favorites_controller.dart';
 
 class MovieDetaleController extends GetxController {
+  final MovieDetaleModel model;
+  MovieDetaleController({required this.model});
   final UserModel _userModel = Get.find<HomeController>().userModel;
   UserModel get userModel => _userModel;
-  final FocusNode myFocusNode = FocusNode();
-  MovieDetaleModel _detales = Get.arguments ?? MovieDetaleModel();
+  FocusNode myFocusNode = FocusNode();
+  late MovieDetaleModel _detales = model;
   MovieDetaleModel get detales => _detales;
 
   List<CommentModel> _commentsList = [];
@@ -74,7 +73,6 @@ class MovieDetaleController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
     heartCheck();
     getData(res: _detales);
     _commentStream = FirestoreService()
@@ -213,8 +211,11 @@ class MovieDetaleController extends GetxController {
     update();
   }
 
-  void uploadComment({required String movieId, required String comment}) async {
-    myFocusNode.unfocus();
+  void uploadComment(
+      {required String movieId,
+      required String comment,
+      required BuildContext context}) async {
+    FocusScope.of(context).unfocus();
 
     if (comment != '') {
       _commentLoader = 1;
@@ -287,7 +288,7 @@ class MovieDetaleController extends GetxController {
       required String postId,
       required bool isSub}) async {
     List<dynamic> lst = [];
-    FirestoreService().getCurrentUser(userId: uid).then((value) {
+    await FirestoreService().getCurrentUser(userId: uid).then((value) async {
       try {
         lst = value.get('ref');
         lst.add({
@@ -295,21 +296,17 @@ class MovieDetaleController extends GetxController {
               .doc('Comments/$movieId/Comments/$postId'),
           'isSub': isSub
         });
-        FirestoreService()
-            .userUpdate(userId: uid, map: {'ref', lst} as Map<String, dynamic>);
+        await FirestoreService().userUpdate(userId: uid, map: {'ref': lst});
       } catch (e) {
-        FirestoreService().userUpdate(
-            userId: uid,
-            map: {
-              'ref',
-              [
-                {
-                  'ref': FirebaseFirestore.instance
-                      .doc('Comments/$movieId/Comments/$postId'),
-                  'isSub': isSub
-                }
-              ]
-            } as Map<String, dynamic>);
+        FirestoreService().userUpdate(userId: uid, map: {
+          'ref': [
+            {
+              'ref': FirebaseFirestore.instance
+                  .doc('Comments/$movieId/Comments/$postId'),
+              'isSub': isSub
+            }
+          ]
+        });
       }
     });
   }
@@ -660,12 +657,14 @@ class MovieDetaleController extends GetxController {
       required String movieId,
       required String postId,
       required String firePostId,
+      required String userId,
       required String token}) {
     Get.to(() => SubCommentPage(
         movieId: movieId,
         mainPostId: postId,
         firePostId: firePostId,
         pastController: controller,
+        userId: userId,
         token: token));
   }
 

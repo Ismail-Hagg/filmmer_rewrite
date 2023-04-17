@@ -247,9 +247,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                               const SizedBox(height: 3),
                               FittedBox(
                                 child: CustomText(
-                                  text: controll.detales.releaseDate
-                                      .toString()
-                                      .substring(0, 4),
+                                  text: controll.detales.releaseDate.toString(),
                                   color: orangeColor,
                                   size: width * 0.04,
                                   weight: FontWeight.bold,
@@ -429,7 +427,6 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                 Flexible(
                                     child: TextField(
                                   controller: controll.txtControlller,
-                                  focusNode: controll.myFocusNode,
                                   keyboardType: TextInputType.multiline,
                                   maxLines: null,
                                   cursorColor: orangeColor,
@@ -453,6 +450,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                             color: orangeColor,
                                             size: width * 0.06),
                                         onPressed: () => controll.uploadComment(
+                                            context: context,
                                             movieId:
                                                 controll.detales.id.toString(),
                                             comment: controll
@@ -516,6 +514,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                                     .commentsList[index].postId,
                                                 firePostId: snapshot
                                                     .data!.docs[index].id,
+                                                userId: controll.commentsList[index].userId,
                                                 token: controll.commentsList[index].token),
                                             disLike: () => controll.likeSystem(false, controll.commentsList[index].postId, controll.detales.id.toString(), snapshot.data!.docs[index].id, controll.commentsList[index].dislikeCount))));
                               }),

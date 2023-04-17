@@ -58,6 +58,7 @@ class Comments extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => Get.find<MovieDetaleController>().goToProfile(
                       profile: ProfileModel(
+                          token: comment.token,
                           usreId: comment.userId,
                           usreName: comment.userName,
                           pic: comment.pic,
@@ -108,6 +109,7 @@ class Comments extends StatelessWidget {
                               onTap: () => Get.find<MovieDetaleController>()
                                   .goToProfile(
                                       profile: ProfileModel(
+                                          token: comment.token,
                                           usreId: comment.userId,
                                           usreName: comment.userName,
                                           pic: comment.pic,

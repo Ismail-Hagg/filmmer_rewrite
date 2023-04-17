@@ -13,21 +13,22 @@ class SubbCommentPageAndroid extends StatelessWidget {
   final String mainPostId;
   final String firePostId;
   final String token;
-  SubbCommentPageAndroid(
+  final String userId;
+  const SubbCommentPageAndroid(
       {Key? key,
       required this.movieId,
       required this.mainPostId,
       required this.firePostId,
       required this.pastController,
-      required this.token})
+      required this.token,
+      required this.userId})
       : super(key: key);
-
-  final SubCommentControllrt controller = Get.put(
-    SubCommentControllrt(),
-  );
 
   @override
   Widget build(BuildContext context) {
+    final SubCommentControllrt controller = Get.put(
+      SubCommentControllrt(uid: userId),
+    );
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         backgroundColor: secondaryColor,
@@ -56,7 +57,7 @@ class SubbCommentPageAndroid extends StatelessWidget {
                 return Column(
                   children: [
                     SizedBox(
-                      height: height * 0.9,
+                      height: height - 55,
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(
@@ -137,7 +138,7 @@ class SubbCommentPageAndroid extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(color: orangeColor, width: 1)),
-                      height: height * 0.1,
+                      height: 55,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 0),

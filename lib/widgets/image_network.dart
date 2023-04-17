@@ -29,6 +29,7 @@ class ImageNetwork extends StatelessWidget {
   final int? charMax;
   final FontWeight? weight;
   final String? rating;
+  final bool? isFit;
 
   const ImageNetwork(
       {super.key,
@@ -53,7 +54,8 @@ class ImageNetwork extends StatelessWidget {
       this.nameMax,
       this.charMax,
       this.weight,
-      this.rating});
+      this.rating,
+      this.isFit});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class ImageNetwork extends StatelessWidget {
       imageUrl: link,
       imageBuilder: (context, imageProvider) => isMovie == false
           ? CircleContainer(
+              isFit: isFit,
               name: name,
               char: char,
               nameSize: nameSize,
@@ -97,6 +100,7 @@ class ImageNetwork extends StatelessWidget {
               baseColor: secondaryColor,
               highlightColor: mainColor,
               child: CircleContainer(
+                isFit: isFit,
                 isPicOk: false,
                 shadow: false,
                 color: color,
@@ -131,6 +135,7 @@ class ImageNetwork extends StatelessWidget {
                   borderWidth: borderWidth ?? 0)),
       errorWidget: (context, url, error) => isMovie == false
           ? CircleContainer(
+              isFit: isFit,
               isPicOk: true,
               shadow: false,
               color: color,

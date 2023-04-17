@@ -472,17 +472,6 @@ class AuthController extends GetxController {
     return lan;
   }
 
-  // platform alert
-  void platformAlerting(
-      {required bool isIos,
-      required String title,
-      required String body,
-      required BuildContext context}) {
-    _count = 0;
-    update();
-    platformAlert(isIos: isIos, title: title, body: body, context: context);
-  }
-
   // move between login and signup
   void moving({required String method}) {
     if (method == 'forward') {

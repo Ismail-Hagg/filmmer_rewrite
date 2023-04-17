@@ -1,3 +1,4 @@
+import 'package:filmmer_rewrite/controllers/movie_detale_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
@@ -120,18 +121,17 @@ class ContentScrolling extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: paddingY),
                     child: GestureDetector(
                         onTap: () {
-                          //controller.navToDetale(res: model!.results![index]);
-                          // if (isFirstPage) {
-                          //   //print(model!.results![index].title);
-                          //   controller.navToDetale(res: model!.results![index]);
-                          // }
                           isFirstPage
                               ? Get.find<HomeController>()
                                   .navToDetale(res: model!.results![index])
                               : isMovie
-                                  ? Get.find<HomeController>().navToDetale(
-                                      res: detales!
-                                          .recomendation!.results![index])
+                                  ? {
+                                      FocusScope.of(context).unfocus(),
+                                      print('love is not love'),
+                                      Get.find<HomeController>().navToDetale(
+                                          res: detales!
+                                              .recomendation!.results![index])
+                                    }
                                   : loading == 0
                                       ? Get.find<HomeController>().navToCast(
                                           name: detales!.cast!.cast![index].name

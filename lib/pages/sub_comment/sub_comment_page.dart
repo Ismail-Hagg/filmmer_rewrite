@@ -10,13 +10,15 @@ class SubCommentPage extends StatelessWidget {
   final String mainPostId;
   final String firePostId;
   final String token;
+  final String userId;
   const SubCommentPage(
       {super.key,
       required this.pastController,
       required this.movieId,
       required this.mainPostId,
       required this.firePostId,
-      required this.token});
+      required this.token,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class SubCommentPage extends StatelessWidget {
             mainPostId: mainPostId,
             firePostId: firePostId,
             token: token,
+            userId: userId,
             pastController: pastController);
   }
 }

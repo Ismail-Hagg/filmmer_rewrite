@@ -1,10 +1,10 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-
-import '../helper/constants.dart';
 import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
 import '../models/comment_model.dart';
@@ -14,6 +14,8 @@ import 'home_controller.dart';
 import 'movie_detale_controller.dart';
 
 class SubCommentControllrt extends GetxController {
+  final String uid;
+  SubCommentControllrt({required this.uid});
   List<CommentModel> _commentsList = [];
   List<CommentModel> get commentsList => _commentsList;
 
@@ -30,6 +32,18 @@ class SubCommentControllrt extends GetxController {
 
   int _loader = 0;
   int get loader => _loader;
+
+  String _lang = '';
+  String get lang => _lang;
+
+  @override
+  void onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+    await FirestoreService().getCurrentUser(userId: uid).then((value) {
+      _lang = (value.data() as Map<String, dynamic>)['language'];
+    });
+  }
 
   CommentModel _mainComment = CommentModel(
       comment: '',
@@ -134,16 +148,18 @@ class SubCommentControllrt extends GetxController {
         try {
           HttpsCallable callable =
               FirebaseFunctions.instance.httpsCallable('sendNotifications');
-          final resp = await callable.call(<String, dynamic>{
+          await callable.call(<String, dynamic>{
             'title': _userModel.userName,
-            'body': 'commentmessage'.tr,
-            'token': _userModel.messagingToken.toString(),
-            'payload': '${{
+            'body': _lang == 'en_US'
+                ? 'replied on your comment'
+                : 'قام بالرد على تعليقك ',
+            'token': token,
+            'payload': json.encode({
               'action': 'comments',
               'movieId': movieId,
               'firePostId': firePostId,
               'postId': postId,
-            }}'
+            })
           });
         } catch (_) {}
       });
@@ -187,7 +203,7 @@ class SubCommentControllrt extends GetxController {
             }
           }
         ],
-        isIos: true,
+        isIos: isIos,
         title: 'delrep'.tr,
         body: 'deletereply'.tr,
         context: context);

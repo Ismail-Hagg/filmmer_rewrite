@@ -13,13 +13,15 @@ import '../services/image_service.dart';
 import '../widgets/image_network.dart';
 
 class ActorController extends GetxController {
+  final ActorModel model;
+  ActorController({required this.model});
   String _str = '';
   String get str => _str;
   int _it = 0;
   int get it => _it;
 
-  final ActorModel _detales = Get.arguments ?? ActorModel();
-  ActorModel get detales => _detales;
+  late final ActorModel _detales = model;
+  ActorModel get detales => model;
 
   final RxInt _imagesCounter = 0.obs;
   int get imagesCounter => _imagesCounter.value;
@@ -40,7 +42,6 @@ class ActorController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getActor();
-    print(_detales.actorName);
   }
 
   // call api to get actor information

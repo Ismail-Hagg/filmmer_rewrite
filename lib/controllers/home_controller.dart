@@ -1,24 +1,27 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/models/search_move_model.dart';
 import 'package:filmmer_rewrite/models/user_model.dart';
-import 'package:filmmer_rewrite/pages/movie_detale_page/movie_detale_page_amdroid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../helper/constants.dart';
 import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
 import '../models/actor_model.dart';
 import '../models/cast_model.dart';
+import '../models/chat_page_model.dart';
 import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
 import '../models/results_model.dart';
 import '../pages/actorPage/actor_page.dart';
+import '../pages/chat_page/chat_page.dart';
+import '../pages/keeping_page/keeing_page.dart';
 import '../pages/movie_detale_page/mocvie_detale_page.dart';
 import '../pages/search_more_page/sewarch_more_page.dart';
+import '../pages/sub_comment/sub_comment_page.dart';
 import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
 import '../services/home_page_service.dart';
@@ -57,15 +60,6 @@ class HomeController extends GetxController {
   List<String> get urls => _urls;
   List<HomePageModel> _lists = [];
   List<HomePageModel> get lists => _lists;
-
-  final List<String> _translation = [
-    'upcoming'.tr,
-    'popularMovies'.tr,
-    'popularShows'.tr,
-    'topMovies'.tr,
-    'topShowa'.tr,
-  ];
-  List<String> get translation => _translation;
 
   @override
   void onInit() {
@@ -165,39 +159,47 @@ class HomeController extends GetxController {
   void goToSearch(
       {required bool isSearch, required String link, required String title}) {
     Move moving = Move(isSearch: isSearch, link: link, title: title);
-    Get.to(() => SearchMorePage(), arguments: moving);
+    Get.to(() => const SearchMorePage(), arguments: moving);
   }
 
   // when notificatio is clicked
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
-    // switch (map['action']) {
-    //   case 'chat':
-    //     Get.to(() => ChatPage(
-    //         thing: ChatPageModel(
-    //             userName: map['userNsme'],
-    //             userId: map['userId'],
-    //             fromList: true)));
+    try {
+      var map = json.decode(receivedAction.payload!['payload'].toString());
 
-    //     break;
+      switch (map['action']) {
+        case 'chat':
+          Get.to(() => const ChatPage(),
+              arguments: ChatPageModel(
+                  userName: map['userNsme'],
+                  userId: map['userId'],
+                  fromList: true));
 
-    //   case 'episode':
-    //     Get.to(() => EpisodeKeepingPage());
+          break;
 
-    //     break;
+        case 'episode':
+          Get.to(() => const KeepingPage());
 
-    //   case 'comments':
-    //     Get.to(() => SubComment(
-    //           movieId: map['movieId'].toString(),
-    //           mainPostId: map['postId'].toString(),
-    //           firePostId: map['firePostId'].toString(),
-    //           pastController: MovieDetaleController(),
-    //           token: '',
-    //         ));
+          break;
 
-    //     break;
-    //   default:
-    // }
+        case 'comments':
+          Get.to(() => SubCommentPage(
+                movieId: map['movieId'].toString(),
+                mainPostId: map['postId'].toString(),
+                userId: map['userId'].toString(),
+                firePostId: map['firePostId'].toString(),
+                pastController:
+                    MovieDetaleController(model: MovieDetaleModel()),
+                token: '',
+              ));
+
+          break;
+        default:
+      }
+    } catch (e) {
+      print('==============>>>>>>> $e');
+    }
   }
 
   // navigate to the detale page
@@ -263,14 +265,11 @@ class HomeController extends GetxController {
           releaseDate: res.releaseDate,
           originCountry: '');
 
-      if (Get.isRegistered<MovieDetaleController>() == true) {
-        Get.find<MovieDetaleController>().myFocusNode.unfocus();
-      }
-      Get.create(() => (MovieDetaleController()), permanent: false);
+      Get.create(() => (MovieDetaleController(model: movieDetales)),
+          permanent: false);
       Get.to(
-        () => const MovieDetalePage(),
+        () => MovieDetalePage(),
         preventDuplicates: false,
-        arguments: movieDetales,
       );
     }
   }
@@ -292,8 +291,10 @@ class HomeController extends GetxController {
         tvResults: [],
         movieResults: [],
         age: 0);
-    Get.create(() => (ActorController()), permanent: false);
-    Get.to(() => const ActorPage(),
-        preventDuplicates: false, arguments: actorModel);
+    Get.create(() => (ActorController(model: actorModel)), permanent: false);
+    Get.to(
+      () => const ActorPage(),
+      preventDuplicates: false,
+    );
   }
 }

@@ -141,17 +141,19 @@ class ActorPageAndroid extends StatelessWidget {
                                     color: orangeColor,
                                   ),
                                 )
-                              : SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  child: CustomText(
-                                    text: controller.detales.bio != ''
-                                        ? controller.detales.bio
-                                        : 'nobio'.tr,
-                                    size: width * 0.047,
-                                    color: whiteColor.withOpacity(0.6),
-                                    align: controller.detales.bio != ''
-                                        ? TextAlign.left
-                                        : TextAlign.center,
+                              : GestureDetector(
+                                  child: SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    child: CustomText(
+                                      text: controller.detales.bio != ''
+                                          ? controller.detales.bio
+                                          : 'nobio'.tr,
+                                      size: width * 0.047,
+                                      color: whiteColor.withOpacity(0.6),
+                                      align: controller.detales.bio != ''
+                                          ? TextAlign.left
+                                          : TextAlign.center,
+                                    ),
                                   ),
                                 ),
                         ),

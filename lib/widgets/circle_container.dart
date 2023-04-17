@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class CircleContainer extends StatelessWidget {
   final int? nameMax;
   final int? charMax;
   final FontWeight? weight;
+  final bool? isFit;
 
   const CircleContainer({
     Key? key,
@@ -54,6 +56,7 @@ class CircleContainer extends StatelessWidget {
     this.nameMax,
     this.charMax,
     this.weight,
+    this.isFit,
   }) : super(key: key);
 
   @override
@@ -94,6 +97,7 @@ class CircleContainer extends StatelessWidget {
                     ? name == ''
                         ? Container()
                         : CustomText(
+                            isFit: isFit,
                             align: TextAlign.center,
                             text: name,
                             size: nameSize,
@@ -105,6 +109,7 @@ class CircleContainer extends StatelessWidget {
                     : Container(),
                 char != null
                     ? CustomText(
+                        isFit: isFit,
                         align: TextAlign.center,
                         text: char,
                         size: charSize,
@@ -152,6 +157,7 @@ class CircleContainer extends StatelessWidget {
                 ),
                 name != null
                     ? CustomText(
+                        isFit: isFit,
                         align: TextAlign.center,
                         text: name,
                         size: nameSize,
@@ -163,6 +169,7 @@ class CircleContainer extends StatelessWidget {
                     : Container(),
                 char != null
                     ? CustomText(
+                        isFit: isFit,
                         align: TextAlign.center,
                         text: char,
                         size: charSize,

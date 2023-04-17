@@ -1,3 +1,4 @@
+import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,8 @@ import '../../helper/constants.dart';
 import '../../models/chat_page_model.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_network.dart';
+import '../chat_page/chat_page.dart';
+import '../settings_page/settings_page.dart';
 
 class ProfilePageAndroid extends StatelessWidget {
   const ProfilePageAndroid({super.key});
@@ -16,6 +19,7 @@ class ProfilePageAndroid extends StatelessWidget {
     ProfileController controller =
         Get.put(ProfileController(context: context, isIos: false));
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: mainColor,
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -71,21 +75,17 @@ class ProfilePageAndroid extends StatelessWidget {
                                   ),
                                 ),
                                 GestureDetector(
-                                  // onTap: controller.detales.usreId !=
-                                  //         controller.userModel.userId
-                                  //     ? () => Get.to(
-                                  //           () => ChatPage(
-                                  //             thing: ChatPageModel(
-                                  //                 userId:
-                                  //                     controller.model.usreId,
-                                  //                 fromList: false,
-                                  //                 userName:
-                                  //                     controller.model.usreName,
-                                  //                 userModel:
-                                  //                     controller.userModel),
-                                  //           ),
-                                  //         )
-                                  //     : () => Get.to(() => SettingsPage()),
+                                  onTap: controller.detales.usreId !=
+                                          controller.userModel.userId
+                                      ? () => Get.to(() => const ChatPage(),
+                                          arguments: ChatPageModel(
+                                              userId: controller.detales.usreId,
+                                              fromList: false,
+                                              userName:
+                                                  controller.detales.usreName,
+                                              userModel: UserModel()))
+                                      : () =>
+                                          Get.to(() => const SettingsPage()),
                                   child: Icon(
                                     controller.detales.usreId ==
                                             controller.userModel.userId
@@ -234,8 +234,8 @@ class ProfilePageAndroid extends StatelessWidget {
                                                   : controller.detales.nowList
                                                       .length, (index) {
                                         return GestureDetector(
-                                          onTap: () => controller.navToDetale(
-                                              index: index),
+                                          onTap: () =>
+                                              controller.navToDet(index: index),
                                           // Get.find<
                                           //         HomeController>()
                                           //     .navToDetale(

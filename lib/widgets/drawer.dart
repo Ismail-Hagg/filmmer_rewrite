@@ -2,12 +2,18 @@ import 'dart:io';
 
 import 'package:filmmer_rewrite/controllers/auth_controller.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
-import 'package:filmmer_rewrite/widgets/image_network.dart';
+import 'package:filmmer_rewrite/pages/favorites_page/favourites_page.dart';
+import 'package:filmmer_rewrite/pages/keeping_page/keeping_page_android.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
+import '../models/profile_model.dart';
 import '../models/user_model.dart';
+import '../pages/chat_list_page/chat_list_page.dart';
+import '../pages/profile_page/profile_page.dart';
+import '../pages/settings_page/settings_page.dart';
+import '../pages/watchlist_page/watchlist_page.dart';
 import 'circle_container.dart';
 import 'drawer_item_widget.dart';
 
@@ -37,13 +43,14 @@ Widget header(double height, double width) {
       child: GestureDetector(
     onTap: () => Get.find<AuthController>().signOut(),
     child: Container(
-        height: height * 0.27,
+        height: height * 0.28,
         color: mainColor,
         child: model.isPicLocal == true
             ? FittedBox(
                 child: Padding(
                   padding: EdgeInsets.all(height * 0.01),
                   child: CircleContainer(
+                      isFit: true,
                       flow: TextOverflow.ellipsis,
                       topSpacing: height * 0.017,
                       fit: BoxFit.cover,
@@ -69,6 +76,7 @@ Widget header(double height, double width) {
                     child: Padding(
                       padding: EdgeInsets.all(height * 0.01),
                       child: CircleContainer(
+                        isFit: true,
                         flow: TextOverflow.ellipsis,
                         color: secondaryColor,
                         height: height * 0.15,
@@ -93,6 +101,7 @@ Widget header(double height, double width) {
                     child: Padding(
                       padding: EdgeInsets.all(height * 0.01),
                       child: CircleContainer(
+                          isFit: true,
                           flow: TextOverflow.ellipsis,
                           topSpacing: height * 0.017,
                           fit: BoxFit.cover,
@@ -129,14 +138,27 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              // Get.to(() => ProfilePage(),
-              //     arguments: ProfileModel(
-              //         usreId: Get.find<HomeController>().model.userId,
-              //         usreName: Get.find<HomeController>().model.userName,
-              //         pic: Get.find<HomeController>().model.onlinePicPath,
-              //         favList: [],
-              //         watchList: [],
-              //         nowList: []));
+              Get.to(() => const ProfilePage(),
+                  arguments: ProfileModel(
+                      usreId: Get.find<HomeController>()
+                          .userModel
+                          .userId
+                          .toString(),
+                      usreName: Get.find<HomeController>()
+                          .userModel
+                          .userName
+                          .toString(),
+                      pic: Get.find<HomeController>()
+                          .userModel
+                          .onlinePicPath
+                          .toString(),
+                      token: Get.find<HomeController>()
+                          .userModel
+                          .messagingToken
+                          .toString(),
+                      favList: [],
+                      watchList: [],
+                      nowList: []));
             },
             icon: Icons.person_outline,
           ),
@@ -147,7 +169,7 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              //Get.to(() => WatchlistPage());
+              Get.to(() => const WatchListPage());
             },
             icon: Icons.list,
           ),
@@ -158,7 +180,7 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              //Get.to(() => FavouritesPage());
+              Get.to(() => const FavoritesPage());
             },
             icon: Icons.favorite_outline,
           ),
@@ -170,7 +192,7 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              //Get.to(() => EpisodeKeepingPage());
+              Get.to(() => const KeepingPageAndtoid());
             },
             icon: Icons.tv_outlined,
           ),
@@ -182,7 +204,7 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              //Get.to(() => ChatListPage());
+              Get.to(() => const ChatListPage());
             },
             icon: Icons.chat_outlined,
           ),
@@ -193,7 +215,9 @@ Widget drawItems(double height, double width) {
             height: height,
             func: () {
               Get.back();
-              //Get.to(() => SettingsPage());
+              Get.to(
+                () => const SettingsPage(),
+              );
             },
             icon: Icons.settings_outlined,
           ),

@@ -34,7 +34,9 @@ class Results {
         : json['poster_path'];
     releaseDate = relDate != 'unknown' && relDate != ''
         ? relDate.substring(0, 4)
-        : relDate;
+        : relDate != ''
+            ? relDate
+            : 'unknown';
     title = json['title'] ?? json['name'];
     voteAverage = double.parse(voteAve.toStringAsFixed(1));
     isShow = json['first_air_date'] != null ? true : false;

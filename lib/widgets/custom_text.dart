@@ -13,6 +13,7 @@ class CustomText extends StatelessWidget {
   final bool? isGradiant;
   final List<Color>? colors;
   final GradientDirection? direction;
+  final bool? isFit;
   const CustomText(
       {Key? key,
       this.text,
@@ -25,7 +26,8 @@ class CustomText extends StatelessWidget {
       this.align,
       this.isGradiant,
       this.colors,
-      this.direction})
+      this.direction,
+      this.isFit})
       : super(key: key);
 
   @override
@@ -43,14 +45,26 @@ class CustomText extends StatelessWidget {
             ),
             colors: colors ?? [],
           )
-        : Text(text ?? '',
-            maxLines: maxline,
-            textAlign: align,
-            style: TextStyle(
-                color: color,
-                fontSize: size,
-                fontWeight: weight,
-                overflow: flow,
-                letterSpacing: spacing));
+        : isFit == true
+            ? FittedBox(
+                child: Text(text ?? '',
+                    maxLines: maxline,
+                    textAlign: align,
+                    style: TextStyle(
+                        color: color,
+                        fontSize: size,
+                        fontWeight: weight,
+                        overflow: flow,
+                        letterSpacing: spacing)),
+              )
+            : Text(text ?? '',
+                maxLines: maxline,
+                textAlign: align,
+                style: TextStyle(
+                    color: color,
+                    fontSize: size,
+                    fontWeight: weight,
+                    overflow: flow,
+                    letterSpacing: spacing));
   }
 }

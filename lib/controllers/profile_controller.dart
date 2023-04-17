@@ -13,7 +13,7 @@ class ProfileController extends GetxController {
   final bool isIos;
   ProfileController({required this.context, required this.isIos});
 
-  final ProfileModel _detales = Get.arguments as ProfileModel;
+  final ProfileModel _detales = Get.arguments;
   ProfileModel get detales => _detales;
 
   final UserModel _userModel = Get.find<HomeController>().userModel;
@@ -42,6 +42,7 @@ class ProfileController extends GetxController {
     }).then((value) async {
       await getData('movieWatchList').then((wachMov) async {
         await getData('showWatchList').then((wachShow) async {
+          update();
           _detales.watchList = [...wachMov, ...wachShow];
           await getData('episodeKeeping').then((value) {
             _detales.nowList = value;
@@ -101,17 +102,24 @@ class ProfileController extends GetxController {
   }
 
   // navigate to the detales page
-  void navToDetale({required int index}) {
+  void navToDet({required int index}) {
+    Results results = Results(voteAverage: 0.0);
     switch (_counter) {
       case 0:
-        Get.find<HomeController>().navToDetale(res: _detales.favList[index]);
+        results = _detales.favList[index];
         break;
       case 1:
-        Get.find<HomeController>().navToDetale(res: _detales.watchList[index]);
+        results = _detales.watchList[index];
         break;
       case 2:
-        Get.find<HomeController>().navToDetale(res: _detales.nowList[index]);
+        results = _detales.nowList[index];
         break;
+    }
+    update();
+    try {
+      Get.find<HomeController>().navToDetale(res: results);
+    } catch (e) {
+      print('========>>> $e');
     }
   }
 }

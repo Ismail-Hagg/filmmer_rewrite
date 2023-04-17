@@ -132,6 +132,10 @@ void platforMulti(
     required List<String> buttonTitle,
     required String body,
     required List<Function()> func,
+    bool? field,
+    TextEditingController? controller,
+    String? hint,
+    Widget? child,
     required BuildContext context}) {
   if (isIos) {
     showCupertinoDialog(
@@ -140,9 +144,23 @@ void platforMulti(
             title: Text(
               title,
             ),
-            content: Text(
-              body,
-            ),
+            content: field == true
+                ? child ??
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: CupertinoTextField(
+                        placeholder: hint,
+                        autofocus: true,
+                        controller: controller,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius: BorderRadius.circular(8)),
+                        clearButtonMode: OverlayVisibilityMode.editing,
+                      ),
+                    )
+                : Text(
+                    body,
+                  ),
             actions: buttonTitle
                 .map((e) => CupertinoDialogAction(
                       onPressed: func[buttonTitle.indexOf(e)],
@@ -154,7 +172,25 @@ void platforMulti(
         context: context,
         builder: (_) => AlertDialog(
             title: Text(title),
-            content: Text(body),
+            content: field == true
+                ? child ??
+                    TextField(
+                      autofocus: true,
+                      controller: controller,
+                      cursorColor: orangeColor,
+                      decoration: InputDecoration(
+                        hintText: hint,
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: orangeColor),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: orangeColor),
+                        ),
+                        fillColor: orangeColor,
+                        focusColor: orangeColor,
+                      ),
+                    )
+                : Text(body),
             actions: buttonTitle
                 .map((e) => TextButton(
                       onPressed: func[buttonTitle.indexOf(e)],
