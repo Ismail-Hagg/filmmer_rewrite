@@ -21,7 +21,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: secondaryColor,
       body: GetBuilder<MovieDetaleController>(
-        init: Get.find<MovieDetaleController>(),
+        init: Get.put(MovieDetaleController()),
         builder: (controll) => LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           var height = constraints.maxHeight;
@@ -194,13 +194,19 @@ class MovieDetalePageAndroid extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 12),
-                  child: CustomText(
-                      text: controll.detales.title.toString(),
-                      color: whiteColor,
-                      size: width * 0.055,
-                      maxline: 2,
-                      flow: TextOverflow.ellipsis,
-                      weight: FontWeight.w500),
+                  child: GestureDetector(
+                    onTap: () {
+                      bool test = Get.isRegistered<MovieDetaleController>();
+                      print(test);
+                    },
+                    child: CustomText(
+                        text: controll.detales.title.toString(),
+                        color: whiteColor,
+                        size: width * 0.055,
+                        maxline: 2,
+                        flow: TextOverflow.ellipsis,
+                        weight: FontWeight.w500),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),

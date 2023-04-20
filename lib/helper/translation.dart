@@ -221,7 +221,7 @@ class Translation extends Translations {
           'edit': 'تعديل',
           'addtowatch': 'اضافه الى قائمة المشاهدة',
           'addkeep': 'اضافه الى متابعة الحلقات',
-          'readykeep': 'موجود في متابة الحلقات',
+          'readykeep': 'موجود في متابعة الحلقات',
           'keepadd': 'تمت الاضافه الى متابعة الحلقات',
           'unknown': 'غير معروف',
           'ended': 'منتهي',

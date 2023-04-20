@@ -30,12 +30,10 @@ import '../widgets/image_network.dart';
 import 'favorites_controller.dart';
 
 class MovieDetaleController extends GetxController {
-  final MovieDetaleModel model;
-  MovieDetaleController({required this.model});
   final UserModel _userModel = Get.find<HomeController>().userModel;
   UserModel get userModel => _userModel;
   FocusNode myFocusNode = FocusNode();
-  late MovieDetaleModel _detales = model;
+  late MovieDetaleModel _detales;
   MovieDetaleModel get detales => _detales;
 
   List<CommentModel> _commentsList = [];
@@ -73,6 +71,7 @@ class MovieDetaleController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    _detales = Get.arguments ?? MovieDetaleModel(isError: true);
     heartCheck();
     getData(res: _detales);
     _commentStream = FirestoreService()

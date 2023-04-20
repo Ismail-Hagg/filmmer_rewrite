@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:filmmer_rewrite/controllers/home_controller.dart';
+import 'package:filmmer_rewrite/controllers/movie_detale_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';

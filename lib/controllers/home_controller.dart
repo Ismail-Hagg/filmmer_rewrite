@@ -99,7 +99,13 @@ class HomeController extends GetxController {
       await HomePageService()
           .getHomeInfo(link: _urls[i], language: language)
           .then((value) {
-        _lists[i].results = value.results;
+        // _lists[i].results = value.results;
+        // _lists[i].isError = value.isError;
+        // _lists[i].errorMessage = value.errorMessage;
+        // _lists[i].page = value.page;
+        // _lists[i].totalPages = value.totalPages;
+        // _lists[i].totalResults = value.totalResults;
+        _lists[i] = value;
       });
     }
     _count = 0;
@@ -189,8 +195,7 @@ class HomeController extends GetxController {
                 mainPostId: map['postId'].toString(),
                 userId: map['userId'].toString(),
                 firePostId: map['firePostId'].toString(),
-                pastController:
-                    MovieDetaleController(model: MovieDetaleModel()),
+                pastController: MovieDetaleController(),
                 token: '',
               ));
 
@@ -265,12 +270,13 @@ class HomeController extends GetxController {
           releaseDate: res.releaseDate,
           originCountry: '');
 
-      Get.create(() => (MovieDetaleController(model: movieDetales)),
-          permanent: false);
-      Get.to(
-        () => MovieDetalePage(),
-        preventDuplicates: false,
+      Get.create(
+        () => (MovieDetaleController()),
+        //',
+        permanent: true,
       );
+      Get.to(() => const MovieDetalePage(),
+          preventDuplicates: false, arguments: movieDetales);
     }
   }
 
@@ -291,10 +297,8 @@ class HomeController extends GetxController {
         tvResults: [],
         movieResults: [],
         age: 0);
-    Get.create(() => (ActorController(model: actorModel)), permanent: false);
-    Get.to(
-      () => const ActorPage(),
-      preventDuplicates: false,
-    );
+    Get.create(() => (ActorController()), permanent: false);
+    Get.to(() => const ActorPage(),
+        preventDuplicates: false, arguments: actorModel);
   }
 }
