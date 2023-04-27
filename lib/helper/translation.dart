@@ -15,8 +15,8 @@ class Translation extends Translations {
           'popularShows': 'Popular Shows',
           'topMovies': 'Top Rated Movies',
           'topShowa': 'Top Rated Shows',
-          'watchList': 'My WatchList',
-          'favourite': 'My Favorites',
+          'watchList': 'WatchList',
+          'favourite': 'Favorites',
           'settings': 'Settings',
           'internet': 'No Internet connection',
           'watchadd': 'Added to Watchlist',
@@ -116,7 +116,8 @@ class Translation extends Translations {
           'commentmessage': ' replied on your comment ',
           'ok': 'ok',
           'complete': 'Complete Your Info',
-          'cancel': 'cancel'
+          'cancel': 'cancel',
+          'home': 'Home'
         },
         'ar_SA': {
           'Year': 'السنه',
@@ -230,7 +231,8 @@ class Translation extends Translations {
           'commentmessage': ' قام بالرد على تعليقك ',
           'ok': 'حسنا',
           'complete': 'اكمل بياناتك',
-          'cancel': 'الغاء'
+          'cancel': 'الغاء',
+          'home': 'الرئيسيه'
         }
 
         // add translation fot other english speaking countries

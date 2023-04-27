@@ -11,6 +11,7 @@ class FavoritesPageAndroid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
     final FavouritesController controller = Get.put(FavouritesController());
     return Scaffold(
         backgroundColor: mainColor,
@@ -78,7 +79,8 @@ class FavoritesPageAndroid extends StatelessWidget {
               ];
             }, onSelected: (value) {
               if (value == 0) {
-                Get.find<FavouritesController>().randomnav();
+                Get.find<FavouritesController>()
+                    .randomnav(isIos: isIos, context: context);
               } else if (value == 1) {
                 controller.genreFilter();
               }
@@ -164,6 +166,7 @@ class FavoritesPageAndroid extends StatelessWidget {
                               splashRadius: 15,
                               onPressed: () {
                                 controller.localDelete(
+                                  context: context,
                                   id: controller.genreListAdd.isEmpty
                                       ? controller.newList[index].id
                                       : controller.postFilter[index].id,

@@ -54,9 +54,10 @@ class FavouritesController extends GetxController {
   }
 
   //go to deteale page of a random movie or a show in the favourites list
-  void randomnav() {
+  void randomnav({required bool isIos, required BuildContext context}) {
     if (_newList.isEmpty) {
-      snack('enter'.tr, '');
+      platformAlert(
+          isIos: isIos, title: 'enter'.tr, body: '', context: context);
     } else {
       int length = _genreListAdd.isEmpty ? _newList.length : _postFilter.length;
       List<FirebaseSend> lst = _genreListAdd.isEmpty ? _newList : _postFilter;
@@ -89,29 +90,28 @@ class FavouritesController extends GetxController {
   //delete from local storage and firebase
   void localDelete(
       {required String id,
+      required BuildContext context,
       required int index,
       required FirebaseSend send}) async {
-    Get.dialog(
-      AlertDialog(
-        title: Text('delete'.tr),
-        content: Text('sure'.tr),
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: orangeColor,
-            ),
-            child: Text("answer".tr),
-            onPressed: () async => {
-              Get.back(),
-              _newList.removeAt(index),
-              await dbHelper.delete(DatabaseHelper.table, id),
-              update(),
-              delete(fire: send)
-            },
-          ),
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    platforMulti(
+        isIos: isIos,
+        title: 'delete'.tr,
+        buttonTitle: ["cancel".tr, "answer".tr],
+        body: 'sure'.tr,
+        func: [
+          () {
+            Get.back();
+          },
+          () async => {
+                Get.back(),
+                _newList.removeAt(index),
+                await dbHelper.delete(DatabaseHelper.table, id),
+                update(),
+                delete(fire: send)
+              },
         ],
-      ),
-    );
+        context: context);
   }
 
   fromDetale({required FirebaseSend send, required bool addOrDelete}) {

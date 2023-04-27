@@ -9,4 +9,4 @@ a movie app made using flutter and the movie database api (tmdb) and firebase in
 - get notifications of new episodes and new movie releases
 - comment on movies and shows
 - see other people's watchlists
-- chatt with other people
+- chat with other people

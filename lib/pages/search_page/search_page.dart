@@ -11,6 +11,6 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
-    return isIos ? const SearchPageIos() : SearchPageAndroid(lst: lst);
+    return isIos ? SearchPageIos(lst: lst) : SearchPageAndroid(lst: lst);
   }
 }

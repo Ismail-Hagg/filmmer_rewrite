@@ -8,7 +8,7 @@ import '../../widgets/custom_text.dart';
 
 class SearchPageAndroid extends StatelessWidget {
   final List<FirebaseSend> lst;
-  SearchPageAndroid({
+  const SearchPageAndroid({
     Key? key,
     required this.lst,
   }) : super(key: key);

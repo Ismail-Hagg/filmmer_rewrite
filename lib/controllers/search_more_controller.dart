@@ -93,6 +93,7 @@ class SearchMoreController extends GetxController {
   //load data from api
   void getMovies({required int page, required String query}) async {
     _indicator = 1;
+    page = 1;
     update();
     await HomePageService()
         .getHomeInfo(
@@ -100,11 +101,7 @@ class SearchMoreController extends GetxController {
                 '${_argumentData.link}${_userModel.language.toString().replaceAll('_', '-')}$query&page=',
             language: '$page')
         .then((value) {
-      print(
-          '${_argumentData.link}${_userModel.language.toString().replaceAll('_', '-')}$query&page=');
       _model = value;
-      print(_model.isError);
-      print(_model.errorMessage);
       _indicator = 0;
       update();
     });

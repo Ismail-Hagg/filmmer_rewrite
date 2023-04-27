@@ -16,7 +16,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await AwesomeNotifications().requestPermissionToSendNotifications();
   Get.put(AuthController());
   await UserDataPref().getUserData().then((user) {
     user.isError == true
@@ -24,9 +23,11 @@ void main() async {
                 Get.deviceLocale.toString() != 'en_US' &&
                 Get.deviceLocale.toString() != 'en'
             ? runApp(MyApp(locale: const Locale('en', 'US')))
-            : runApp(MyApp(
-                locale: Locale(Get.deviceLocale.toString().substring(0, 2),
-                    Get.deviceLocale.toString().substring(3, 5))))
+            : Get.deviceLocale.toString() == 'en'
+                ? runApp(MyApp(locale: const Locale('en', 'US')))
+                : runApp(MyApp(
+                    locale: Locale(Get.deviceLocale.toString().substring(0, 2),
+                        Get.deviceLocale.toString().substring(3, 5))))
         : runApp(MyApp(
             locale: Locale(user.language.toString().substring(0, 2),
                 user.language.toString().substring(3, 5)),

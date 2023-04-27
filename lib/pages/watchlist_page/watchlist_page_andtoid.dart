@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import '../../controllers/watchlist_controller.dart';
 import '../../helper/constants.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/menu_widget.dart';
 
 class WatchListPageAndroid extends StatelessWidget {
   final bool isIos;
-  WatchListPageAndroid({super.key, required this.isIos});
+  const WatchListPageAndroid({super.key, required this.isIos});
 
   @override
   Widget build(BuildContext context) {
@@ -49,48 +50,22 @@ class WatchListPageAndroid extends StatelessWidget {
               controll.searching();
             },
           ),
-          PopupMenuButton(itemBuilder: (context) {
-            return [
-              PopupMenuItem<int>(
-                value: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("random".tr),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.05,
-                    ),
-                    const Icon(
-                      Icons.shuffle,
-                      color: Colors.black,
-                    )
-                  ],
-                ),
-              ),
-              PopupMenuItem<int>(
-                value: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("filter".tr),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    const Icon(
-                      Icons.filter_alt,
-                      color: Colors.black,
-                    )
-                  ],
-                ),
-              ),
-            ];
-          }, onSelected: (value) {
-            if (value == 0) {
-              controll.randomNav();
-            } else if (value == 1) {
-              controll.genreFilter();
-            }
-          }),
+          Menu(
+            ios: false,
+            titles: ["random".tr, "filter".tr],
+            funcs: [
+              () {
+                controll.randomNav();
+              },
+              () {
+                controll.genreFilter();
+              },
+            ],
+            child: const Icon(
+              Icons.more_vert,
+              color: whiteColor,
+            ),
+          ),
         ],
       ),
       body: LayoutBuilder(
@@ -223,51 +198,50 @@ class WatchListPageAndroid extends StatelessWidget {
                       ],
                     )
                   : Container(),
-              SizedBox(
-                  height: builder.filtering ? height * 0.86 : height * 0.93,
+              Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: builder.count == 0
-                          ? builder.genreListAddMovies.isEmpty
-                              ? builder.movieList.length
-                              : builder.postMoviesLocal.length
-                          : builder.genreListAddShows.isEmpty
-                              ? builder.showList.length
-                              : builder.postShowLocal.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: () {
-                            builder.navv(builder.count == 0
-                                ? builder.genreListAddMovies.isEmpty
-                                    ? builder.movieList[index]
-                                    : builder.postMoviesLocal[index]
-                                : builder.genreListAddShows.isEmpty
-                                    ? builder.showList[index]
-                                    : builder.postShowLocal[index]);
-                          },
-                          title: CustomText(
-                              text: builder.count == 0
-                                  ? builder.genreListAddMovies.isEmpty
-                                      ? builder.movieList[index].name
-                                      : builder.postMoviesLocal[index].name
-                                  : builder.genreListAddShows.isEmpty
-                                      ? builder.showList[index].name
-                                      : builder.postShowLocal[index].name,
-                              color: Colors.white,
-                              size: width * 0.042),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.white),
-                            splashRadius: 15,
-                            onPressed: () {
-                              builder.delete(index: index);
-                            },
-                          ),
-                        );
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: builder.count == 0
+                      ? builder.genreListAddMovies.isEmpty
+                          ? builder.movieList.length
+                          : builder.postMoviesLocal.length
+                      : builder.genreListAddShows.isEmpty
+                          ? builder.showList.length
+                          : builder.postShowLocal.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        builder.navv(builder.count == 0
+                            ? builder.genreListAddMovies.isEmpty
+                                ? builder.movieList[index]
+                                : builder.postMoviesLocal[index]
+                            : builder.genreListAddShows.isEmpty
+                                ? builder.showList[index]
+                                : builder.postShowLocal[index]);
                       },
-                    ),
-                  ))
+                      title: CustomText(
+                          text: builder.count == 0
+                              ? builder.genreListAddMovies.isEmpty
+                                  ? builder.movieList[index].name
+                                  : builder.postMoviesLocal[index].name
+                              : builder.genreListAddShows.isEmpty
+                                  ? builder.showList[index].name
+                                  : builder.postShowLocal[index].name,
+                          color: Colors.white,
+                          size: width * 0.042),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.white),
+                        splashRadius: 15,
+                        onPressed: () {
+                          builder.delete(index: index);
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ))
             ],
           ),
         );

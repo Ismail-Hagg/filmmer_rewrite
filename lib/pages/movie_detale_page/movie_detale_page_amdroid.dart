@@ -11,6 +11,7 @@ import '../../helper/utils.dart';
 import '../../widgets/comment_widget.dart';
 import '../../widgets/content_scrolling.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/menu_widget.dart';
 
 class MovieDetalePageAndroid extends StatelessWidget {
   const MovieDetalePageAndroid({super.key});
@@ -38,6 +39,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           controll.getImages(
+                            isIos: false,
                             height: height,
                             width: width,
                             isActor: false,
@@ -109,45 +111,21 @@ class MovieDetalePageAndroid extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               controll.detales.isShow == true
-                                  ? PopupMenuButton(
-                                      splashRadius: 15,
-                                      icon: Icon(Icons.add,
+                                  ? Menu(
+                                      ios: false,
+                                      titles: ["addtowatch".tr, "addkeep".tr],
+                                      funcs: [
+                                        () =>
+                                            {controll.watch(context: context)},
+                                        () => {
+                                              controll.addKeeping(
+                                                  context: context)
+                                            }
+                                      ],
+                                      child: Icon(Icons.add,
                                           color: orangeColor,
                                           size: width * 0.08),
-                                      tooltip: '',
-                                      itemBuilder: (context) {
-                                        return [
-                                          PopupMenuItem<int>(
-                                            value: 0,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text("addtowatch".tr),
-                                              ],
-                                            ),
-                                          ),
-                                          PopupMenuItem<int>(
-                                            value: 1,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text("addkeep".tr),
-                                              ],
-                                            ),
-                                          ),
-                                        ];
-                                      },
-                                      onSelected: (value) {
-                                        if (value == 0) {
-                                          controll.watch(context: context);
-                                        } else if (value == 1) {
-                                          controll.addKeeping(context: context);
-                                        }
-                                      })
+                                    )
                                   : IconButton(
                                       splashRadius: 15,
                                       icon: Icon(Icons.add,
@@ -194,19 +172,13 @@ class MovieDetalePageAndroid extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 12),
-                  child: GestureDetector(
-                    onTap: () {
-                      bool test = Get.isRegistered<MovieDetaleController>();
-                      print(test);
-                    },
-                    child: CustomText(
-                        text: controll.detales.title.toString(),
-                        color: whiteColor,
-                        size: width * 0.055,
-                        maxline: 2,
-                        flow: TextOverflow.ellipsis,
-                        weight: FontWeight.w500),
-                  ),
+                  child: CustomText(
+                      text: controll.detales.title.toString(),
+                      color: whiteColor,
+                      size: width * 0.055,
+                      maxline: 2,
+                      flow: TextOverflow.ellipsis,
+                      weight: FontWeight.w500),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),

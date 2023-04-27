@@ -147,7 +147,9 @@ class AuthController extends GetxController {
                       localPicPath: '',
                       userId: user.user!.uid,
                       isPicLocal: false,
-                      language: Get.deviceLocale.toString(),
+                      language: Get.deviceLocale.toString() == 'en'
+                          ? 'en_US'
+                          : Get.deviceLocale.toString(),
                       isError: false,
                       messagingToken: value,
                       commentLikes: '',
@@ -467,7 +469,9 @@ class AuthController extends GetxController {
             Get.deviceLocale.toString() != 'en_US' &&
             Get.deviceLocale.toString() != 'en'
         ? lan = 'en_US'
-        : lan = Get.deviceLocale.toString();
+        : Get.deviceLocale.toString() == 'en'
+            ? 'en_US'
+            : lan = Get.deviceLocale.toString();
 
     return lan;
   }

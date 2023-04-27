@@ -8,6 +8,8 @@ class WatchListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
-    return isIos ? const WatchListIos() : WatchListPageAndroid(isIos: isIos);
+    return isIos
+        ? WatchListIos(isIos: isIos)
+        : WatchListPageAndroid(isIos: isIos);
   }
 }

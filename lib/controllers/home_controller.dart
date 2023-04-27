@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:filmmer_rewrite/controllers/auth_controller.dart';
+import 'package:filmmer_rewrite/controllers/settings_controller.dart';
+import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
 import 'package:filmmer_rewrite/models/search_move_model.dart';
 import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +19,33 @@ import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
 import '../models/results_model.dart';
 import '../pages/actorPage/actor_page.dart';
+import '../pages/chat_list_page/chat_list_page.dart';
 import '../pages/chat_page/chat_page.dart';
+import '../pages/favorites_page/favourites_page.dart';
+import '../pages/home_page/home_page_ios.dart';
 import '../pages/keeping_page/keeing_page.dart';
+import '../pages/keeping_page/keeping_page_android.dart';
 import '../pages/movie_detale_page/mocvie_detale_page.dart';
 import '../pages/search_more_page/sewarch_more_page.dart';
+import '../pages/settings_page/settings_page.dart';
 import '../pages/sub_comment/sub_comment_page.dart';
+import '../pages/watchlist_page/watchlist_page.dart';
 import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
 import '../services/home_page_service.dart';
 import 'actor_controller.dart';
+import 'chat_list_controller.dart';
+import 'favorites_controller.dart';
+import 'keeping_controller.dart';
 import 'movie_detale_controller.dart';
 
 class HomeController extends GetxController {
   final BuildContext context;
   final bool isIos;
   HomeController({required this.context, required this.isIos});
+
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
 
   int _count = 0;
   int get count => _count;
@@ -60,6 +74,15 @@ class HomeController extends GetxController {
   List<String> get urls => _urls;
   List<HomePageModel> _lists = [];
   List<HomePageModel> get lists => _lists;
+
+  var wdgts = [
+    const HomePageIos(),
+    const WatchListPage(),
+    const FavoritesPage(),
+    const KeepingPageAndtoid(),
+    const ChatListPage(),
+    const SettingsPage()
+  ];
 
   @override
   void onInit() {
@@ -99,12 +122,6 @@ class HomeController extends GetxController {
       await HomePageService()
           .getHomeInfo(link: _urls[i], language: language)
           .then((value) {
-        // _lists[i].results = value.results;
-        // _lists[i].isError = value.isError;
-        // _lists[i].errorMessage = value.errorMessage;
-        // _lists[i].page = value.page;
-        // _lists[i].totalPages = value.totalPages;
-        // _lists[i].totalResults = value.totalResults;
         _lists[i] = value;
       });
     }
@@ -157,6 +174,9 @@ class HomeController extends GetxController {
         await AwesomeNotifications().setListeners(
           onActionReceivedMethod: onActionReceivedMethod,
         );
+      } else {
+        await AwesomeNotifications()
+            .requestPermissionToSendNotifications(channelKey: 'basic_channel');
       }
     });
   }
@@ -165,7 +185,11 @@ class HomeController extends GetxController {
   void goToSearch(
       {required bool isSearch, required String link, required String title}) {
     Move moving = Move(isSearch: isSearch, link: link, title: title);
-    Get.to(() => const SearchMorePage(), arguments: moving);
+    Get.to(
+      () => const SearchMorePage(),
+      arguments: moving,
+      transition: Transition.native,
+    );
   }
 
   // when notificatio is clicked
@@ -276,7 +300,9 @@ class HomeController extends GetxController {
         permanent: true,
       );
       Get.to(() => const MovieDetalePage(),
-          preventDuplicates: false, arguments: movieDetales);
+          transition: Transition.native,
+          preventDuplicates: false,
+          arguments: movieDetales);
     }
   }
 
@@ -299,6 +325,33 @@ class HomeController extends GetxController {
         age: 0);
     Get.create(() => (ActorController()), permanent: false);
     Get.to(() => const ActorPage(),
-        preventDuplicates: false, arguments: actorModel);
+        transition: Transition.native,
+        preventDuplicates: false,
+        arguments: actorModel);
+  }
+
+  // ios version bottom navigation index update
+  void indexUpdate({required int index}) {
+    if (_currentIndex != index) {
+      switch (_currentIndex) {
+        case 1:
+          Get.delete<WatchlistController>();
+          break;
+        case 2:
+          Get.delete<FavouritesController>();
+          break;
+        case 3:
+          Get.delete<EpisodeKeepingColtroller>();
+          break;
+        case 4:
+          Get.delete<ChatListController>();
+          break;
+        case 5:
+          Get.delete<SettingsController>();
+          break;
+      }
+      _currentIndex = index;
+      update();
+    }
   }
 }

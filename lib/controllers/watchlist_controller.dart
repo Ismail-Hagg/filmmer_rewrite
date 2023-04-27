@@ -122,7 +122,7 @@ class WatchlistController extends GetxController {
   }
 
   //delete from local storage and from firebase
-  delete({required int index}) async {
+  void delete({required int index}) async {
     String id = '';
     platforMulti(
         isIos: isIos,

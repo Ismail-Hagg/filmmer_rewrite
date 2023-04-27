@@ -14,6 +14,7 @@ class CustomText extends StatelessWidget {
   final List<Color>? colors;
   final GradientDirection? direction;
   final bool? isFit;
+  final bool? isMat;
   const CustomText(
       {Key? key,
       this.text,
@@ -27,7 +28,8 @@ class CustomText extends StatelessWidget {
       this.isGradiant,
       this.colors,
       this.direction,
-      this.isFit})
+      this.isFit,
+      this.isMat})
       : super(key: key);
 
   @override
@@ -47,7 +49,43 @@ class CustomText extends StatelessWidget {
           )
         : isFit == true
             ? FittedBox(
-                child: Text(text ?? '',
+                child: isMat == true
+                    ? Material(
+                        type: MaterialType.transparency,
+                        child: Text(text ?? '',
+                            maxLines: maxline,
+                            textAlign: align,
+                            style: TextStyle(
+                                color: color,
+                                fontSize: size,
+                                fontWeight: weight,
+                                overflow: flow,
+                                letterSpacing: spacing)),
+                      )
+                    : Text(text ?? '',
+                        maxLines: maxline,
+                        textAlign: align,
+                        style: TextStyle(
+                            color: color,
+                            fontSize: size,
+                            fontWeight: weight,
+                            overflow: flow,
+                            letterSpacing: spacing)),
+              )
+            : isMat == true
+                ? Material(
+                    type: MaterialType.transparency,
+                    child: Text(text ?? '',
+                        maxLines: maxline,
+                        textAlign: align,
+                        style: TextStyle(
+                            color: color,
+                            fontSize: size,
+                            fontWeight: weight,
+                            overflow: flow,
+                            letterSpacing: spacing)),
+                  )
+                : Text(text ?? '',
                     maxLines: maxline,
                     textAlign: align,
                     style: TextStyle(
@@ -55,16 +93,6 @@ class CustomText extends StatelessWidget {
                         fontSize: size,
                         fontWeight: weight,
                         overflow: flow,
-                        letterSpacing: spacing)),
-              )
-            : Text(text ?? '',
-                maxLines: maxline,
-                textAlign: align,
-                style: TextStyle(
-                    color: color,
-                    fontSize: size,
-                    fontWeight: weight,
-                    overflow: flow,
-                    letterSpacing: spacing));
+                        letterSpacing: spacing));
   }
 }

@@ -8,8 +8,6 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
-    // final ChatPageController controller =
-    //     Get.put(ChatPageController(context: context, isIos: isIos));
     return isIos ? const FavoritesPageIos() : const FavoritesPageAndroid();
   }
 }

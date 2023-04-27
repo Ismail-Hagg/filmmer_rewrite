@@ -4,6 +4,7 @@ import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
 import 'package:filmmer_rewrite/models/movie_detale_model.dart';
 import 'package:filmmer_rewrite/pages/trailer_page/trailer_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
@@ -79,12 +80,12 @@ class MovieDetaleController extends GetxController {
   }
 
   // call api to get images
-  void getImages({
-    required double height,
-    required double width,
-    required bool isActor,
-    required String id,
-  }) async {
+  void getImages(
+      {required double height,
+      required double width,
+      required bool isActor,
+      required String id,
+      required bool isIos}) async {
     if (_loader == 0) {
       _imageModel = ImagesModel();
       _imagesCounter = 1;
@@ -94,9 +95,14 @@ class MovieDetaleController extends GetxController {
           init: Get.find<MovieDetaleController>(),
           builder: (build) => Center(
             child: _imagesCounter == 1
-                ? const CircularProgressIndicator(
-                    color: orangeColor,
-                  )
+                ? isIos
+                    ? CupertinoActivityIndicator(
+                        color: orangeColor,
+                        radius: width * 0.05,
+                      )
+                    : const CircularProgressIndicator(
+                        color: orangeColor,
+                      )
                 : _imageModel.isError == false
                     ? CarouselSlider.builder(
                         options: CarouselOptions(
@@ -114,20 +120,33 @@ class MovieDetaleController extends GetxController {
                           );
                         },
                       )
-                    : AlertDialog(
-                        title: Text('noimage'.tr),
-                        actions: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: orangeColor,
-                            ),
-                            child: Text("answer".tr),
-                            onPressed: () async => {
-                              Get.back(),
-                            },
+                    : isIos
+                        ? CupertinoAlertDialog(
+                            title: Text('noimage'.tr),
+                            actions: [
+                              CupertinoDialogAction(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text(
+                                    'ok'.tr,
+                                  ))
+                            ],
+                          )
+                        : AlertDialog(
+                            title: Text('noimage'.tr),
+                            actions: [
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: orangeColor,
+                                ),
+                                child: Text("answer".tr),
+                                onPressed: () async => {
+                                  Get.back(),
+                                },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
           ),
         ),
       );
@@ -593,7 +612,7 @@ class MovieDetaleController extends GetxController {
             value.token = _userModel.messagingToken;
             await FirestoreService()
                 .addEpisode(uid: _userModel.userId.toString(), model: value)
-                .then((thing) {
+                .then((thing) async {
               platformAlert(
                   isIos: isIos,
                   title: 'keepadd'.tr,
@@ -601,7 +620,7 @@ class MovieDetaleController extends GetxController {
                   context: context);
               // remove from firebase watchinglist and from local storage
 
-              FirestoreService()
+              await FirestoreService()
                   .ref
                   .doc(_userModel.userId)
                   .collection('showWatchList')
