@@ -49,4 +49,9 @@ class TrailerController extends GetxController {
             PlayVideoFrom.youtube("https://www.youtube.com/watch?v=$id"));
     update();
   }
+
+  // get back
+  void backing() {
+    Get.back();
+  }
 }

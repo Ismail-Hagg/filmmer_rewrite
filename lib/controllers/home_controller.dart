@@ -23,7 +23,6 @@ import '../pages/chat_list_page/chat_list_page.dart';
 import '../pages/chat_page/chat_page.dart';
 import '../pages/favorites_page/favourites_page.dart';
 import '../pages/home_page/home_page_ios.dart';
-import '../pages/keeping_page/keeing_page.dart';
 import '../pages/keeping_page/keeping_page_android.dart';
 import '../pages/movie_detale_page/mocvie_detale_page.dart';
 import '../pages/search_more_page/sewarch_more_page.dart';
@@ -209,7 +208,7 @@ class HomeController extends GetxController {
           break;
 
         case 'episode':
-          Get.to(() => const KeepingPage());
+          Get.to(() => const KeepingPageAndtoid());
 
           break;
 

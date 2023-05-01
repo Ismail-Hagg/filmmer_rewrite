@@ -146,4 +146,9 @@ class ChatPageController extends GetxController {
         clearAll: false,
         chatId: _otherUser.userId);
   }
+
+  // go back
+  void back() {
+    Get.back();
+  }
 }

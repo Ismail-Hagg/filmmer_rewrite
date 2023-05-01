@@ -165,6 +165,8 @@ class AuthController extends GetxController {
                     controllerClear();
                     _count = 0;
                   }).catchError((error) {
+                    _count = 0;
+                    update();
                     platformAlert(
                         isIos: isIos,
                         title: 'error'.tr,
@@ -199,6 +201,8 @@ class AuthController extends GetxController {
                     _count = 0;
                   });
                 }).catchError((error) {
+                  _count = 0;
+                  update();
                   platformAlert(
                       isIos: isIos,
                       title: 'error'.tr,
@@ -211,21 +215,21 @@ class AuthController extends GetxController {
         }
       });
     } on FirebaseAuthException catch (e) {
+      _count = 0;
+      update();
       platformAlert(
           isIos: isIos,
           title: 'error'.tr,
           body: getMessageFromErrorCode(e),
           context: context);
+    } catch (e) {
       _count = 0;
       update();
-    } catch (e) {
       platformAlert(
           isIos: isIos,
           title: 'error'.tr,
           body: e.toString(),
           context: context);
-      _count = 0;
-      update();
     }
   }
 

@@ -23,14 +23,13 @@ class SubCommentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
-    return isIos
-        ? const SubCommentPageIos()
-        : SubbCommentPageAndroid(
-            movieId: movieId,
-            mainPostId: mainPostId,
-            firePostId: firePostId,
-            token: token,
-            userId: userId,
-            pastController: pastController);
+    return SubbCommentPageAndroid(
+        movieId: movieId,
+        mainPostId: mainPostId,
+        firePostId: firePostId,
+        token: token,
+        userId: userId,
+        isIos: isIos,
+        pastController: pastController);
   }
 }

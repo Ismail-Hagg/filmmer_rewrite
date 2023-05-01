@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:filmmer_rewrite/models/actor_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class ActorController extends GetxController {
   int _it = 0;
   int get it => _it;
 
-  final ActorModel _detales = Get.arguments;
+  late ActorModel _detales;
   ActorModel get detales => _detales;
 
   final RxInt _imagesCounter = 0.obs;
@@ -39,6 +40,7 @@ class ActorController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    _detales = Get.arguments ?? ActorModel(isError: true);
     getActor();
   }
 
@@ -50,9 +52,7 @@ class ActorController extends GetxController {
             link:
                 'https://api.themoviedb.org/3/person/${_detales.id}?api_key=$apiKey&language=${_detales.language.toString().replaceAll('_', '-')}')
         .then((value) {
-      _detales.bio = value.isError == false
-          ? value.biography
-          : 'Error ${value.errorMessage}';
+      _detales.bio = value.isError == false ? value.biography : 'error'.tr;
       _detales.age = value.isError == false ? value.age : 0;
       _detales.imdb = value.isError == false ? value.imdbId : '';
       if (value.isError == false) {
@@ -86,7 +86,7 @@ class ActorController extends GetxController {
   }
 
   // load actor award data from imdb api
-  getAward({required String id}) async {
+  void getAward({required String id}) async {
     await AwardsService()
         .getAward(link: 'https://imdb-api.com/en/API/NameAwards/$imdbKey/$id')
         .then((value) {
@@ -97,7 +97,7 @@ class ActorController extends GetxController {
   }
 
   // formatt actor's awards
-  awardCount({required AwardModel model}) {
+  void awardCount({required AwardModel model}) {
     awardMapLate = [];
     if (model.items!.isNotEmpty) {
       for (var i = 0; i < model.items!.length; i++) {
@@ -131,15 +131,21 @@ class ActorController extends GetxController {
       required bool isActor,
       required String id,
       required String language,
+      required bool isIos,
       required bool isShow}) async {
     ImagesModel model = ImagesModel();
     _imagesCounter.value = 1;
     Get.dialog(Obx(
       () => Center(
         child: _imagesCounter.value == 1
-            ? const CircularProgressIndicator(
-                color: orangeColor,
-              )
+            ? isIos
+                ? const CupertinoActivityIndicator(
+                    color: orangeColor,
+                    radius: 25,
+                  )
+                : const CircularProgressIndicator(
+                    color: orangeColor,
+                  )
             : model.isError == false
                 ? CarouselSlider.builder(
                     options: CarouselOptions(

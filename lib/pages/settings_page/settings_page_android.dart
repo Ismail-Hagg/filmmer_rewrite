@@ -245,34 +245,14 @@ class SettingsPageAndroid extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
-                              leading:
-                                  const Icon(Icons.logout, color: orangeColor),
-                              title: CustomText(
-                                  size: constraints.maxWidth * 0.04,
-                                  text: "logout".tr,
-                                  color: whiteColor),
-                              onTap: () {
-                                Get.defaultDialog(
-                                  title: '',
-                                  content: Column(
-                                    children: [
-                                      CustomText(
-                                          text: "logoutq".tr,
-                                          size: constraints.maxWidth * 0.04),
-                                      TextButton(
-                                          onPressed: () {
-                                            Get.find<AuthController>()
-                                                .signOut();
-                                          },
-                                          child: CustomText(
-                                            text: "answer".tr,
-                                            size: constraints.maxWidth * 0.04,
-                                            color: orangeColor,
-                                          ))
-                                    ],
-                                  ),
-                                );
-                              }),
+                            leading:
+                                const Icon(Icons.logout, color: orangeColor),
+                            title: CustomText(
+                                size: constraints.maxWidth * 0.04,
+                                text: "logout".tr,
+                                color: whiteColor),
+                            onTap: () => controller.logOut(context: context),
+                          ),
                         ),
                       ],
                     ),

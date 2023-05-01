@@ -10,6 +10,7 @@ import '../models/comment_model.dart';
 import '../models/user_model.dart';
 import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
+import 'auth_controller.dart';
 import 'home_controller.dart';
 
 class SettingsController extends GetxController {
@@ -207,6 +208,7 @@ class SettingsController extends GetxController {
         func: [
           () {
             Get.back();
+            _txt.clear();
           },
           changeUsername
         ],
@@ -237,6 +239,28 @@ class SettingsController extends GetxController {
             await FirestoreService().userUpdate(
                 userId: _model.userId.toString(), map: {'language': lang});
             Get.find<HomeController>().loadUser();
+          }
+        ],
+        context: context);
+  }
+
+  // logout
+  void logOut({
+    required BuildContext context,
+  }) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    platforMulti(
+        isIos: isIos,
+        title: "logoutq".tr,
+        buttonTitle: ['cancel'.tr, "answer".tr],
+        body: '',
+        func: [
+          () {
+            Get.back();
+          },
+          () async {
+            Get.back();
+            await Get.find<AuthController>().signOut();
           }
         ],
         context: context);

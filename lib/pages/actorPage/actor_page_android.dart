@@ -55,6 +55,7 @@ class ActorPageAndroid extends StatelessWidget {
                             width: width * 0.4,
                             child: GestureDetector(
                               onTap: () => controller.getImages(
+                                  isIos: false,
                                   height: height,
                                   width: width,
                                   isActor: true,

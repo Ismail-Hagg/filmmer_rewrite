@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class Comments extends StatelessWidget {
   final MovieDetaleController controller;
   final bool showView;
   final double width;
+  final bool isIos;
   CommentModel comment;
   final Function() like;
   final Function() disLike;
@@ -29,6 +31,7 @@ class Comments extends StatelessWidget {
     required this.disLike,
     required this.showView,
     required this.controller,
+    required this.isIos,
   }) : super(key: key);
 
   @override
@@ -136,12 +139,19 @@ class Comments extends StatelessWidget {
                           comment.userId == controller.userModel.userId
                               ? SizedBox(
                                   width: ((width - 16) * 0.8) * 0.13,
-                                  child: IconButton(
-                                      splashRadius: 15,
-                                      icon: Icon(Icons.delete,
-                                          color: orangeColor,
-                                          size: width * 0.06),
-                                      onPressed: delete),
+                                  child: isIos
+                                      ? CupertinoButton(
+                                          onPressed: delete,
+                                          child: const Icon(
+                                              CupertinoIcons.delete_solid,
+                                              color: orangeColor),
+                                        )
+                                      : IconButton(
+                                          splashRadius: 15,
+                                          icon: Icon(Icons.delete,
+                                              color: orangeColor,
+                                              size: width * 0.06),
+                                          onPressed: delete),
                                 )
                               : Container(width: 0),
                         ],
@@ -207,16 +217,25 @@ class Comments extends StatelessWidget {
                                   ? Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 8.0),
-                                      child: TextButton(
-                                          style: TextButton.styleFrom(
-                                            foregroundColor: orangeColor,
-                                          ),
-                                          onPressed: nav,
-                                          child: CustomText(
-                                              text:
-                                                  '${comment.subComments.length} ${'replies'.tr}',
-                                              color: orangeColor,
-                                              size: width * 0.037)),
+                                      child: isIos
+                                          ? CupertinoButton(
+                                              onPressed: nav,
+                                              child: CustomText(
+                                                  text:
+                                                      '${comment.subComments.length} ${'replies'.tr}',
+                                                  color: orangeColor,
+                                                  size: width * 0.037),
+                                            )
+                                          : TextButton(
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: orangeColor,
+                                              ),
+                                              onPressed: nav,
+                                              child: CustomText(
+                                                  text:
+                                                      '${comment.subComments.length} ${'replies'.tr}',
+                                                  color: orangeColor,
+                                                  size: width * 0.037)),
                                     )
                                   : Container()
                               : Container()

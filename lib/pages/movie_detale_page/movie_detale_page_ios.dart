@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../controllers/movie_detale_controller.dart';
 import '../../helper/constants.dart';
 import '../../helper/utils.dart';
+import '../../widgets/comment_widget.dart';
 import '../../widgets/content_scrolling.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/menu_widget.dart';
@@ -18,7 +20,7 @@ class MovieDetalePageIos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: secondaryColor,
       child: GetBuilder<MovieDetaleController>(
           init: Get.put(MovieDetaleController()),
@@ -463,6 +465,138 @@ class MovieDetalePageIos extends StatelessWidget {
                                     )
                                   : Container()
                           : Container(),
+                      controll.detales.isError == false
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                          child: CupertinoTextField(
+                                        placeholderStyle: TextStyle(
+                                            color: orangeColor,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.04),
+                                        placeholder: 'comments'.tr,
+                                        controller: controll.txtControlller,
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        cursorColor: orangeColor,
+                                        decoration: const BoxDecoration(
+                                            color: mainColor),
+                                        style: TextStyle(
+                                            color: orangeColor,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.04),
+                                        // decoration: InputDecoration(
+                                        //   border: InputBorder.none,
+                                        //   hintText: 'comments'.tr,
+                                        //   hintStyle: const TextStyle(
+                                        //     color: orangeColor,
+                                        //   ),
+                                        // ),
+                                      )),
+                                      controll.commentLoader == 0
+                                          ? CupertinoButton(
+                                              child: Icon(
+                                                  CupertinoIcons.paperplane,
+                                                  color: orangeColor,
+                                                  size: width * 0.06),
+                                              onPressed: () =>
+                                                  controll.uploadComment(
+                                                      context: context,
+                                                      movieId: controll
+                                                          .detales.id
+                                                          .toString(),
+                                                      comment: controll
+                                                          .txtControlller.text
+                                                          .trim()))
+                                          : const Center(
+                                              child: CupertinoActivityIndicator(
+                                                  color: orangeColor),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Divider(
+                                    color: orangeColor,
+                                    height: 2,
+                                  ),
+                                ),
+                                StreamBuilder(
+                                    stream: controll.commentStream,
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return const Center(
+                                          child: CupertinoActivityIndicator(
+                                            color: orangeColor,
+                                          ),
+                                        );
+                                      }
+                                      controll.modelComments(
+                                          lst: snapshot.data!.docs);
+                                      return Column(
+                                          children: List.generate(
+                                              controll.commentsList.length,
+                                              (index) => Material(
+                                                    type: MaterialType
+                                                        .transparency,
+                                                    child: Comments(
+                                                        isIos: true,
+                                                        controller: controll,
+                                                        showView: true,
+                                                        width: width,
+                                                        comment: controll.commentsList[
+                                                            index],
+                                                        like: () => controll.likeSystem(
+                                                            true,
+                                                            controll
+                                                                .commentsList[
+                                                                    index]
+                                                                .postId,
+                                                            controll.detales.id
+                                                                .toString(),
+                                                            snapshot.data!
+                                                                .docs[index].id,
+                                                            controll
+                                                                .commentsList[
+                                                                    index]
+                                                                .likeCount),
+                                                        delete: () =>
+                                                            controll.deleteComment(
+                                                                context:
+                                                                    context,
+                                                                movieId: controll
+                                                                    .detales.id
+                                                                    .toString(),
+                                                                postId: snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                    .id),
+                                                        nav: () => controll.navToSubComment(
+                                                            controller: controll,
+                                                            movieId: controll.detales.id.toString(),
+                                                            postId: controll.commentsList[index].postId,
+                                                            firePostId: snapshot.data!.docs[index].id,
+                                                            userId: controll.commentsList[index].userId,
+                                                            token: controll.commentsList[index].token),
+                                                        disLike: () => controll.likeSystem(false, controll.commentsList[index].postId, controll.detales.id.toString(), snapshot.data!.docs[index].id, controll.commentsList[index].dislikeCount)),
+                                                  )));
+                                    }),
+                              ],
+                            )
+                          : Container()
                     ],
                   ),
                 );

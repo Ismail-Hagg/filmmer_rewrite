@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,6 @@ import '../../controllers/keeping_controller.dart';
 import '../../helper/constants.dart';
 import '../../models/results_model.dart';
 import '../../widgets/custom_text.dart';
-import '../../widgets/image_network.dart';
 import '../../widgets/keeping_widget.dart';
 
 class KeepingPageAndtoid extends StatelessWidget {
@@ -14,6 +14,7 @@ class KeepingPageAndtoid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
     final EpisodeKeepingColtroller controller =
         Get.put(EpisodeKeepingColtroller());
     return Scaffold(
@@ -55,7 +56,7 @@ class KeepingPageAndtoid extends StatelessWidget {
                                   init: Get.find<EpisodeKeepingColtroller>(),
                                   builder: (thing) => Container(
                                     color: secondaryColor,
-                                    height: height * 0.55,
+                                    height: height * 0.6,
                                     child: Column(
                                       children: [
                                         SizedBox(
@@ -80,26 +81,62 @@ class KeepingPageAndtoid extends StatelessWidget {
                                                       ),
                                                       Row(
                                                         children: [
-                                                          MaterialButton(
-                                                              shape:
-                                                                  const CircleBorder(),
-                                                              onPressed: () => control.counting(
-                                                                  control
-                                                                      .models[
-                                                                          index]
-                                                                      .myEpisode!
-                                                                      .toInt(),
-                                                                  index,
-                                                                  'add',
-                                                                  true),
-                                                              color: orangeColor
-                                                                  .withOpacity(
-                                                                      0.7),
-                                                              child: const Icon(
-                                                                Icons.add,
-                                                                color:
-                                                                    whiteColor,
-                                                              )),
+                                                          isIos
+                                                              ? Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16.0),
+                                                                  child:
+                                                                      CupertinoButton(
+                                                                    borderRadius: const BorderRadius
+                                                                            .all(
+                                                                        Radius.circular(
+                                                                            100.0)),
+                                                                    onPressed: () => control.counting(
+                                                                        control
+                                                                            .models[index]
+                                                                            .myEpisode!
+                                                                            .toInt(),
+                                                                        index,
+                                                                        'add',
+                                                                        true),
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(0),
+                                                                    color: orangeColor
+                                                                        .withOpacity(
+                                                                            0.7),
+                                                                    child:
+                                                                        const Icon(
+                                                                      CupertinoIcons
+                                                                          .add,
+                                                                      color:
+                                                                          whiteColor,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : MaterialButton(
+                                                                  shape:
+                                                                      const CircleBorder(),
+                                                                  onPressed: () => control.counting(
+                                                                      control
+                                                                          .models[
+                                                                              index]
+                                                                          .myEpisode!
+                                                                          .toInt(),
+                                                                      index,
+                                                                      'add',
+                                                                      true),
+                                                                  color: orangeColor
+                                                                      .withOpacity(
+                                                                          0.7),
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons.add,
+                                                                    color:
+                                                                        whiteColor,
+                                                                  )),
                                                           CustomText(
                                                             text: control
                                                                 .models[index]
@@ -107,26 +144,63 @@ class KeepingPageAndtoid extends StatelessWidget {
                                                                 .toString(),
                                                             color: orangeColor,
                                                           ),
-                                                          MaterialButton(
-                                                              shape:
-                                                                  const CircleBorder(),
-                                                              onPressed: () => control.counting(
-                                                                  control
-                                                                      .models[
-                                                                          index]
-                                                                      .myEpisode!
-                                                                      .toInt(),
-                                                                  index,
-                                                                  'sub',
-                                                                  true),
-                                                              color: orangeColor
-                                                                  .withOpacity(
-                                                                      0.7),
-                                                              child: const Icon(
-                                                                Icons.remove,
-                                                                color:
-                                                                    whiteColor,
-                                                              ))
+                                                          isIos
+                                                              ? Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16.0),
+                                                                  child:
+                                                                      CupertinoButton(
+                                                                    onPressed: () => control.counting(
+                                                                        control
+                                                                            .models[index]
+                                                                            .myEpisode!
+                                                                            .toInt(),
+                                                                        index,
+                                                                        'sub',
+                                                                        true),
+                                                                    borderRadius: const BorderRadius
+                                                                            .all(
+                                                                        Radius.circular(
+                                                                            100.0)),
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(0),
+                                                                    color: orangeColor
+                                                                        .withOpacity(
+                                                                            0.7),
+                                                                    child:
+                                                                        const Icon(
+                                                                      CupertinoIcons
+                                                                          .minus,
+                                                                      color:
+                                                                          whiteColor,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : MaterialButton(
+                                                                  shape:
+                                                                      const CircleBorder(),
+                                                                  onPressed: () => control.counting(
+                                                                      control
+                                                                          .models[
+                                                                              index]
+                                                                          .myEpisode!
+                                                                          .toInt(),
+                                                                      index,
+                                                                      'sub',
+                                                                      true),
+                                                                  color: orangeColor
+                                                                      .withOpacity(
+                                                                          0.7),
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .remove,
+                                                                    color:
+                                                                        whiteColor,
+                                                                  ))
                                                         ],
                                                       )
                                                     ],
@@ -147,26 +221,62 @@ class KeepingPageAndtoid extends StatelessWidget {
                                                       ),
                                                       Row(
                                                         children: [
-                                                          MaterialButton(
-                                                              shape:
-                                                                  const CircleBorder(),
-                                                              onPressed: () => control.counting(
-                                                                  control
-                                                                      .models[
-                                                                          index]
-                                                                      .mySeason!
-                                                                      .toInt(),
-                                                                  index,
-                                                                  'add',
-                                                                  false),
-                                                              color: orangeColor
-                                                                  .withOpacity(
-                                                                      0.7),
-                                                              child: const Icon(
-                                                                Icons.add,
-                                                                color:
-                                                                    whiteColor,
-                                                              )),
+                                                          isIos
+                                                              ? Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16.0),
+                                                                  child:
+                                                                      CupertinoButton(
+                                                                    borderRadius: const BorderRadius
+                                                                            .all(
+                                                                        Radius.circular(
+                                                                            100.0)),
+                                                                    onPressed: () => control.counting(
+                                                                        control
+                                                                            .models[index]
+                                                                            .mySeason!
+                                                                            .toInt(),
+                                                                        index,
+                                                                        'add',
+                                                                        false),
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(0),
+                                                                    color: orangeColor
+                                                                        .withOpacity(
+                                                                            0.7),
+                                                                    child:
+                                                                        const Icon(
+                                                                      CupertinoIcons
+                                                                          .add,
+                                                                      color:
+                                                                          whiteColor,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : MaterialButton(
+                                                                  shape:
+                                                                      const CircleBorder(),
+                                                                  onPressed: () => control.counting(
+                                                                      control
+                                                                          .models[
+                                                                              index]
+                                                                          .mySeason!
+                                                                          .toInt(),
+                                                                      index,
+                                                                      'add',
+                                                                      false),
+                                                                  color: orangeColor
+                                                                      .withOpacity(
+                                                                          0.7),
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons.add,
+                                                                    color:
+                                                                        whiteColor,
+                                                                  )),
                                                           CustomText(
                                                             text: control
                                                                 .models[index]
@@ -174,27 +284,64 @@ class KeepingPageAndtoid extends StatelessWidget {
                                                                 .toString(),
                                                             color: orangeColor,
                                                           ),
-                                                          MaterialButton(
-                                                              //minWiCdth: width * 0.3,
-                                                              shape:
-                                                                  const CircleBorder(),
-                                                              onPressed: () => control.counting(
-                                                                  control
-                                                                      .models[
-                                                                          index]
-                                                                      .mySeason!
-                                                                      .toInt(),
-                                                                  index,
-                                                                  'sub',
-                                                                  false),
-                                                              color: orangeColor
-                                                                  .withOpacity(
-                                                                      0.7),
-                                                              child: const Icon(
-                                                                Icons.remove,
-                                                                color:
-                                                                    whiteColor,
-                                                              ))
+                                                          isIos
+                                                              ? Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16.0),
+                                                                  child:
+                                                                      CupertinoButton(
+                                                                    borderRadius: const BorderRadius
+                                                                            .all(
+                                                                        Radius.circular(
+                                                                            100.0)),
+                                                                    onPressed: () => control.counting(
+                                                                        control
+                                                                            .models[index]
+                                                                            .mySeason!
+                                                                            .toInt(),
+                                                                        index,
+                                                                        'sub',
+                                                                        false),
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(0),
+                                                                    color: orangeColor
+                                                                        .withOpacity(
+                                                                            0.7),
+                                                                    child:
+                                                                        const Icon(
+                                                                      CupertinoIcons
+                                                                          .minus,
+                                                                      color:
+                                                                          whiteColor,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : MaterialButton(
+                                                                  //minWiCdth: width * 0.3,
+                                                                  shape:
+                                                                      const CircleBorder(),
+                                                                  onPressed: () => control.counting(
+                                                                      control
+                                                                          .models[
+                                                                              index]
+                                                                          .mySeason!
+                                                                          .toInt(),
+                                                                      index,
+                                                                      'sub',
+                                                                      false),
+                                                                  color: orangeColor
+                                                                      .withOpacity(
+                                                                          0.7),
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .remove,
+                                                                    color:
+                                                                        whiteColor,
+                                                                  ))
                                                         ],
                                                       )
                                                     ],
@@ -317,22 +464,42 @@ class KeepingPageAndtoid extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 12),
-                                          width: width,
-                                          height: (height * 0.55) * 0.15,
-                                          child: MaterialButton(
-                                            onPressed: () =>
-                                                control.updateEpisode(index),
-                                            color: orangeColor.withOpacity(0.7),
-                                            child: CustomText(
-                                              text: 'edit'.tr,
-                                              color: whiteColor,
-                                              size: width * 0.04,
-                                            ),
-                                          ),
-                                        )
+                                        isIos
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8.0),
+                                                child: CupertinoButton(
+                                                  onPressed: () => control
+                                                      .updateEpisode(index),
+                                                  color: orangeColor
+                                                      .withOpacity(0.7),
+                                                  child: CustomText(
+                                                    text: 'edit'.tr,
+                                                    color: whiteColor,
+                                                    size: width * 0.04,
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 12),
+                                                width: width,
+                                                height: (height * 0.55) * 0.15,
+                                                child: MaterialButton(
+                                                  onPressed: () => control
+                                                      .updateEpisode(index),
+                                                  color: orangeColor
+                                                      .withOpacity(0.7),
+                                                  child: CustomText(
+                                                    text: 'edit'.tr,
+                                                    color: whiteColor,
+                                                    size: width * 0.04,
+                                                  ),
+                                                ),
+                                              )
                                       ],
                                     ),
                                   ),

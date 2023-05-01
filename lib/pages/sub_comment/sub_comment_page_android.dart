@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class SubbCommentPageAndroid extends StatelessWidget {
   final String firePostId;
   final String token;
   final String userId;
+  final bool isIos;
   const SubbCommentPageAndroid(
       {Key? key,
       required this.movieId,
@@ -21,7 +23,8 @@ class SubbCommentPageAndroid extends StatelessWidget {
       required this.firePostId,
       required this.pastController,
       required this.token,
-      required this.userId})
+      required this.userId,
+      required this.isIos})
       : super(key: key);
 
   @override
@@ -63,6 +66,7 @@ class SubbCommentPageAndroid extends StatelessWidget {
                         child: Column(
                           children: [
                             Comments(
+                              isIos: isIos,
                               controller: pastController,
                               showView: false,
                               width: width,
@@ -100,6 +104,7 @@ class SubbCommentPageAndroid extends StatelessWidget {
                                 children: List.generate(
                                     controller.commentsList.length, (index) {
                               return Comments(
+                                isIos: isIos,
                                 controller: pastController,
                                 showView: false,
                                 width: width,
@@ -146,45 +151,83 @@ class SubbCommentPageAndroid extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                                child: TextField(
-                              controller: controller.txtControlller,
-                              focusNode: controller.myFocusNode,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              cursorColor: orangeColor,
-                              style: TextStyle(
-                                  color: orangeColor, fontSize: width * 0.04),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'comments'.tr,
-                                hintStyle: const TextStyle(
-                                  color: orangeColor,
-                                ),
-                              ),
-                            )),
+                                child: isIos
+                                    ? CupertinoTextField(
+                                        placeholderStyle: const TextStyle(
+                                          color: orangeColor,
+                                        ),
+                                        placeholder: 'comments'.tr,
+                                        controller: controller.txtControlller,
+                                        focusNode: controller.myFocusNode,
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        cursorColor: orangeColor,
+                                        style: TextStyle(
+                                            color: orangeColor,
+                                            fontSize: width * 0.04),
+                                        decoration: const BoxDecoration(),
+                                      )
+                                    : TextField(
+                                        controller: controller.txtControlller,
+                                        focusNode: controller.myFocusNode,
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        cursorColor: orangeColor,
+                                        style: TextStyle(
+                                            color: orangeColor,
+                                            fontSize: width * 0.04),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'comments'.tr,
+                                          hintStyle: const TextStyle(
+                                            color: orangeColor,
+                                          ),
+                                        ),
+                                      )),
                             GetBuilder(
                               init: controller,
                               builder: (thing) => controller.loader == 0
-                                  ? IconButton(
-                                      splashRadius: 15,
-                                      icon: Icon(Icons.send,
-                                          color: orangeColor,
-                                          size: width * 0.06),
-                                      onPressed: () {
-                                        controller.uploadReply(
-                                            comment: controller
-                                                .txtControlller.text
-                                                .trim(),
-                                            movieId: movieId,
-                                            firePostId: firePostId,
-                                            subs: controller
-                                                .mainComment.subComments,
-                                            postId: mainPostId,
-                                            token: token);
-                                      })
-                                  : const Center(
-                                      child: CircularProgressIndicator(
-                                          color: orangeColor),
+                                  ? isIos
+                                      ? CupertinoButton(
+                                          child: const Icon(
+                                            CupertinoIcons.paperplane_fill,
+                                            color: orangeColor,
+                                          ),
+                                          onPressed: () {
+                                            controller.uploadReply(
+                                                comment: controller
+                                                    .txtControlller.text
+                                                    .trim(),
+                                                movieId: movieId,
+                                                firePostId: firePostId,
+                                                subs: controller
+                                                    .mainComment.subComments,
+                                                postId: mainPostId,
+                                                token: token);
+                                          })
+                                      : IconButton(
+                                          splashRadius: 15,
+                                          icon: Icon(Icons.send,
+                                              color: orangeColor,
+                                              size: width * 0.06),
+                                          onPressed: () {
+                                            controller.uploadReply(
+                                                comment: controller
+                                                    .txtControlller.text
+                                                    .trim(),
+                                                movieId: movieId,
+                                                firePostId: firePostId,
+                                                subs: controller
+                                                    .mainComment.subComments,
+                                                postId: mainPostId,
+                                                token: token);
+                                          })
+                                  : Center(
+                                      child: isIos
+                                          ? const CupertinoActivityIndicator(
+                                              color: orangeColor)
+                                          : const CircularProgressIndicator(
+                                              color: orangeColor),
                                     ),
                             )
                           ],

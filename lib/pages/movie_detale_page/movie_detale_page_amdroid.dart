@@ -465,6 +465,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                     children: List.generate(
                                         controll.commentsList.length,
                                         (index) => Comments(
+                                          isIos: false,
                                             controller: controll,
                                             showView: true,
                                             width: width,
