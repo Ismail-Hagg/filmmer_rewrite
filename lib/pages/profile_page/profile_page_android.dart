@@ -1,4 +1,5 @@
 import 'package:filmmer_rewrite/models/user_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,7 @@ import '../../controllers/home_controller.dart';
 import '../../controllers/profile_controller.dart';
 import '../../helper/constants.dart';
 import '../../models/chat_page_model.dart';
+import '../../widgets/cupertino_inkwell.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_network.dart';
 import '../chat_page/chat_page.dart';
@@ -16,8 +18,9 @@ class ProfilePageAndroid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
     ProfileController controller =
-        Get.put(ProfileController(context: context, isIos: false));
+        Get.put(ProfileController(context: context, isIos: isIos));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: mainColor,
@@ -66,35 +69,69 @@ class ProfilePageAndroid extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
-                                  onTap: () => controller.goBack(),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: whiteColor,
-                                    size: width * 0.065,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: controller.detales.usreId !=
-                                          controller.userModel.userId
-                                      ? () => Get.to(() => const ChatPage(),
-                                          arguments: ChatPageModel(
-                                              userId: controller.detales.usreId,
-                                              fromList: false,
-                                              userName:
-                                                  controller.detales.usreName,
-                                              userModel: UserModel()))
-                                      : () =>
-                                          Get.to(() => const SettingsPage()),
-                                  child: Icon(
-                                    controller.detales.usreId ==
+                                isIos
+                                    ? CupertinoButton(
+                                        padding: const EdgeInsets.all(0),
+                                        child: const Icon(
+                                          CupertinoIcons.back,
+                                          color: whiteColor,
+                                        ),
+                                        onPressed: () => controller.goBack(),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => controller.goBack(),
+                                        child: Icon(
+                                          Icons.arrow_back,
+                                          color: whiteColor,
+                                          size: width * 0.065,
+                                        ),
+                                      ),
+                                isIos
+                                    ? controller.detales.usreId !=
                                             controller.userModel.userId
-                                        ? Icons.settings
-                                        : Icons.message,
-                                    color: whiteColor,
-                                    size: width * 0.065,
-                                  ),
-                                ),
+                                        ? CupertinoButton(
+                                            padding: const EdgeInsets.all(0),
+                                            onPressed: () => Get.to(
+                                                () => const ChatPage(),
+                                                arguments: ChatPageModel(
+                                                    userId: controller
+                                                        .detales.usreId,
+                                                    fromList: false,
+                                                    userName: controller
+                                                        .detales.usreName,
+                                                    userModel: UserModel())),
+                                            child: const Icon(
+                                              CupertinoIcons.paperplane_fill,
+                                              color: whiteColor,
+                                            ),
+                                          )
+                                        : const SizedBox(
+                                            width: 0,
+                                            height: 0,
+                                          )
+                                    : GestureDetector(
+                                        onTap: controller.detales.usreId !=
+                                                controller.userModel.userId
+                                            ? () => Get.to(
+                                                () => const ChatPage(),
+                                                arguments: ChatPageModel(
+                                                    userId: controller
+                                                        .detales.usreId,
+                                                    fromList: false,
+                                                    userName: controller
+                                                        .detales.usreName,
+                                                    userModel: UserModel()))
+                                            : () => Get.to(
+                                                () => const SettingsPage()),
+                                        child: Icon(
+                                          controller.detales.usreId ==
+                                                  controller.userModel.userId
+                                              ? Icons.settings
+                                              : Icons.message,
+                                          color: whiteColor,
+                                          size: width * 0.065,
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -131,22 +168,39 @@ class ProfilePageAndroid extends StatelessWidget {
                         children: [
                           Column(
                             children: [
-                              InkWell(
-                                onTap: () => controller.flipper(0),
-                                child: SizedBox(
-                                  height: ((height * 0.65) * 0.1) * 0.97,
-                                  width: width / 3,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: 'favs'.tr,
-                                      color: controller.counter == 0
-                                          ? whiteColor
-                                          : whiteColor.withOpacity(0.5),
-                                      size: width * 0.04,
+                              isIos
+                                  ? CupertinoInkWell(
+                                      onPressed: () => controller.flipper(0),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'favs'.tr,
+                                            color: controller.counter == 0
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () => controller.flipper(0),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'favs'.tr,
+                                            color: controller.counter == 0
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                               Container(
                                   height: ((height * 0.65) * 0.1) * 0.03,
                                   width: width / 3,
@@ -157,22 +211,39 @@ class ProfilePageAndroid extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              InkWell(
-                                onTap: () => controller.flipper(1),
-                                child: SizedBox(
-                                  height: ((height * 0.65) * 0.1) * 0.97,
-                                  width: width / 3,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: 'wlist'.tr,
-                                      color: controller.counter == 1
-                                          ? whiteColor
-                                          : whiteColor.withOpacity(0.5),
-                                      size: width * 0.04,
+                              isIos
+                                  ? CupertinoInkWell(
+                                      onPressed: () => controller.flipper(1),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'wlist'.tr,
+                                            color: controller.counter == 1
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () => controller.flipper(1),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'wlist'.tr,
+                                            color: controller.counter == 1
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                               Container(
                                   height: ((height * 0.65) * 0.1) * 0.03,
                                   width: width / 3,
@@ -183,22 +254,39 @@ class ProfilePageAndroid extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              InkWell(
-                                onTap: () => controller.flipper(2),
-                                child: SizedBox(
-                                  height: ((height * 0.65) * 0.1) * 0.97,
-                                  width: width / 3,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: 'watching'.tr,
-                                      color: controller.counter == 2
-                                          ? whiteColor
-                                          : whiteColor.withOpacity(0.5),
-                                      size: width * 0.04,
+                              isIos
+                                  ? CupertinoInkWell(
+                                      onPressed: () => controller.flipper(2),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'watching'.tr,
+                                            color: controller.counter == 2
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () => controller.flipper(2),
+                                      child: SizedBox(
+                                        height: ((height * 0.65) * 0.1) * 0.97,
+                                        width: width / 3,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: 'watching'.tr,
+                                            color: controller.counter == 2
+                                                ? whiteColor
+                                                : whiteColor.withOpacity(0.5),
+                                            size: width * 0.04,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                               Container(
                                   height: ((height * 0.65) * 0.1) * 0.03,
                                   width: width / 3,

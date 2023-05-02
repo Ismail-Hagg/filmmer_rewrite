@@ -5,8 +5,8 @@ class AwardModel {
   List<Items>? items;
   String? nameAwardsHtml;
   String? errorMessage;
-  String? errorMessageConnection;
   bool? isError;
+  String? localErrorMessage;
 
   AwardModel(
       {this.imDbId,
@@ -16,24 +16,22 @@ class AwardModel {
       this.nameAwardsHtml,
       this.errorMessage,
       this.isError,
-      this.errorMessageConnection});
+      this.localErrorMessage});
 
   AwardModel.fromJson(Map<String, dynamic> json) {
-    imDbId = json['imDbId'] ?? 'null';
-    name = json['name'] ?? 'null';
-    description = json['description'] ?? 'null';
+    isError = false;
+    localErrorMessage = '';
+    imDbId = json['imDbId'];
+    name = json['name'];
+    description = json['description'];
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
         items!.add(Items.fromJson(v));
       });
-    } else {
-      items = <Items>[];
     }
-    nameAwardsHtml = json['nameAwardsHtml'] ?? 'null';
+    nameAwardsHtml = json['nameAwardsHtml'];
     errorMessage = json['errorMessage'];
-    isError = false;
-    errorMessageConnection = '';
   }
 
   Map<String, dynamic> toJson() {
@@ -52,16 +50,16 @@ class AwardModel {
 
 class Items {
   String? eventTitle;
-  List<OutcomeItems>? outcomeItems;
+  List<NameAwardEventDetails>? nameAwardEventDetails;
 
-  Items({this.eventTitle, this.outcomeItems});
+  Items({this.eventTitle, this.nameAwardEventDetails});
 
   Items.fromJson(Map<String, dynamic> json) {
     eventTitle = json['eventTitle'];
-    if (json['outcomeItems'] != null) {
-      outcomeItems = <OutcomeItems>[];
-      json['outcomeItems'].forEach((v) {
-        outcomeItems!.add(OutcomeItems.fromJson(v));
+    if (json['nameAwardEventDetails'] != null) {
+      nameAwardEventDetails = <NameAwardEventDetails>[];
+      json['nameAwardEventDetails'].forEach((v) {
+        nameAwardEventDetails!.add(NameAwardEventDetails.fromJson(v));
       });
     }
   }
@@ -69,64 +67,35 @@ class Items {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['eventTitle'] = eventTitle;
-    if (outcomeItems != null) {
-      data['outcomeItems'] = outcomeItems!.map((v) => v.toJson()).toList();
+    if (nameAwardEventDetails != null) {
+      data['nameAwardEventDetails'] =
+          nameAwardEventDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class OutcomeItems {
-  String? outcomeYear;
-  String? outcomeTitle;
-  String? outcomeCategory;
-  List<OutcomeDetails>? outcomeDetails;
+class NameAwardEventDetails {
+  String? image;
+  String? title;
+  String? forr;
+  String? description;
 
-  OutcomeItems(
-      {this.outcomeYear,
-      this.outcomeTitle,
-      this.outcomeCategory,
-      this.outcomeDetails});
+  NameAwardEventDetails({this.image, this.title, this.forr, this.description});
 
-  OutcomeItems.fromJson(Map<String, dynamic> json) {
-    outcomeYear = json['outcomeYear'];
-    outcomeTitle = json['outcomeTitle'];
-    outcomeCategory = json['outcomeCategory'];
-    if (json['outcomeDetails'] != null) {
-      outcomeDetails = <OutcomeDetails>[];
-      json['outcomeDetails'].forEach((v) {
-        outcomeDetails!.add(OutcomeDetails.fromJson(v));
-      });
-    }
+  NameAwardEventDetails.fromJson(Map<String, dynamic> json) {
+    image = json['image'];
+    title = json['title'];
+    forr = json['for'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['outcomeYear'] = outcomeYear;
-    data['outcomeTitle'] = outcomeTitle;
-    data['outcomeCategory'] = outcomeCategory;
-    if (outcomeDetails != null) {
-      data['outcomeDetails'] = outcomeDetails!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class OutcomeDetails {
-  String? plainText;
-  String? html;
-
-  OutcomeDetails({this.plainText, this.html});
-
-  OutcomeDetails.fromJson(Map<String, dynamic> json) {
-    plainText = json['plainText'];
-    html = json['html'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['plainText'] = plainText;
-    data['html'] = html;
+    data['image'] = image;
+    data['title'] = title;
+    data['for'] = forr;
+    data['description'] = description;
     return data;
   }
 }

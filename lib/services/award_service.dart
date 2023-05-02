@@ -13,12 +13,12 @@ class AwardsService {
         result = jsonDecode(response.body);
         model = AwardModel.fromJson(result);
       } else {
-        model = AwardModel(
-            isError: true, errorMessageConnection: 'status code not 200');
+        model =
+            AwardModel(isError: true, localErrorMessage: 'status code not 200');
       }
       return model;
     } catch (e) {
-      return AwardModel(isError: true, errorMessageConnection: e.toString());
+      return AwardModel(isError: true, localErrorMessage: e.toString());
     }
   }
 }

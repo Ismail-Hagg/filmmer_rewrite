@@ -199,10 +199,8 @@ class ActorPageAndroid extends StatelessWidget {
                               );
                             },
                             separatorBuilder: (context, index) {
-                              return const CustomText(
-                                text: '  ',
-                                size: 30,
-                                color: whiteColor,
+                              return SizedBox(
+                                width: width * 0.01,
                               );
                             },
                             itemCount: controller.awardMap.length),

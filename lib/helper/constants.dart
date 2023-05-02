@@ -10,7 +10,7 @@ const blackClor = Colors.black;
 const whiteColor = Colors.white;
 const apiKey = 'e11cff04b1fcf50079f6918e5199d691';
 
-const imdbKey = 'k_1dh42prh';
+const imdbKey = 'k_b4zpyb19';
 
 const imagebase = 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2';
 

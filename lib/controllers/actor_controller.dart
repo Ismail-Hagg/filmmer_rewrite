@@ -99,14 +99,17 @@ class ActorController extends GetxController {
   // formatt actor's awards
   void awardCount({required AwardModel model}) {
     awardMapLate = [];
-    if (model.items!.isNotEmpty) {
+    if (model.isError == false && model.errorMessage == '') {
       for (var i = 0; i < model.items!.length; i++) {
         _str = '';
         _it = 0;
 
         _str = model.items![i].eventTitle.toString();
-        for (var x = 0; x < model.items![i].outcomeItems!.length; x++) {
-          if (model.items![i].outcomeItems![x].outcomeTitle == 'Winner') {
+        for (var x = 0;
+            x < model.items![i].nameAwardEventDetails!.length;
+            x++) {
+          if (model.items![i].nameAwardEventDetails![x].title!
+              .contains('Winner')) {
             _it++;
           }
         }

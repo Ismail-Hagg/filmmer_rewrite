@@ -154,53 +154,54 @@ class ActorPageIos extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: SizedBox(
-                              width: width,
-                              height: (height * 0.7) * 0.15 - 16,
-                              child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return SizedBox(
-                                      width: width * 0.3,
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CustomText(
-                                                isMat: true,
-                                                align: TextAlign.center,
-                                                text: controller.awardMap[index]
-                                                        ['count']
-                                                    .toString(),
-                                                size: width * 0.04,
-                                                color: Colors.white),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            CustomText(
-                                              isMat: true,
-                                              maxline: 2,
-                                              text: controller.awardMap[index]
-                                                      ['awardName']
-                                                  .toString(),
-                                              size: width * 0.033,
-                                              color: orangeColor,
-                                              flow: TextOverflow.ellipsis,
-                                              align: TextAlign.center,
-                                            )
-                                          ]),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return const CustomText(
-                                      isMat: true,
-                                      text: '  ',
-                                      size: 30,
-                                      color: whiteColor,
-                                    );
-                                  },
-                                  itemCount: controller.awardMap.length),
-                            ),
+                                width: width,
+                                height: (height * 0.7) * 0.15 - 16,
+                                child: controller.awardMap.isNotEmpty
+                                    ? ListView.separated(
+                                        scrollDirection: Axis.horizontal,
+                                        physics: const BouncingScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return SizedBox(
+                                            width: width * 0.3,
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  CustomText(
+                                                      isMat: true,
+                                                      align: TextAlign.center,
+                                                      text: controller
+                                                          .awardMap[index]
+                                                              ['count']
+                                                          .toString(),
+                                                      size: width * 0.04,
+                                                      color: Colors.white),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  CustomText(
+                                                    isMat: true,
+                                                    maxline: 2,
+                                                    text: controller
+                                                        .awardMap[index]
+                                                            ['awardName']
+                                                        .toString(),
+                                                    size: width * 0.033,
+                                                    color: orangeColor,
+                                                    flow: TextOverflow.ellipsis,
+                                                    align: TextAlign.center,
+                                                  )
+                                                ]),
+                                          );
+                                        },
+                                        separatorBuilder: (context, index) {
+                                          return SizedBox(
+                                            width: width * 0.01,
+                                          );
+                                        },
+                                        itemCount: controller.awardMap.length)
+                                    : Container()),
                           ),
                           SizedBox(
                             width: width,
