@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/pages/profile_page/profile_page_android.dart';
+import '/pages/profile_page/profile_page_android.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {

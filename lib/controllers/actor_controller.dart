@@ -1,12 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:filmmer_rewrite/models/actor_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
+import '../models/actor_model.dart';
 import '../models/award_model.dart';
 import '../models/image_model.dart';
+import '../models/results_model.dart';
 import '../services/actor_cast_service.dart';
 import '../services/actor_detale_service.dart';
 import '../services/award_service.dart';
@@ -78,7 +79,14 @@ class ActorController extends GetxController {
         if (element == 'movie') {
           _detales.movieResults = value.res;
         } else {
-          _detales.tvResults = value.res;
+          List<Results> lst = [];
+          for (var element in value.res!) {
+            if (!element.genreIds!.contains(10767) &&
+                !element.genreIds!.contains(10763)) {
+              lst.add(element);
+            }
+          }
+          _detales.tvResults = lst;
         }
       });
     }

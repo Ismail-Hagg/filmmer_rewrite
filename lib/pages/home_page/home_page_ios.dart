@@ -1,11 +1,10 @@
-import 'package:filmmer_rewrite/helper/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../controllers/home_controller.dart';
+import '../../helper/constants.dart';
 import '../../widgets/content_scroll_ios.dart';
 import '../../widgets/custom_text.dart';
 

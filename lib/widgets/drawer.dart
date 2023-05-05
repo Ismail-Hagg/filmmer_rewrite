@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:filmmer_rewrite/controllers/auth_controller.dart';
-import 'package:filmmer_rewrite/controllers/home_controller.dart';
-import 'package:filmmer_rewrite/pages/favorites_page/favourites_page.dart';
-import 'package:filmmer_rewrite/pages/keeping_page/keeping_page_android.dart';
+import '../controllers/auth_controller.dart';
+import '../controllers/home_controller.dart';
+import '../pages/favorites_page/favourites_page.dart';
+import '../pages/keeping_page/keeping_page_android.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

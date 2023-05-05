@@ -1,5 +1,3 @@
-import 'package:filmmer_rewrite/pages/home_page/home_page_android.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +6,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../controllers/home_controller.dart';
 import '../../helper/constants.dart';
 import '../../widgets/drawer_item_widget.dart';
+import 'home_page_android.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

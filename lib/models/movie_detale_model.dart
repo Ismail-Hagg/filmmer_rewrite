@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/models/homepage_model.dart';
+import '../models/homepage_model.dart';
 
 import '../helper/constants.dart';
 import 'cast_model.dart';
@@ -43,8 +43,6 @@ class MovieDetaleModel {
     double voteAve = json['vote_average'] ?? 0.0;
     String relDate =
         json['release_date'] ?? json['first_air_date'] ?? 'unknown';
-    // int seasonNumbrt = json['seasons'][0]['season_number'];
-    // List<dynamic> seasons = json['seasons'];
     int run = json['runtime'] ?? json['seasons'][0]['season_number'];
 
     if (json['genres'] != null) {

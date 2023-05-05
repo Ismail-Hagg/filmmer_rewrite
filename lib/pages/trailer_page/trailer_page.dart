@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/pages/trailer_page/trailer_page_android.dart';
+import '/pages/trailer_page/trailer_page_android.dart';
 import 'package:flutter/material.dart';
 
 class TrailerPage extends StatelessWidget {

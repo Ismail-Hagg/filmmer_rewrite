@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:filmmer_rewrite/models/homepage_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/homepage_model.dart';
 
 class RecommendationService {
   Future<HomePageModel> getHomeInfo({required String link}) async {

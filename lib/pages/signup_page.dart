@@ -17,12 +17,13 @@ class SignUpPage extends StatelessWidget {
     AuthController controller = Get.find<AuthController>();
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
     return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          var width = constraints.maxWidth;
-          var height = constraints.maxHeight;
-          return SizedBox(
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        var width = constraints.maxWidth;
+        var height = constraints.maxHeight;
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SizedBox(
             height: height,
             child: Stack(
               children: [
@@ -171,9 +172,9 @@ class SignUpPage extends StatelessWidget {
                     ))
               ],
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

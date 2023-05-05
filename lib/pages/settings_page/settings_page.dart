@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/pages/settings_page/settings_page_android.dart';
-import 'package:filmmer_rewrite/pages/settings_page/settings_page_ios.dart';
+import '/pages/settings_page/settings_page_android.dart';
+import '/pages/settings_page/settings_page_ios.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {

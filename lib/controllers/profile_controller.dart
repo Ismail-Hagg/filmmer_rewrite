@@ -1,7 +1,7 @@
-import 'package:filmmer_rewrite/helper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../helper/utils.dart';
 import '../models/profile_model.dart';
 import '../models/results_model.dart';
 import '../models/user_model.dart';

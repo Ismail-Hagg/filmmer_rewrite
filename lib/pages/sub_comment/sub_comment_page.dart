@@ -1,5 +1,4 @@
-import 'package:filmmer_rewrite/pages/sub_comment/sub_comment_page_android.dart';
-import 'package:filmmer_rewrite/pages/sub_comment/sub_comment_page_ios.dart';
+import '/pages/sub_comment/sub_comment_page_android.dart';
 import 'package:flutter/material.dart';
 
 import '../../controllers/movie_detale_controller.dart';

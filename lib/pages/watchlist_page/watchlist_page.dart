@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/pages/watchlist_page/watchlist_page_andtoid.dart';
-import 'package:filmmer_rewrite/pages/watchlist_page/watchlist_page_ios.dart';
+import '/pages/watchlist_page/watchlist_page_andtoid.dart';
+import '/pages/watchlist_page/watchlist_page_ios.dart';
 import 'package:flutter/material.dart';
 
 class WatchListPage extends StatelessWidget {

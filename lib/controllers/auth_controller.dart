@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ import '../helper/utils.dart';
 import '../local_storage/local_data_pref.dart';
 import '../local_storage/local_database.dart';
 import '../models/fire_upload.dart';
+import '../models/user_model.dart';
 import '../pages/control_page.dart';
 import '../pages/signup_page.dart';
 import '../services/firestore_services.dart';
@@ -220,7 +220,7 @@ class AuthController extends GetxController {
       platformAlert(
           isIos: isIos,
           title: 'error'.tr,
-          body: getMessageFromErrorCode(e),
+          body: e.message.toString(),
           context: context);
     } catch (e) {
       _count = 0;
@@ -358,10 +358,12 @@ class AuthController extends GetxController {
     await _auth.signOut();
     await GoogleSignIn().signOut();
     Get.offAll(() => const ControllerPage());
-    await dbHelper.deleteAll(DatabaseHelper.showTable);
-    await dbHelper.deleteAll(DatabaseHelper.movieTable);
-    await dbHelper.deleteAll(DatabaseHelper.table);
-    await UserDataPref().deleteUser();
+    await UserDataPref().deleteUser().then((value) async {
+      await dbHelper.deleteAll(DatabaseHelper.showTable);
+      await dbHelper.deleteAll(DatabaseHelper.movieTable);
+      await dbHelper.deleteAll(DatabaseHelper.table);
+      print('data wipe completed successfully');
+    });
     Get.delete<HomeController>();
   }
 

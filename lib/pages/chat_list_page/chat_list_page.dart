@@ -1,6 +1,6 @@
-import 'package:filmmer_rewrite/pages/chat_list_page/chat_list_page_android.dart';
-
 import 'package:flutter/material.dart';
+
+import 'chat_list_page_android.dart';
 
 class ChatListPage extends StatelessWidget {
   const ChatListPage({super.key});

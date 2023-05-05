@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.filmmer_rewrite">
    <application
-        android:label="filmmer_rewrite"
+        android:label="Filmmer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

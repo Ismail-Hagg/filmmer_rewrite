@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/helper/constants.dart';
-import 'package:filmmer_rewrite/widgets/custom_text.dart';
+import '../helper/constants.dart';
+import '../widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

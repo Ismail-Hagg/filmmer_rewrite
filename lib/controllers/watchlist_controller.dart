@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:filmmer_rewrite/helper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../helper/utils.dart';
 import '../local_storage/local_database.dart';
 import '../models/fire_upload.dart';
 import '../models/results_model.dart';

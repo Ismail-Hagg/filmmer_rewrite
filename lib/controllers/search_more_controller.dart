@@ -1,12 +1,11 @@
-import 'package:filmmer_rewrite/controllers/auth_controller.dart';
-import 'package:filmmer_rewrite/models/search_move_model.dart';
-import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/constants.dart';
 import '../helper/utils.dart';
 import '../models/homepage_model.dart';
+import '../models/search_move_model.dart';
+import '../models/user_model.dart';
 import '../services/home_page_service.dart';
 import 'home_controller.dart';
 

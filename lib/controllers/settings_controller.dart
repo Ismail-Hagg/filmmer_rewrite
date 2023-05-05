@@ -143,7 +143,7 @@ class SettingsController extends GetxController {
           });
         }
       } catch (e) {
-        print('====================== $e');
+        print('=============>>========= $e');
       }
     });
   }

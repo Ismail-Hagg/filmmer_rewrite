@@ -1,10 +1,9 @@
-import 'package:filmmer_rewrite/controllers/chat_page_controller.dart';
-import 'package:filmmer_rewrite/pages/chat_page/chat_page_android.dart';
-import 'package:filmmer_rewrite/pages/chat_page/chat_page_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/chat_page_model.dart';
+import '../../controllers/chat_page_controller.dart';
+import 'chat_page_android.dart';
+import 'chat_page_ios.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({

@@ -1,11 +1,11 @@
-import 'package:filmmer_rewrite/helper/constants.dart';
-import 'package:filmmer_rewrite/widgets/cupertino_inkwell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/actor_controller.dart';
 import '../../controllers/home_controller.dart';
+import '../../helper/constants.dart';
+import '../../widgets/cupertino_inkwell.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_network.dart';
 
@@ -14,14 +14,16 @@ class ActorPageIos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ActorController controller = Get.put(ActorController());
     return CupertinoPageScaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: mainColor,
       navigationBar: CupertinoNavigationBar(
         backgroundColor: mainColor,
         border: const Border(bottom: BorderSide(color: Colors.transparent)),
         leading: CupertinoButton(
           padding: const EdgeInsets.all(0),
-          onPressed: () => Get.find<ActorController>().back(),
+          onPressed: () => controller.back(),
           child: const Icon(
             CupertinoIcons.back,
             color: whiteColor,
@@ -33,7 +35,7 @@ class ActorPageIos extends StatelessWidget {
         var height = constraints.maxHeight;
         var width = constraints.maxWidth;
         return GetBuilder<ActorController>(
-            init: Get.find<ActorController>(),
+            init: controller,
             builder: (controller) => Column(
                   children: [
                     SizedBox(

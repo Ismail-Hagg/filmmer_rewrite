@@ -1,4 +1,3 @@
-import 'package:filmmer_rewrite/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
 import '../../controllers/search_more_controller.dart';
 import '../../helper/constants.dart';
+import '../../widgets/custom_text.dart';
 import '../../widgets/image_network.dart';
 
 class SearchMoreIos extends StatelessWidget {

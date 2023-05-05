@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/pages/search_more_page/search_more_ios.dart';
-import 'package:filmmer_rewrite/pages/search_more_page/search_more_nadroid.dart';
+import '/pages/search_more_page/search_more_ios.dart';
+import '/pages/search_more_page/search_more_nadroid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

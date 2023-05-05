@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/models/results_model.dart';
+import '../models/results_model.dart';
 
 class ActorCastModel {
   List<Results>? res;

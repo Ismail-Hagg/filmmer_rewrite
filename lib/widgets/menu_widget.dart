@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/helper/constants.dart';
+import '../helper/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

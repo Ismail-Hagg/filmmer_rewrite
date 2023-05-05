@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:filmmer_rewrite/controllers/home_controller.dart';
-import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
-import 'package:filmmer_rewrite/models/movie_detale_model.dart';
-import 'package:filmmer_rewrite/pages/trailer_page/trailer_page.dart';
+import '../models/movie_detale_model.dart';
+import '../pages/trailer_page/trailer_page.dart';
+import 'home_controller.dart';
+import 'watchlist_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,8 +62,6 @@ class MovieDetaleController extends GetxController {
 
   int _heart = 0;
   int get heart => _heart;
-
-  List<String> slashes = ['', '/credits', '/recommendations', '/videos'];
 
   int get imagesCounter => _imagesCounter;
 
@@ -194,6 +192,7 @@ class MovieDetaleController extends GetxController {
     var show = res.isShow == true ? 'tv' : 'movie';
     var base = 'https://api.themoviedb.org/3/$show/${res.id}';
     var end = '?api_key=$apiKey&language=$lan';
+    List<String> slashes = ['', '/credits', '/recommendations', '/videos'];
 
     for (var i = 0; i < slashes.length; i++) {
       switch (i) {

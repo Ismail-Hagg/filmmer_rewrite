@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:filmmer_rewrite/models/results_model.dart';
+import '../models/results_model.dart';
 
 class ProfileModel {
   String usreId;

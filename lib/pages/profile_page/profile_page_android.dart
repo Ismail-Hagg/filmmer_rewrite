@@ -1,12 +1,11 @@
-import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/home_controller.dart';
 import '../../controllers/profile_controller.dart';
 import '../../helper/constants.dart';
 import '../../models/chat_page_model.dart';
+import '../../models/user_model.dart';
 import '../../widgets/cupertino_inkwell.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_network.dart';

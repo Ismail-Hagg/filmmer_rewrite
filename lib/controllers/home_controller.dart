@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Filmmer/controllers/settings_controller.dart';
+import 'package:Filmmer/controllers/watchlist_controller.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:filmmer_rewrite/controllers/auth_controller.dart';
-import 'package:filmmer_rewrite/controllers/settings_controller.dart';
-import 'package:filmmer_rewrite/controllers/watchlist_controller.dart';
-import 'package:filmmer_rewrite/models/search_move_model.dart';
-import 'package:filmmer_rewrite/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../helper/constants.dart';
@@ -18,6 +15,8 @@ import '../models/chat_page_model.dart';
 import '../models/homepage_model.dart';
 import '../models/movie_detale_model.dart';
 import '../models/results_model.dart';
+import '../models/search_move_model.dart';
+import '../models/user_model.dart';
 import '../pages/actorPage/actor_page.dart';
 import '../pages/chat_list_page/chat_list_page.dart';
 import '../pages/chat_page/chat_page.dart';
@@ -33,6 +32,7 @@ import '../services/firebase_storage_service.dart';
 import '../services/firestore_services.dart';
 import '../services/home_page_service.dart';
 import 'actor_controller.dart';
+import 'auth_controller.dart';
 import 'chat_list_controller.dart';
 import 'favorites_controller.dart';
 import 'keeping_controller.dart';
@@ -322,7 +322,7 @@ class HomeController extends GetxController {
         tvResults: [],
         movieResults: [],
         age: 0);
-    Get.create(() => (ActorController()), permanent: false);
+    Get.create(() => (ActorController()), permanent: true);
     Get.to(() => const ActorPage(),
         transition: Transition.native,
         preventDuplicates: false,

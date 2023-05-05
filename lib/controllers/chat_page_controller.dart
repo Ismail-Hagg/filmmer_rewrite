@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:filmmer_rewrite/helper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:uuid/uuid.dart';
+import '../helper/utils.dart';
 import '../models/chat_message_model.dart';
 import '../models/chat_page_model.dart';
 import '../models/user_model.dart';

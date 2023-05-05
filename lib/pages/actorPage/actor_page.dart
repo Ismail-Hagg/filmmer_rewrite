@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/pages/actorPage/actor_page_android.dart';
 import 'package:flutter/material.dart';
+import 'actor_page_android.dart';
 import 'actor_page_ios.dart';
 
 class ActorPage extends StatelessWidget {

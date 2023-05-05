@@ -1,5 +1,5 @@
-import 'package:filmmer_rewrite/pages/search_page/search_page_android.dart';
-import 'package:filmmer_rewrite/pages/search_page/search_page_ios.dart';
+import '/pages/search_page/search_page_android.dart';
+import '/pages/search_page/search_page_ios.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/fire_upload.dart';

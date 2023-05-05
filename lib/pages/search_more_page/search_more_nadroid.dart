@@ -1,7 +1,7 @@
-import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/home_controller.dart';
 import '../../controllers/search_more_controller.dart';
 import '../../helper/constants.dart';
 import '../../widgets/custom_text.dart';

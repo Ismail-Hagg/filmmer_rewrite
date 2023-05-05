@@ -1,6 +1,6 @@
-import 'package:filmmer_rewrite/pages/movie_detale_page/movie_detale_page_ios.dart';
 import 'package:flutter/material.dart';
 import 'movie_detale_page_amdroid.dart';
+import 'movie_detale_page_ios.dart';
 
 class MovieDetalePage extends StatelessWidget {
   const MovieDetalePage({super.key});

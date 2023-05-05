@@ -1,6 +1,7 @@
-import 'package:filmmer_rewrite/models/trailer_model.dart';
 import 'package:get/get.dart';
 import 'package:pod_player/pod_player.dart';
+
+import '../models/trailer_model.dart';
 
 class TrailerController extends GetxController {
   final TrailerModel _detales =

@@ -1,7 +1,7 @@
-import 'package:filmmer_rewrite/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../controllers/home_controller.dart';
 import '../../helper/constants.dart';
 import '../../widgets/content_scrolling.dart';
 import '../../widgets/custom_text.dart';

@@ -8,6 +8,7 @@ class Results {
   double? voteAverage;
   bool? isShow;
   String? mediaType;
+  List<dynamic>? genreIds;
 
   Results(
       {this.backdropPath,
@@ -18,6 +19,7 @@ class Results {
       this.title,
       required this.voteAverage,
       this.mediaType,
+      this.genreIds,
       this.isShow});
 
   Results.fromMap(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class Results {
     voteAverage = double.parse(voteAve.toStringAsFixed(1));
     isShow = json['first_air_date'] != null ? true : false;
     mediaType = json['media_type'] ?? '';
+    genreIds = json['genre_ids'];
   }
 
   Map<String, dynamic> toMap() {
@@ -51,7 +54,8 @@ class Results {
       'poster_path': posterPath,
       'release_date': releaseDate,
       'title': title,
-      'vote_average': voteAverage
+      'vote_average': voteAverage,
+      'genre_ids': genreIds
     };
   }
 }

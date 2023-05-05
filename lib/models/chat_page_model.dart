@@ -1,4 +1,4 @@
-import 'package:filmmer_rewrite/models/user_model.dart';
+import '../models/user_model.dart';
 
 class ChatPageModel {
   String userId;

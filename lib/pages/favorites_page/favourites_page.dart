@@ -1,6 +1,7 @@
-import 'package:filmmer_rewrite/pages/favorites_page/favorites_page_android.dart';
-import 'package:filmmer_rewrite/pages/favorites_page/favorites_page_ios.dart';
 import 'package:flutter/material.dart';
+
+import 'favorites_page_android.dart';
+import 'favorites_page_ios.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
