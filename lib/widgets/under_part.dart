@@ -21,40 +21,42 @@ class UnderParat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomText(
-          text: titele,
-          color: mainColor,
-          size: titleSize,
-          weight: FontWeight.w600,
-          flow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(width: 10),
-        isIos
-            ? CupertinoButton(
-                onPressed: tap,
-                child: CustomText(
-                  text: navigatorText,
-                  color: orangeColor,
-                  size: titleSize,
-                  weight: FontWeight.w600,
-                  flow: TextOverflow.ellipsis,
-                ),
-              )
-            : TextButton(
-                style: TextButton.styleFrom(foregroundColor: orangeColor),
-                onPressed: tap,
-                child: CustomText(
-                  text: navigatorText,
-                  color: orangeColor,
-                  size: titleSize,
-                  weight: FontWeight.w600,
-                  flow: TextOverflow.ellipsis,
-                ),
-              )
-      ],
+    return FittedBox(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomText(
+            text: titele,
+            color: mainColor,
+            size: titleSize,
+            weight: FontWeight.w600,
+            flow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(width: 10),
+          isIos
+              ? CupertinoButton(
+                  onPressed: tap,
+                  child: CustomText(
+                    text: navigatorText,
+                    color: orangeColor,
+                    size: titleSize,
+                    weight: FontWeight.w600,
+                    flow: TextOverflow.ellipsis,
+                  ),
+                )
+              : TextButton(
+                  style: TextButton.styleFrom(foregroundColor: orangeColor),
+                  onPressed: tap,
+                  child: CustomText(
+                    text: navigatorText,
+                    color: orangeColor,
+                    size: titleSize,
+                    weight: FontWeight.w600,
+                    flow: TextOverflow.ellipsis,
+                  ),
+                )
+        ],
+      ),
     );
   }
 }

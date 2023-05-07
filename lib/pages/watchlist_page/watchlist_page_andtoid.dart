@@ -96,7 +96,7 @@ class WatchListPageAndroid extends StatelessWidget {
                                   color: builder.count == 0
                                       ? Colors.white
                                       : Colors.white.withOpacity(0.3),
-                                  size: width * 0.04,
+                                  size: width * 0.037,
                                 ),
                               ),
                             ),
@@ -127,7 +127,7 @@ class WatchListPageAndroid extends StatelessWidget {
                                   color: builder.count == 1
                                       ? Colors.white
                                       : Colors.white.withOpacity(0.3),
-                                  size: width * 0.04,
+                                  size: width * 0.037,
                                 ),
                               ),
                             ),
@@ -230,7 +230,7 @@ class WatchListPageAndroid extends StatelessWidget {
                                   ? builder.showList[index].name
                                   : builder.postShowLocal[index].name,
                           color: Colors.white,
-                          size: width * 0.042),
+                          size: width * 0.038),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.white),
                         splashRadius: 15,

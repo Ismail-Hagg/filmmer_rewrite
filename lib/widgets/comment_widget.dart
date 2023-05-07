@@ -122,7 +122,7 @@ class Comments extends StatelessWidget {
                               child: CustomText(
                                   text: comment.userName,
                                   color: orangeColor,
-                                  size: width * 0.045,
+                                  size: width * 0.035,
                                   flow: TextOverflow.ellipsis,
                                   weight: FontWeight.w500),
                             ),
@@ -132,7 +132,7 @@ class Comments extends StatelessWidget {
                             child: CustomText(
                               text: timeAgo(comment.timeStamp),
                               color: orangeColor,
-                              size: width * 0.037,
+                              size: width * 0.027,
                               flow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -161,7 +161,7 @@ class Comments extends StatelessWidget {
                         child: CustomText(
                           text: comment.comment,
                           color: whiteColor,
-                          size: width * 0.045,
+                          size: width * 0.033,
                         ),
                       ),
                       Row(
@@ -200,7 +200,7 @@ class Comments extends StatelessWidget {
                                             .contains(comment.postId)
                                         ? orangeColor
                                         : whiteColor,
-                                    size: width * 0.06),
+                                    size: width * 0.055),
                               ),
                               Padding(
                                 padding:
@@ -235,7 +235,7 @@ class Comments extends StatelessWidget {
                                                   text:
                                                       '${comment.subComments.length} ${'replies'.tr}',
                                                   color: orangeColor,
-                                                  size: width * 0.037)),
+                                                  size: width * 0.03)),
                                     )
                                   : Container()
                               : Container()

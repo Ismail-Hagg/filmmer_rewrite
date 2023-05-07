@@ -270,7 +270,8 @@ class MovieDetaleController extends GetxController {
                     movieId: movieId,
                     postId: value,
                     isSub: false)
-              });
+              })
+          .catchError((error) => {print('===>>>>    $error')});
     } else {
       txtControlller.clear();
     }

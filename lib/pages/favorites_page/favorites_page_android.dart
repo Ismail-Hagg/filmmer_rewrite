@@ -182,7 +182,7 @@ class FavoritesPageAndroid extends StatelessWidget {
                                     ? controller.newList[index].name
                                     : controller.postFilter[index].name,
                                 color: whiteColor,
-                                size: width * 0.045),
+                                size: width * 0.038),
                             onTap: () {
                               controller.navv(
                                   model: controller.genreListAdd.isEmpty

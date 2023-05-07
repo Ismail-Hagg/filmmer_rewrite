@@ -149,7 +149,7 @@ class ActorPageAndroid extends StatelessWidget {
                                       text: controller.detales.bio != ''
                                           ? controller.detales.bio
                                           : 'nobio'.tr,
-                                      size: width * 0.047,
+                                      size: width * 0.044,
                                       color: whiteColor.withOpacity(0.6),
                                       align: controller.detales.bio != ''
                                           ? TextAlign.left
@@ -169,33 +169,35 @@ class ActorPageAndroid extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return SizedBox(
-                                width: width * 0.3,
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CustomText(
-                                          align: TextAlign.center,
+                              return FittedBox(
+                                child: SizedBox(
+                                  width: width * 0.3,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomText(
+                                            align: TextAlign.center,
+                                            text: controller.awardMap[index]
+                                                    ['count']
+                                                .toString(),
+                                            size: width * 0.04,
+                                            color: Colors.white),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        CustomText(
+                                          maxline: 2,
                                           text: controller.awardMap[index]
-                                                  ['count']
+                                                  ['awardName']
                                               .toString(),
-                                          size: width * 0.04,
-                                          color: Colors.white),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      CustomText(
-                                        maxline: 2,
-                                        text: controller.awardMap[index]
-                                                ['awardName']
-                                            .toString(),
-                                        size: width * 0.033,
-                                        color: orangeColor,
-                                        flow: TextOverflow.ellipsis,
-                                        align: TextAlign.center,
-                                      )
-                                    ]),
+                                          size: width * 0.03,
+                                          color: orangeColor,
+                                          flow: TextOverflow.ellipsis,
+                                          align: TextAlign.center,
+                                        )
+                                      ]),
+                                ),
                               );
                             },
                             separatorBuilder: (context, index) {
@@ -229,7 +231,7 @@ class ActorPageAndroid extends StatelessWidget {
                                             color: controller.flip == 0
                                                 ? orangeColor
                                                 : orangeColor.withOpacity(0.5),
-                                            size: width * 0.045,
+                                            size: width * 0.04,
                                           ),
                                         ),
                                       ),
@@ -261,7 +263,7 @@ class ActorPageAndroid extends StatelessWidget {
                                             color: controller.flip != 0
                                                 ? orangeColor
                                                 : orangeColor.withOpacity(0.5),
-                                            size: width * 0.045,
+                                            size: width * 0.04,
                                           ),
                                         ),
                                       ),

@@ -41,7 +41,7 @@ class DrawerItem extends StatelessWidget {
               ),
               title: CustomText(
                 text: titlel,
-                size: width * 0.05,
+                size: width * 0.045,
               ),
               trailing: alarm == true
                   ? StreamBuilder<QuerySnapshot>(

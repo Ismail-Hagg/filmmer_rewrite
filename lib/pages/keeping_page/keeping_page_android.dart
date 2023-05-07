@@ -359,107 +359,135 @@ class KeepingPageAndtoid extends StatelessWidget {
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'lastepisode'.tr,
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                      CustomText(
-                                                        text:
-                                                            '${'episode'.tr} ${control.models[index].episode} - ${'season'.tr} ${control.models[index].season}',
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                    ],
+                                                  child: CustomText(
+                                                    text:
+                                                        '${'lastepisode'.tr}  :  ${'episode'.tr} ${control.models[index].episode} - ${'season'.tr} ${control.models[index].season}',
+                                                    color: orangeColor,
+                                                    size: width * 0.04,
+                                                    isFit: true,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'nextepisode'.tr,
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                      CustomText(
-                                                        text: control
-                                                                    .models[
-                                                                        index]
-                                                                    .nextepisode ==
-                                                                0
-                                                            ? 'unknown'.tr
-                                                            : '${'episode'.tr} ${control.models[index].nextepisode} - ${'season'.tr} ${control.models[index].nextSeason}',
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                    ],
+                                                  child: CustomText(
+                                                    text:
+                                                        '${'nextepisode'.tr}   :   ${control.models[index].nextepisode == 0 ? 'unknown'.tr : '${'episode'.tr} ${control.models[index].nextepisode} - ${'season'.tr} ${control.models[index].nextSeason}'}',
+                                                    color: orangeColor,
+                                                    size: width * 0.04,
+                                                    isFit: true,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'nextepisodedate'
-                                                            .tr,
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                      CustomText(
-                                                        text: control
-                                                                    .models[
-                                                                        index]
-                                                                    .nextepisode ==
-                                                                0
-                                                            ? 'unknown'.tr
-                                                            : control
-                                                                .models[index]
-                                                                .nextEpisodeDate,
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                    ],
+                                                  child: CustomText(
+                                                    text:
+                                                        '${'nextepisodedate'.tr}   :   ${control.models[index].nextepisode == 0 ? 'unknown'.tr : control.models[index].nextEpisodeDate}',
+                                                    color: orangeColor,
+                                                    size: width * 0.04,
+                                                    isFit: true,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'status'.tr,
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                      CustomText(
-                                                        text: control
-                                                            .showStatus(control
-                                                                .models[index]
-                                                                .status
-                                                                .toString()),
-                                                        color: orangeColor,
-                                                        size: width * 0.04,
-                                                      ),
-                                                    ],
+                                                  child: CustomText(
+                                                    text:
+                                                        '${'status'.tr}   :   ${control.showStatus(control.models[index].status.toString())}',
+                                                    color: orangeColor,
+                                                    size: width * 0.04,
+                                                    isFit: true,
                                                   ),
                                                 ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.all(8),
+                                                //   child: Row(
+                                                //     mainAxisAlignment:
+                                                //         MainAxisAlignment
+                                                //             .spaceBetween,
+                                                //     children: [
+                                                //       CustomText(
+                                                //         text: 'nextepisode'.tr,
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //         flow: TextOverflow
+                                                //             .ellipsis,
+                                                //       ),
+                                                //       CustomText(
+                                                //         flow: TextOverflow
+                                                //             .ellipsis,
+                                                //         text: control
+                                                //                     .models[
+                                                //                         index]
+                                                //                     .nextepisode ==
+                                                //                 0
+                                                //             ? 'unknown'.tr
+                                                //             : '${'episode'.tr} ${control.models[index].nextepisode} - ${'season'.tr} ${control.models[index].nextSeason}',
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.all(8),
+                                                //   child: Row(
+                                                //     mainAxisAlignment:
+                                                //         MainAxisAlignment
+                                                //             .spaceBetween,
+                                                //     children: [
+                                                //       CustomText(
+                                                //         flow: TextOverflow
+                                                //             .ellipsis,
+                                                //         text: 'nextepisodedate'
+                                                //             .tr,
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //       ),
+                                                //       CustomText(
+                                                //         text: control
+                                                //                     .models[
+                                                //                         index]
+                                                //                     .nextepisode ==
+                                                //                 0
+                                                //             ? 'unknown'.tr
+                                                //             : control
+                                                //                 .models[index]
+                                                //                 .nextEpisodeDate,
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.all(8),
+                                                //   child: Row(
+                                                //     mainAxisAlignment:
+                                                //         MainAxisAlignment
+                                                //             .spaceBetween,
+                                                //     children: [
+                                                //       CustomText(
+                                                //         text: 'status'.tr,
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //       ),
+                                                //       CustomText(
+                                                //         text: control
+                                                //             .showStatus(control
+                                                //                 .models[index]
+                                                //                 .status
+                                                //                 .toString()),
+                                                //         color: orangeColor,
+                                                //         size: width * 0.04,
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
                                               ],
                                             ),
                                           ),

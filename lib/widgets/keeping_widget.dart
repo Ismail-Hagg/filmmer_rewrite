@@ -74,12 +74,12 @@ class KeepingWidget extends StatelessWidget {
                   child: CustomText(
                     text: title,
                     color: orangeColor,
-                    size: width * 0.05,
+                    size: width * 0.045,
                     flow: TextOverflow.ellipsis,
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: even
@@ -91,8 +91,7 @@ class KeepingWidget extends StatelessWidget {
                       text:
                           '${'episode'.tr}: $episode  -  ${'season'.tr}: $season',
                       color: whiteColor,
-                      size: width * 0.05,
-                      //isFit: true,
+                      size: width * 0.04,
                       flow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -100,7 +99,7 @@ class KeepingWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       height: ((height * 0.15) - 12) * 0.22,
                       width: ((width * 0.75) - 12) * 0.85,
                       child: FittedBox(

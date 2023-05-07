@@ -159,9 +159,9 @@ class HomeController extends GetxController {
             null,
             [
               NotificationChannel(
-                  ledColor: orangeColor,
+                  ledColor: whiteColor,
                   playSound: true,
-                  defaultColor: orangeColor,
+                  defaultColor: whiteColor,
                   channelKey: 'basic_channel',
                   channelName: 'Basic Notification',
                   channelDescription: 'describtion',

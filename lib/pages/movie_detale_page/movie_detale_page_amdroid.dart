@@ -141,7 +141,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                   text:
                                       controll.detales.voteAverage!.toString(),
                                   color: orangeColor,
-                                  size: width * 0.065,
+                                  size: width * 0.05,
                                 )
                               ]),
                         ),
@@ -181,7 +181,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                     child: CustomText(
                         text: controll.detales.title.toString(),
                         color: whiteColor,
-                        size: width * 0.055,
+                        size: width * 0.05,
                         maxline: 2,
                         flow: TextOverflow.ellipsis,
                         weight: FontWeight.w500),
@@ -225,7 +225,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                 CustomText(
                                   text: 'Year'.tr,
                                   color: whiteColor,
-                                  size: width * 0.04,
+                                  size: width * 0.035,
                                   flow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 3),
@@ -248,7 +248,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                     CustomText(
                                       text: 'country'.tr,
                                       color: whiteColor,
-                                      size: width * 0.04,
+                                      size: width * 0.035,
                                       flow: TextOverflow.ellipsis,
                                     ),
                                     const SizedBox(height: 3),
@@ -272,6 +272,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
+                                      isFit: true,
                                       text: controll.detales.isError == false
                                           ? controll.detales.isShow == false
                                               ? 'length'.tr
@@ -280,7 +281,7 @@ class MovieDetalePageAndroid extends StatelessWidget {
                                               ? 'length'.tr
                                               : 'seasons'.tr,
                                       color: whiteColor,
-                                      size: width * 0.04,
+                                      size: width * 0.035,
                                       flow: TextOverflow.ellipsis,
                                     ),
                                     const SizedBox(height: 3),
