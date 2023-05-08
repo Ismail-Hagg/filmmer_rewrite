@@ -41,30 +41,54 @@ class SettingsPageIos extends StatelessWidget {
                         width: width,
                         color: mainColor,
                         child: controller.model.isPicLocal == true
-                            ? FittedBox(
-                                child: CircleContainer(
-                                    isFit: true,
-                                    flow: TextOverflow.ellipsis,
-                                    topSpacing: height * 0.01,
-                                    fit: BoxFit.cover,
-                                    borderWidth: 2,
-                                    borderColor: orangeColor,
-                                    char: controller.model.email,
-                                    charColor: orangeColor,
-                                    charSize: width * 0.045,
-                                    name: controller.model.userName,
-                                    nameColor: milkyColor,
-                                    nameSize: width * 0.06,
-                                    color: secondaryColor,
-                                    height: height * 0.17,
-                                    isPicOk: true,
-                                    shadow: false,
-                                    width: height * 0.17,
-                                    image: Image.file(File(controller
-                                            .model.localPicPath
-                                            .toString()))
-                                        .image),
-                              )
+                            ? controller.checkPic
+                                ? FittedBox(
+                                    child: CircleContainer(
+                                        isFit: true,
+                                        flow: TextOverflow.ellipsis,
+                                        topSpacing: height * 0.01,
+                                        fit: BoxFit.cover,
+                                        borderWidth: 2,
+                                        borderColor: orangeColor,
+                                        char: controller.model.email,
+                                        charColor: orangeColor,
+                                        charSize: width * 0.045,
+                                        name: controller.model.userName,
+                                        nameColor: milkyColor,
+                                        nameSize: width * 0.06,
+                                        color: secondaryColor,
+                                        height: height * 0.17,
+                                        isPicOk: true,
+                                        shadow: false,
+                                        width: height * 0.17,
+                                        image: Image.file(File(controller
+                                                .model.localPicPath
+                                                .toString()))
+                                            .image),
+                                  )
+                                : FittedBox(
+                                    child: ImageNetwork(
+                                      isFit: true,
+                                      topSpacing: height * 0.01,
+                                      flow: TextOverflow.ellipsis,
+                                      char: controller.model.email,
+                                      charColor: orangeColor,
+                                      charSize: width * 0.045,
+                                      name: controller.model.userName,
+                                      nameColor: milkyColor,
+                                      nameSize: width * 0.06,
+                                      borderWidth: 2,
+                                      borderColor: orangeColor,
+                                      color: mainColor,
+                                      fit: BoxFit.cover,
+                                      height: height * 0.17,
+                                      isMovie: false,
+                                      isShadow: false,
+                                      link: controller.model.onlinePicPath
+                                          .toString(),
+                                      width: height * 0.17,
+                                    ),
+                                  )
                             : controller.model.onlinePicPath == ''
                                 ? FittedBox(
                                     child: CircleContainer(
@@ -102,7 +126,7 @@ class SettingsPageIos extends StatelessWidget {
                                       borderWidth: 2,
                                       borderColor: orangeColor,
                                       color: mainColor,
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.cover,
                                       height: height * 0.17,
                                       isMovie: false,
                                       isShadow: false,

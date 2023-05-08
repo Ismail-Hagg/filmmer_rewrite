@@ -83,6 +83,9 @@ class HomeController extends GetxController {
     const SettingsPage()
   ];
 
+  bool _checkPick = false;
+  bool get checkPick => _checkPick;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -104,6 +107,7 @@ class HomeController extends GetxController {
       if (value.isError == false) {
         _userModel = value;
         update();
+        checking(pic: _userModel.localPicPath.toString());
         apiCall(language: _userModel.language.toString());
         uploadImage();
       } else {
@@ -352,5 +356,13 @@ class HomeController extends GetxController {
       _currentIndex = index;
       update();
     }
+  }
+
+  // check if the profile pic is in the phone
+  void checking({required String pic}) async {
+    await File(pic).exists().then((value) {
+      _checkPick = value;
+      update();
+    });
   }
 }

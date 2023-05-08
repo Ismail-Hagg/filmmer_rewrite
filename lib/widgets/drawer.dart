@@ -44,31 +44,58 @@ Widget header(double height, double width) {
           height: height * 0.28,
           color: mainColor,
           child: model.isPicLocal == true
-              ? FittedBox(
-                  child: Padding(
-                    padding: EdgeInsets.all(height * 0.01),
-                    child: CircleContainer(
-                        isFit: true,
-                        flow: TextOverflow.ellipsis,
-                        topSpacing: height * 0.017,
-                        fit: BoxFit.cover,
-                        borderWidth: 2,
-                        borderColor: orangeColor,
-                        char: model.email,
-                        charColor: orangeColor,
-                        charSize: width * 0.05,
-                        name: model.userName,
-                        nameColor: milkyColor,
-                        nameSize: width * 0.07,
-                        color: secondaryColor,
-                        height: height * 0.15,
-                        isPicOk: true,
-                        shadow: false,
-                        width: height * 0.15,
-                        image: Image.file(File(model.localPicPath.toString()))
-                            .image),
-                  ),
-                )
+              ? Get.find<HomeController>().checkPick
+                  ? FittedBox(
+                      child: Padding(
+                        padding: EdgeInsets.all(height * 0.01),
+                        child: CircleContainer(
+                            isFit: true,
+                            flow: TextOverflow.ellipsis,
+                            topSpacing: height * 0.017,
+                            fit: BoxFit.cover,
+                            borderWidth: 2,
+                            borderColor: orangeColor,
+                            char: model.email,
+                            charColor: orangeColor,
+                            charSize: width * 0.05,
+                            name: model.userName,
+                            nameColor: milkyColor,
+                            nameSize: width * 0.07,
+                            color: secondaryColor,
+                            height: height * 0.15,
+                            isPicOk: true,
+                            shadow: false,
+                            width: height * 0.15,
+                            image:
+                                Image.file(File(model.localPicPath.toString()))
+                                    .image),
+                      ),
+                    )
+                  : FittedBox(
+                      child: Padding(
+                        padding: EdgeInsets.all(height * 0.01),
+                        child: CircleContainer(
+                            isFit: true,
+                            flow: TextOverflow.ellipsis,
+                            topSpacing: height * 0.017,
+                            fit: BoxFit.cover,
+                            borderWidth: 2,
+                            borderColor: orangeColor,
+                            char: model.email,
+                            charColor: orangeColor,
+                            charSize: width * 0.05,
+                            name: model.userName,
+                            nameColor: milkyColor,
+                            nameSize: width * 0.07,
+                            color: secondaryColor,
+                            height: height * 0.15,
+                            isPicOk: true,
+                            shadow: false,
+                            width: height * 0.15,
+                            image: Image.network(model.onlinePicPath.toString())
+                                .image),
+                      ),
+                    )
               : model.onlinePicPath == ''
                   ? FittedBox(
                       child: Padding(

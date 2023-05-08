@@ -26,6 +26,16 @@ class SettingsController extends GetxController {
   String _path = '';
   String get path => _path;
 
+  bool _checkPic = false;
+  bool get checkPic => _checkPic;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    checking(pic: _model.localPicPath.toString());
+  }
+
   // go to social
   Future<void> openUrl(
       {required String url, required BuildContext context}) async {
@@ -264,5 +274,13 @@ class SettingsController extends GetxController {
           }
         ],
         context: context);
+  }
+
+  // check if the profile pic is in the phone
+  void checking({required String pic}) async {
+    await File(pic).exists().then((value) {
+      _checkPic = value;
+      update();
+    });
   }
 }

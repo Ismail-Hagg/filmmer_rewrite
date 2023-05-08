@@ -190,15 +190,22 @@ class AuthController extends GetxController {
                         model.language.toString().substring(0, 2),
                         model.language.toString().substring(3, 5)));
                   }
-                  await getDocs(userId: model.userId.toString())
-                      .then((value) async {
+                  await getDocs(userId: model.userId.toString()).then((value) {
                     Get.offAll(() => const ControllerPage());
                     controllerClear();
-                    await updateToken(
+                    updateToken(
                         userId: model.userId.toString(),
                         token: model.messagingToken.toString(),
                         model: model);
                     _count = 0;
+                  }).catchError((e) {
+                    _count = 0;
+                    update();
+                    platformAlert(
+                        isIos: isIos,
+                        title: 'error'.tr,
+                        body: e.toString(),
+                        context: context);
                   });
                 }).catchError((error) {
                   _count = 0;
@@ -323,10 +330,10 @@ class AuthController extends GetxController {
                           model.language.toString().substring(3, 5)));
                     }
                     await getDocs(userId: model.userId.toString())
-                        .then((value) async {
+                        .then((value) {
                       Get.offAll(() => const ControllerPage());
                       controllerClear();
-                      await updateToken(
+                      updateToken(
                           userId: model.userId.toString(),
                           token: model.messagingToken.toString(),
                           model: model);
@@ -426,7 +433,7 @@ class AuthController extends GetxController {
   }
 
   // update token
-  Future<void> updateToken(
+  void updateToken(
       {required String userId,
       required String token,
       required UserModel model}) async {

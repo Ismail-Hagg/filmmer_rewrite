@@ -59,6 +59,7 @@ dependencies:
   url_launcher: ^6.1.10
   line_icons: ^2.0.1
   salomon_bottom_bar: ^3.3.2
+  flutter_native_splash: ^2.2.19
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,12 @@ flutter_icons:
   image_path: "assets/images/main_logo.png"
   # adaptive_icon_foreground: "assets/images/main_logo.png"
   adaptive_icon_background: "#ffffff"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/main_logo.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
